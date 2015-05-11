@@ -5,7 +5,7 @@ module Scimre
     attr_accessor :frame, :mark_pos
     attr_accessor :current_buffer, :buffer_list, :prev_buffer
     attr_accessor :mode
-    def initialize(file = nil)
+    def initialize(init_filename, opts = nil)
       @frame = Scimre::Frame.new()
       
       @keymap = ViewKeyMap.new(@frame.view_win)
@@ -17,21 +17,18 @@ module Scimre
       @buffer_list = []
       @current_buffer = nil
       @filename = nil
-      if file != nil
-        Scimre::load_file(@frame.view_win, file)
-        @mode = Scimre::Mode.set_mode_by_filename(file)
-        @frame.view_win.set_lexer_language(@mode.name)
-        @mode.set_style(@frame.view_win)
-        @frame.view_win.set_sel_back(true, 0xff0000)
-        @frame.view_win.refresh
-        @filename = file
-        buffer = Scimre::Buffer.new(file)
-        buffer.docpointer = @frame.view_win.get_docpointer()
-        @current_buffer = buffer
-        @prev_buffer = buffer
-        @buffer_list.push(buffer)
+      load_init_file(init_filename)
+    end
+
+    def load_init_file(init_filename)
+      begin
+        File.open(init_filename, "r") do |f|
+          init_str = f.read()
+          instance_eval(init_str)
+        end
+      rescue
+        $stderr.puts $!
       end
-      @frame.modeline(self)
     end
 
   def extend(command)
@@ -74,18 +71,37 @@ module Scimre
     end
   end
 
-  def run
-    command_mode = nil
-    prefix_key = ""
-    while true do
-      doin()
+    def run(file = nil)
+      if file != nil
+        Scimre::load_file(@frame.view_win, file)
+        @mode = Scimre::Mode.set_mode_by_filename(file)
+        @frame.view_win.set_lexer_language(@mode.name)
+        @mode.set_style(@frame.view_win)
+        @frame.view_win.set_sel_back(true, 0xff0000)
+        @frame.view_win.refresh
+        @filename = file
+        buffer = Scimre::Buffer.new(file)
+      else
+        buffer = Scimre::Buffer.new(nil)
+      end
+      buffer.docpointer = @frame.view_win.get_docpointer()
+      @current_buffer = buffer
+      @prev_buffer = buffer
+      @buffer_list.push(buffer)
+
+      @frame.modeline(self)
+
+      command_mode = nil
+      prefix_key = ""
+      while true do
+        doin()
 #      if @mark_pos != nil
 #        @frame.view_win.set_anchor(@mark_pos)
       #      end
-      @frame.view_win.refresh
-      @frame.modeline(self)
-      next
+        @frame.view_win.refresh
+        @frame.modeline(self)
+        next
+      end
     end
   end
-end
 end
