@@ -1,6 +1,6 @@
 module Scimre
   class Buffer
-    attr_accessor :filename, :directory, :docpointer, :name
+    attr_accessor :filename, :directory, :docpointer, :name, :encoding
     def initialize(filename = nil)
       if filename != nil
         @filename = File.expand_path(filename)
@@ -12,6 +12,7 @@ module Scimre
         @directory = Dir.getwd
       end
       text = ""
+      @encoding = "utf-8"
       @docpointer = nil
     end 
   end

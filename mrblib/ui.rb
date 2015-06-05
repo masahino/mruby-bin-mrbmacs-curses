@@ -95,6 +95,14 @@ module Scimre
       end
       if win == nil
         @view_win.send_key(c, mod_shift, mod_ctrl, mod_alt)
+        @view_win.refresh
+        pos1 = @view_win.brace_match(@view_win.get_current_pos()-1, 0)
+        # $stderr.puts "cur = #{@view_win.get_current_pos()}, pos1 = #{pos1}"
+        if pos1 != -1 and c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord
+          @view_win.brace_highlight(pos1, @view_win.get_current_pos()-1)
+        else
+          @view_win.brace_highlight(-1, -1)
+        end
       else
         win.send_key(c, mod_shift, mod_ctrl, mod_alt)
       end
@@ -103,7 +111,7 @@ module Scimre
     def modeline(app)
       @mode_win.clear()
       @mode_win.move(0, 0)
-      mode_text = " -:"
+      mode_text = " (#{app.current_buffer.encoding}):"
       if @view_win.get_modify != 0
         mode_text += "**-"
       else

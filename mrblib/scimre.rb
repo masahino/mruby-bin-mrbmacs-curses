@@ -5,6 +5,7 @@ module Scimre
     attr_accessor :frame, :mark_pos
     attr_accessor :current_buffer, :buffer_list, :prev_buffer
     attr_accessor :mode
+    attr_accessor :file_encodings
     def initialize(init_filename, opts = nil)
       @frame = Scimre::Frame.new()
       
@@ -17,6 +18,8 @@ module Scimre
       @buffer_list = []
       @current_buffer = nil
       @filename = nil
+      
+      @file_encodings = []
       load_init_file(init_filename)
     end
 
@@ -73,19 +76,20 @@ module Scimre
 
     def run(file = nil)
       if file != nil
-        Scimre::load_file(@frame.view_win, file)
+        buffer = Scimre::Buffer.new(file)
+        @current_buffer = buffer
+        Scimre::load_file(self, file)
         @mode = Scimre::Mode.set_mode_by_filename(file)
         @frame.view_win.set_lexer_language(@mode.name)
         @mode.set_style(@frame.view_win)
         @frame.view_win.set_sel_back(true, 0xff0000)
         @frame.view_win.refresh
         @filename = file
-        buffer = Scimre::Buffer.new(file)
       else
         buffer = Scimre::Buffer.new(nil)
+        @current_buffer = buffer
       end
       buffer.docpointer = @frame.view_win.get_docpointer()
-      @current_buffer = buffer
       @prev_buffer = buffer
       @buffer_list.push(buffer)
 
