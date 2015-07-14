@@ -46,7 +46,7 @@ module Scimre
         end
         keydef += $2.ord
       end
-      win.assign_cmdkey(keydef, cmd)
+      win.sci_assign_cmdkey(keydef, cmd)
     end
   end
 

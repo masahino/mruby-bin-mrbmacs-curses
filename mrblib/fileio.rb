@@ -24,8 +24,8 @@ module Scimre
           text = Iconv.conv("utf-8", file_encoding, text)
           current_buffer.encoding = file_encoding
         end
-        view_win.set_text(text)
-        view_win.set_savepoint
+        view_win.sci_set_text(text)
+        view_win.sci_set_savepoint
       rescue
         # new file
 	$stderr.puts $!
@@ -34,7 +34,7 @@ module Scimre
     end
 
     def save_buffer(app)
-      all_text = app.frame.view_win.get_text(app.frame.view_win.get_length+1)
+      all_text = app.frame.view_win.sci_get_text(app.frame.view_win.sci_get_length+1)
       if app.current_buffer.encoding != "utf-8"
         all_text = Iconv.conv(app.current_buffer.encoding, "utf-8", all_text)
       end
@@ -43,7 +43,7 @@ module Scimre
       File.open(app.current_buffer.filename, "w") do |f|
         f.write all_text
       end
-      app.frame.view_win.set_save_point
+      app.frame.view_win.sci_set_save_point
     end
 
     def find_file(app)
@@ -58,18 +58,18 @@ module Scimre
       end
       if filename != nil
         new_buffer = Buffer.new(filename)
-        view_win.add_refdocument(app.current_buffer.docpointer)
-        view_win.set_docpointer(nil)
-        new_buffer.docpointer = view_win.get_docpointer
+        view_win.sci_add_refdocument(app.current_buffer.docpointer)
+        view_win.sci_set_docpointer(nil)
+        new_buffer.docpointer = view_win.sci_get_docpointer
 #         new_buffer.docpointer = view_win.create_document
         app.buffer_list.push(new_buffer)
         app.prev_buffer = app.current_buffer
         app.current_buffer = new_buffer
         load_file(app, filename)
         mode = Scimre::Mode.set_mode_by_filename(filename)
-        view_win.set_lexer_language(mode.name)
+        view_win.sci_set_lexer_language(mode.name)
         mode.set_style(view_win)
-        view_win.set_sel_back(true, 0xff0000)
+        view_win.sci_set_sel_back(true, 0xff0000)
         view_win.refresh
       end
     end

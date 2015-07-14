@@ -54,7 +54,7 @@ module Scimre
       line = view_win.line_from_position(view_win.get_current_pos())
       level = view_win.get_fold_level(line) & Scintilla::SC_FOLDLEVELNUMBERMASK - Scintilla::SC_FOLDLEVELBASE
       cur_line = view_win.get_curline()[0]
-      if level > 0 and cur_line =~/^\s+(end|}).*$/
+      if level > 0 and cur_line =~/^\s+(end|else|then|elsif|when|rescue|ensure|}).*$/
         level -= 1
       end
       return level

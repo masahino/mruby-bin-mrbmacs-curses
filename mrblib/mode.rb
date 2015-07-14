@@ -36,23 +36,23 @@ module Scimre
     def set_style(view_win)
       for i in 0..@style.length-1
         if @style[i][:fore]
-          view_win.style_set_fore(i, @style[i][:fore])
+          view_win.sci_style_set_fore(i, @style[i][:fore])
         end
         if @style[i][:back]
-          view_win.style_set_back(i, @style[i][:back])
+          view_win.sci_style_set_back(i, @style[i][:back])
         end
         if @style[i][:italic]
-          view_win.style_set_italic(i, @style[i][:italic])
+          view_win.sci_style_set_italic(i, @style[i][:italic])
         end
       end
-      view_win.set_keywords(0, @keyword_list)
-      view_win.set_property("fold", "1")
-      view_win.set_tab_width(@indent)
-      view_win.set_use_tabs(false)
-      view_win.set_tab_indents(true)
-      view_win.set_back_space_un_indents(true)
-      view_win.set_indent(@indent)
-      view_win.set_wrap_mode(Scintilla::SC_WRAP_CHAR)
+      view_win.sci_set_keywords(0, @keyword_list)
+      view_win.sci_set_property("fold", "1")
+      view_win.sci_set_tab_width(@indent)
+      view_win.sci_set_use_tabs(false)
+      view_win.sci_set_tab_indents(true)
+      view_win.sci_set_back_space_un_indents(true)
+      view_win.sci_set_indent(@indent)
+      view_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
     end
     def config
     end

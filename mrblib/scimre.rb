@@ -80,16 +80,16 @@ module Scimre
         @current_buffer = buffer
         Scimre::load_file(self, file)
         @mode = Scimre::Mode.set_mode_by_filename(file)
-        @frame.view_win.set_lexer_language(@mode.name)
+        @frame.view_win.sci_set_lexer_language(@mode.name)
         @mode.set_style(@frame.view_win)
-        @frame.view_win.set_sel_back(true, 0xff0000)
+        @frame.view_win.sci_set_sel_back(true, 0xff0000)
         @frame.view_win.refresh
         @filename = file
       else
         buffer = Scimre::Buffer.new(nil)
         @current_buffer = buffer
       end
-      buffer.docpointer = @frame.view_win.get_docpointer()
+      buffer.docpointer = @frame.view_win.sci_get_docpointer()
       @prev_buffer = buffer
       @buffer_list.push(buffer)
 
