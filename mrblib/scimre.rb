@@ -7,13 +7,13 @@ module Scimre
     attr_accessor :mode
     attr_accessor :file_encodings
     def initialize(init_filename, opts = nil)
-      @frame = Scimre::Frame.new()
-      
+      @frame = Scimre::Frame.new()  
       @keymap = ViewKeyMap.new(@frame.view_win)
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new(@frame.echo_win)
-
+      @style_list = {}
       @mode = Mode.new
+      @theme = SolarizedDarkTheme.new
       @mark_pos = nil
       @buffer_list = []
       @current_buffer = nil
@@ -74,14 +74,15 @@ module Scimre
     end
   end
 
-    def run(file = nil)
+  def run(file = nil)
       if file != nil
         buffer = Scimre::Buffer.new(file)
         @current_buffer = buffer
         Scimre::load_file(self, file)
         @mode = Scimre::Mode.set_mode_by_filename(file)
-        @frame.view_win.sci_set_lexer_language(@mode.name)
-        @mode.set_style(@frame.view_win)
+                @frame.view_win.sci_set_lexer_language(@mode.name)
+        $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
+        @mode.set_style(@frame.view_win, @theme)
         @frame.view_win.sci_set_sel_back(true, 0xff0000)
         @frame.view_win.refresh
         @filename = file
