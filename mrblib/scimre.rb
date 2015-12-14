@@ -5,6 +5,7 @@ module Scimre
     attr_accessor :frame, :mark_pos
     attr_accessor :current_buffer, :buffer_list, :prev_buffer
     attr_accessor :mode
+    attr_accessor :theme
     attr_accessor :file_encodings
     def initialize(init_filename, opts = nil)
       @frame = Scimre::Frame.new()  
