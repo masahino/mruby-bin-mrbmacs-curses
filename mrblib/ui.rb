@@ -1,5 +1,5 @@
 # coding: utf-8
-module Scimre
+module Mrbmacs
   class Frame
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk
@@ -41,7 +41,7 @@ module Scimre
 #          end
 #        end
       end
-      Scimre::use_solarized
+      Mrbmacs::use_solarized
       @view_win.resize_window(Curses::lines - 2, Curses::cols)
 
       @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)

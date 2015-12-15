@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class << self
     def isearch_forward(app)
       prompt = "I-search: "

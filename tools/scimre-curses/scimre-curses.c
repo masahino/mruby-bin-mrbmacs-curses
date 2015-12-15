@@ -4,7 +4,7 @@
 #include <string.h>
 #include "mruby.h"
 
-const char init_file_name[] = ".scimrerc";
+const char init_file_name[] = ".mrbmacsrc";
 
 char *
 get_init_file_path(mrb_state *mrb)
@@ -49,7 +49,7 @@ main(int argc, char **argv)
   if (argc > 1) {
     fname = argv[1];
   } 
-  scimre_class = mrb_class_get_under(mrb, mrb_module_get(mrb, "Scimre"), "Application");
+  scimre_class = mrb_class_get_under(mrb, mrb_module_get(mrb, "Mrbmacs"), "Application");
   scimre = mrb_funcall(mrb, mrb_obj_value(scimre_class), "new", 1, mrb_str_new_cstr(mrb, init_path));
 
   if (argc < 2) {

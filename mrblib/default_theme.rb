@@ -1,5 +1,5 @@
-module Scimre
-  def Scimre::get_default_style_list
+module Mrbmacs
+  def Mrbmacs::get_default_style_list
     style = Hash.new
     style["ruby"] = [
     {:fore => 0xffffff}, # SCE_RB_DEFAULT 0

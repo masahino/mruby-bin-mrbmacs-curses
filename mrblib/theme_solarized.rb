@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   COLOR_BASE03 = Scintilla::COLOR_BLACK
   COLOR_BASE02 = Scintilla::COLOR_RED
   COLOR_BASE01 = Scintilla::COLOR_GREEN
@@ -31,34 +31,34 @@ module Scimre
       Scintilla::ScinTerm.set_pallete(color_list)
       @style_list= {
         'cpp' => [
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_DEFAULT 0
-          {:fore => Scimre::COLOR_BASE01, :italic => true}, # SCE_C_COMMENT 1
-          {:fore => Scimre::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINE 2
-          {:fore => Scimre::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTDOC 3
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_NUMBER 4
-          {:fore => Scimre::COLOR_BLUE}, # SCE_C_WORD 5
-          {:fore => Scimre::COLOR_CYAN}, # SCE_C_STRING 6
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_CHARACTER 7
-          {:fore => Scimre::COLOR_GREEN}, # SCE_C_UUID 8
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_PREPROCESSOR 9
-          {:fore => Scimre::COLOR_BLUE}, # SCE_C_OPERATOR 10
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_IDENTIFIER 11
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_STRINGEOL 21
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_VERBATIM 13
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_REGEX 14
-          {:fore => Scimre::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINEDOC 15
-          {:fore => Scimre::COLOR_BLUE}, # SCE_C_WORD2 16
-          {:fore => Scimre::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORD 17
-          {:fore => Scimre::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORDERROR 18
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_GLOBALCLASS 19
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_STRINGRAW 20
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_TRIPLEVERBATIM 21
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_HASHQUOTEDSTRING 22
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENT 23
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENTDOC 24
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_USERLITERAL 25
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_TASKMARKER 26
-          {:fore => Scimre::COLOR_BASE0}, # SCE_C_ESCAPESEQUENCE 27
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_DEFAULT 0
+          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENT 1
+          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINE 2
+          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTDOC 3
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_NUMBER 4
+          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_WORD 5
+          {:fore => Mrbmacs::COLOR_CYAN}, # SCE_C_STRING 6
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_CHARACTER 7
+          {:fore => Mrbmacs::COLOR_GREEN}, # SCE_C_UUID 8
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSOR 9
+          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_OPERATOR 10
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_IDENTIFIER 11
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_STRINGEOL 21
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_VERBATIM 13
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_REGEX 14
+          {:fore => Mrbmacs::COLOR_BASE01, :italic => true}, # SCE_C_COMMENTLINEDOC 15
+          {:fore => Mrbmacs::COLOR_BLUE}, # SCE_C_WORD2 16
+          {:fore => Mrbmacs::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORD 17
+          {:fore => Mrbmacs::COLOR_BASE01}, # SCE_C_COMMENTDOCKEYWORDERROR 18
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_GLOBALCLASS 19
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_STRINGRAW 20
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_TRIPLEVERBATIM 21
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_HASHQUOTEDSTRING 22
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENT 23
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_PREPROCESSORCOMMENTDOC 24
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_USERLITERAL 25
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_TASKMARKER 26
+          {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_ESCAPESEQUENCE 27
         ],
         'ruby' => [
           {:fore => COLOR_BASE0}, # SCE_RB_DEFAULT 0

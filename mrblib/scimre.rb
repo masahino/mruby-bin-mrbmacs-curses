@@ -1,4 +1,4 @@
-module Scimre
+module Mrbmacs
   class Application
     include Scintilla
 
@@ -8,7 +8,7 @@ module Scimre
     attr_accessor :theme
     attr_accessor :file_encodings
     def initialize(init_filename, opts = nil)
-      @frame = Scimre::Frame.new()  
+      @frame = Mrbmacs::Frame.new()  
       @keymap = ViewKeyMap.new(@frame.view_win)
       @command_list = @keymap.command_list
       @echo_keymap = EchoWinKeyMap.new(@frame.echo_win)
@@ -40,7 +40,7 @@ module Scimre
         @frame.view_win.send_message(command)
       else
         begin
-          instance_eval("Scimre::#{command.gsub("-", "_")}(self)")
+          instance_eval("Mrbmacs::#{command.gsub("-", "_")}(self)")
         rescue
           $stderr.puts $!
         end
@@ -77,10 +77,10 @@ module Scimre
 
     def run(file = nil)
       if file != nil
-        buffer = Scimre::Buffer.new(file)
+        buffer = Mrbmacs::Buffer.new(file)
         @current_buffer = buffer
-        Scimre::load_file(self, file)
-        @mode = Scimre::Mode.set_mode_by_filename(file)
+        Mrbmacs::load_file(self, file)
+        @mode = Mrbmacs::Mode.set_mode_by_filename(file)
         @frame.view_win.sci_set_lexer_language(@mode.name)
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
@@ -90,7 +90,7 @@ module Scimre
         @frame.view_win.refresh
         @filename = file
       else
-        buffer = Scimre::Buffer.new(nil)
+        buffer = Mrbmacs::Buffer.new(nil)
         @current_buffer = buffer
       end
       buffer.docpointer = @frame.view_win.sci_get_docpointer()
