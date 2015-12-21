@@ -7,6 +7,7 @@ module Mrbmacs
       echo_win.sci_clear_all
       echo_win.sci_add_text(prompt.length, prompt)
       echo_win.refresh
+      view_win.sci_set_target_start(view_win.sci_get_current_pos)
       view_win.sci_set_target_end(view_win.sci_get_length)
       search_text = ""
       while true
