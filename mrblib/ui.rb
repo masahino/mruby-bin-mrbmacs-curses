@@ -5,10 +5,10 @@ module Mrbmacs
     attr_accessor :view_win, :echo_win, :tk
 
     def initialize
+      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
       Curses::curs_set(0)
-      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       @keysyms = [0,
                   Scintilla::SCK_BACK,
                   Scintilla::SCK_TAB,
@@ -198,6 +198,7 @@ module Mrbmacs
     end
 
     def exit
+      @view_win.delete
       Curses::noraw
       Curses::curs_set(1)
       Curses::endwin
