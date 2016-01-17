@@ -1,6 +1,6 @@
 diff -ru scinterm_1.6-org/Makefile scinterm_1.6/Makefile
---- scinterm_1.6-org/Makefile	2015-04-18 14:22:28.000000000 +0900
-+++ scinterm_1.6/Makefile	2015-05-27 21:58:10.000000000 +0900
+--- scinterm_1.6-org/Makefile	2015-04-19 03:22:28.000000000 +0900
++++ scinterm_1.6/Makefile	2016-01-17 19:34:31.000000000 +0900
 @@ -5,7 +5,7 @@
  AR = ar
  CXX = g++
@@ -10,11 +10,18 @@ diff -ru scinterm_1.6-org/Makefile scinterm_1.6/Makefile
  ifdef DEBUG
    CXXFLAGS += -DDEBUG -g
  else
-Only in scinterm_1.6: Makefile~
 diff -ru scinterm_1.6-org/ScintillaTerm.cxx scinterm_1.6/ScintillaTerm.cxx
---- scinterm_1.6-org/ScintillaTerm.cxx	2015-04-18 14:22:28.000000000 +0900
-+++ scinterm_1.6/ScintillaTerm.cxx	2015-05-27 21:57:08.000000000 +0900
-@@ -417,7 +417,13 @@
+--- scinterm_1.6-org/ScintillaTerm.cxx	2015-04-19 03:22:28.000000000 +0900
++++ scinterm_1.6/ScintillaTerm.cxx	2016-01-17 19:34:46.000000000 +0900
+@@ -7,6 +7,7 @@
+ 
+ #include <math.h>
+ #include <stdint.h>
++#include <stdlib.h>
+ #include <string.h>
+ 
+ #include <stdexcept>
+@@ -417,7 +418,13 @@
    void MeasureWidths(Font &font_, const char *s, int len,
                       XYPOSITION *positions) {
      for (int i = 0, j = 0; i < len; i++) {
@@ -29,4 +36,3 @@ diff -ru scinterm_1.6-org/ScintillaTerm.cxx scinterm_1.6/ScintillaTerm.cxx
        positions[i] = j;
      }
    }
-Only in scinterm_1.6: ScintillaTerm.cxx~
