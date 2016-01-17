@@ -1,0 +1,32 @@
+diff -ru scinterm_1.6-org/Makefile scinterm_1.6/Makefile
+--- scinterm_1.6-org/Makefile	2015-04-18 14:22:28.000000000 +0900
++++ scinterm_1.6/Makefile	2015-05-27 21:58:10.000000000 +0900
+@@ -5,7 +5,7 @@
+ AR = ar
+ CXX = g++
+ INCLUDEDIRS = -I ../include -I ../src -I ../lexlib
+-CXXFLAGS = -Wall -pedantic -DCURSES -DSCI_LEXER $(INCLUDEDIRS)
++CXXFLAGS = -Wall -pedantic -DCURSES -DSCI_LEXER $(INCLUDEDIRS) -D_XOPEN_SOURCE_EXTENDED
+ ifdef DEBUG
+   CXXFLAGS += -DDEBUG -g
+ else
+Only in scinterm_1.6: Makefile~
+diff -ru scinterm_1.6-org/ScintillaTerm.cxx scinterm_1.6/ScintillaTerm.cxx
+--- scinterm_1.6-org/ScintillaTerm.cxx	2015-04-18 14:22:28.000000000 +0900
++++ scinterm_1.6/ScintillaTerm.cxx	2015-05-27 21:57:08.000000000 +0900
+@@ -417,7 +417,13 @@
+   void MeasureWidths(Font &font_, const char *s, int len,
+                      XYPOSITION *positions) {
+     for (int i = 0, j = 0; i < len; i++) {
+-      if (!UTF8IsTrailByte((unsigned char)s[i])) j++;
++      if (!UTF8IsTrailByte((unsigned char)s[i])) {
++	if (UTF8IsAscii((unsigned char)s[i])) {
++          j++;
++        } else {
++          j += 2;
++        }
++      }
+       positions[i] = j;
+     }
+   }
+Only in scinterm_1.6: ScintillaTerm.cxx~
