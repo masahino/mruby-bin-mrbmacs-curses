@@ -14,4 +14,4 @@ fi
 if [ ! -d "./mruby/src" ]; then
   git clone https://github.com/mruby/mruby.git
 fi
-(cd mruby; rake)
+(cd mruby; ./minirake)
