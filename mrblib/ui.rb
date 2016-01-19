@@ -111,7 +111,17 @@ module Mrbmacs
     def modeline(app)
       @mode_win.clear()
       @mode_win.move(0, 0)
-      mode_text = " (#{app.current_buffer.encoding}):"
+      newline = case @view_win.sci_get_eol_mode
+      when 0
+        "dos"
+      when 1
+        "mac"
+      when 2
+        "unix"
+      else
+        ""
+      end
+      mode_text = " (#{app.current_buffer.encoding}-#{newline}):"
       if @view_win.sci_get_modify != 0
         mode_text += "**-"
       else
@@ -141,6 +151,7 @@ module Mrbmacs
         if key_str == "C-g"
           @echo_win.sci_clear_all
           @echo_win.sci_add_text("Quit")
+          input_text = nil
           break
         end
         case key.code
@@ -163,11 +174,12 @@ module Mrbmacs
           if @echo_win.sci_autoc_active == 0
             input_text = @echo_win.sci_get_line(0)[prompt.length..-1]
             if block != nil
-              comp_list = block.call(input_text)
-              len = input_text.length - text.length
-              if len < 0
-                len = input_text.length
-              end
+              comp_list, len = block.call(input_text)
+#              len = input_text.length - text.length
+#              if len < 0
+#                len = input_text.length
+#                len = 0
+#              end
               @echo_win.sci_autoc_cancel
               @view_win.refresh
               @mode_win.refresh
