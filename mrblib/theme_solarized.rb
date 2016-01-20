@@ -1,34 +1,33 @@
 module Mrbmacs
-  COLOR_BASE03 = Scintilla::COLOR_BLACK
-  COLOR_BASE02 = Scintilla::COLOR_RED
-  COLOR_BASE01 = Scintilla::COLOR_GREEN
-  COLOR_BASE00 = Scintilla::COLOR_YELLOW
-  COLOR_BASE0  = Scintilla::COLOR_BLUE
-  COLOR_BASE1  = Scintilla::COLOR_MAGENTA
-  COLOR_BASE2  = Scintilla::COLOR_CYAN
-  COLOR_BASE3  = Scintilla::COLOR_WHITE
-  COLOR_YELLOW = Scintilla::COLOR_LIGHTBLACK
+  COLOR_BASE03 = Scintilla::COLOR_LIGHTBLACK
+  COLOR_BASE02 = Scintilla::COLOR_BLACK
+  COLOR_BASE01 = Scintilla::COLOR_LIGHTGREEN
+  COLOR_BASE00 = Scintilla::COLOR_LIGHTYELLOW
+  COLOR_BASE0  = Scintilla::COLOR_LIGHTBLUE
+  COLOR_BASE1  = Scintilla::COLOR_LIGHTCYAN
+  COLOR_BASE2  = Scintilla::COLOR_WHITE
+  COLOR_BASE3  = Scintilla::COLOR_LIGHTWHITE
+  COLOR_YELLOW = Scintilla::COLOR_YELLOW
   COLOR_ORANGE = Scintilla::COLOR_LIGHTRED
-  COLOR_RED    = Scintilla::COLOR_LIGHTGREEN
-  COLOR_MAGENTA = Scintilla::COLOR_LIGHTYELLOW
-  COLOR_VIOLET = Scintilla::COLOR_LIGHTBLUE
-  COLOR_BLUE   = Scintilla::COLOR_LIGHTMAGENTA
-  COLOR_CYAN   = Scintilla::COLOR_LIGHTCYAN
-  COLOR_GREEN  = Scintilla::COLOR_LIGHTWHITE
+  COLOR_RED    = Scintilla::COLOR_RED
+  COLOR_MAGENTA = Scintilla::COLOR_MAGENTA
+  COLOR_VIOLET = Scintilla::COLOR_LIGHTMAGENTA
+  COLOR_BLUE   = Scintilla::COLOR_BLUE
+  COLOR_CYAN   = Scintilla::COLOR_CYAN
+  COLOR_GREEN  = Scintilla::COLOR_GREEN
   class << self
-    def use_solarized
-      color_list = [234, 235, 239, 240, 244, 245, 187, 230,
-                    136, 166, 124, 125,  61,  33,  37, 64]
+    def set_pallete
+      color_list = [235, 160, 64, 136, 33, 125, 37, 254,
+                    234, 166, 240, 241, 244, 61, 245, 230]
       Scintilla::ScinTerm.set_pallete(color_list)
     end
   end
 
   class SolarizedDarkTheme
-    attr_accessor :style_list
+    attr_accessor :style_list, :foreground_color, :background_color
     def initialize
-      color_list = [234, 235, 239, 240, 244, 245, 187, 230,
-                    136, 166, 124, 125,  61,  33,  37, 64]
-      Scintilla::ScinTerm.set_pallete(color_list)
+      @foreground_color = Mrbmacs::COLOR_BASE0
+      @background_color = Mrbmacs::COLOR_BASE03
       @style_list= {
         'cpp' => [
           {:fore => Mrbmacs::COLOR_BASE0}, # SCE_C_DEFAULT 0
@@ -103,7 +102,21 @@ module Mrbmacs
           {}, # 39
           {}, # SCE_RB_STDERR 40
           {:fore => COLOR_YELLOW}, # SCE_RB_UPPER_BOUND 41
-        ]
+        ],
+        'html' => [
+          {:fore => COLOR_BASE0}, #define SCE_H_DEFAULT 0
+          {:fore => COLOR_BLUE},  #define SCE_H_TAG 1
+          {:fore => COLOR_BLUE}, #define SCE_H_TAGUNKNOWN 2
+          {:fore => COLOR_ORANGE}, #define SCE_H_ATTRIBUTE 3
+          {:fore => COLOR_ORANGE}, #define SCE_H_ATTRIBUTEUNKNOWN 4
+          {:fore => COLOR_CYAN}, #define SCE_H_NUMBER 5
+          {:fore => COLOR_CYAN}, #define SCE_H_DOUBLESTRING 6
+          {:fore => COLOR_CYAN}, #define SCE_H_SINGLESTRING 7
+          {:fore => COLOR_BASE0}, #define SCE_H_OTHER 8
+          {:fore => COLOR_BASE0}, #define SCE_H_COMMENT 9
+          {:fore => COLOR_BASE0}, #define SCE_H_ENTITY 10
+          {:fore => COLOR_BASE0}, #define SCE_H_TAGEND 11
+          ]
       }
     end
   end

@@ -41,25 +41,24 @@ module Mrbmacs
 #          end
 #        end
       end
-      Mrbmacs::use_solarized
       @view_win.resize_window(Curses::lines - 2, Curses::cols)
 
       @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
 
       #      @view_win.style_set_fore(Scintilla::STYLE_DEFAULT, COLOR_WHITE)
-      @view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, COLOR_BASE0)
+      #      @view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, COLOR_BASE0)
       #      @view_win.style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
-      @view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, COLOR_BASE03)
-      @view_win.sci_style_clear_all()
+      #@view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, COLOR_BASE03)
+      #@view_win.sci_style_clear_all()
       @view_win.sci_set_margin_widthn(0, @view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      @view_win.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, COLOR_BASE0)
-      @view_win.sci_style_set_back(Scintilla::STYLE_LINENUMBER, COLOR_BASE02)
+      #@view_win.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, COLOR_BASE0)
+      #@view_win.sci_style_set_back(Scintilla::STYLE_LINENUMBER, COLOR_BASE02)
       @view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
       @view_win.sci_set_margin_widthn(1, 1)
       @view_win.sci_set_margin_typen(1, 0)
       @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
       
-      @view_win.sci_style_set_back(STYLE_BRACELIGHT, COLOR_LIGHTCYAN)
+      #@view_win.sci_style_set_back(STYLE_BRACELIGHT, COLOR_LIGHTCYAN)
       
       @view_win.sci_set_focus(true)
       @view_win.refresh

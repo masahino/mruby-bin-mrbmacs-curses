@@ -28,6 +28,9 @@ module Mrbmacs
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
         end
+        @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
+        @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
+        @frame.view_win.sci_style_clear_all
         @mode.set_style(@frame.view_win, @theme)
         @frame.view_win.sci_set_sel_back(true, 0xff0000)
         @frame.view_win.refresh
