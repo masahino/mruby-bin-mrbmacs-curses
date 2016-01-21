@@ -82,6 +82,9 @@ module Mrbmacs
     end
 
     def send_key(key, win = nil)
+      if win == nil
+        win = @view_win
+      end
       mod_shift = (key.modifiers & TermKey::KEYMOD_SHIFT > 0)? true : false;
       mod_ctrl = (key.modifiers & TermKey::KEYMOD_CTRL > 0)? true : false;
       mod_alt = (key.modifiers & TermKey::KEYMOD_ALT > 0)? true : false;
@@ -91,19 +94,22 @@ module Mrbmacs
       when TermKey::TYPE_FUNCTION
       when TermKey::TYPE_KEYSYM
         c = @keysyms[key.code]
-      end
-      if win == nil
-        @view_win.send_key(c, mod_shift, mod_ctrl, mod_alt)
-        @view_win.refresh
-        pos1 = @view_win.sci_brace_match(@view_win.sci_get_current_pos()-1, 0)
-        # $stderr.puts "cur = #{@view_win.get_current_pos()}, pos1 = #{pos1}"
-        if pos1 != -1 and c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord
-          @view_win.sci_brace_highlight(pos1, @view_win.sci_get_current_pos()-1)
-        else
-          @view_win.sci_brace_highlight(-1, -1)
+      when TermKey::TYPE_MOUSE
+        ev, button, line, col = @tk.interpret_mouse(key)
+        if $DEBUG
+          $stderr.puts "ev = #{ev}, button = #{button}, line = #{line}, col = #{col}"
         end
+        win.send_mouse(ev, 0, button, line-1, col-1, mod_shift, mod_ctrl, mod_alt)
+        return
+      end
+      win.send_key(c, mod_shift, mod_ctrl, mod_alt)
+      win.refresh
+      pos1 = win.sci_brace_match(win.sci_get_current_pos()-1, 0)
+      # $stderr.puts "cur = #{@view_win.get_current_pos()}, pos1 = #{pos1}"
+      if pos1 != -1 and c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord
+        win.sci_brace_highlight(pos1, win.sci_get_current_pos()-1)
       else
-        win.send_key(c, mod_shift, mod_ctrl, mod_alt)
+        win.sci_brace_highlight(-1, -1)
       end
     end
 
