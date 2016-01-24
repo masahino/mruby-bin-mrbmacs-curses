@@ -49,7 +49,7 @@ main(int argc, char **argv)
   if (argc > 1) {
     fname = argv[1];
   } 
-  printf("\033[?1000h"); // enable mouse press and release events
+//  printf("\033[?1000h"); // enable mouse press and release events
   scimre_class = mrb_class_get_under(mrb, mrb_module_get(mrb, "Mrbmacs"), "Application");
   scimre = mrb_funcall(mrb, mrb_obj_value(scimre_class), "new", 1, mrb_str_new_cstr(mrb, init_path));
 

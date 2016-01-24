@@ -5,6 +5,7 @@ module Mrbmacs
     attr_accessor :view_win, :echo_win, :tk
 
     def initialize
+      print "\033[?1000h" # enable mouse
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
@@ -219,6 +220,7 @@ module Mrbmacs
       Curses::noraw
       Curses::curs_set(1)
       Curses::endwin
+      print "\033[?1000l" # disable mouse
     end
   end
 end
