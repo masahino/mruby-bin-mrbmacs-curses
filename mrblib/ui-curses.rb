@@ -46,20 +46,11 @@ module Mrbmacs
 
       @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
 
-      #      @view_win.style_set_fore(Scintilla::STYLE_DEFAULT, COLOR_WHITE)
-      #      @view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, COLOR_BASE0)
-      #      @view_win.style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
-      #@view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, COLOR_BASE03)
-      #@view_win.sci_style_clear_all()
       @view_win.sci_set_margin_widthn(0, @view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      #@view_win.sci_style_set_fore(Scintilla::STYLE_LINENUMBER, COLOR_BASE0)
-      #@view_win.sci_style_set_back(Scintilla::STYLE_LINENUMBER, COLOR_BASE02)
       @view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
       @view_win.sci_set_margin_widthn(1, 1)
       @view_win.sci_set_margin_typen(1, 0)
       @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
-      
-      #@view_win.sci_style_set_back(STYLE_BRACELIGHT, COLOR_LIGHTCYAN)
       
       @view_win.sci_set_focus(true)
       @view_win.refresh
@@ -104,7 +95,7 @@ module Mrbmacs
         return
       end
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
-      win.refresh
+#      win.refresh
       pos1 = win.sci_brace_match(win.sci_get_current_pos()-1, 0)
       # $stderr.puts "cur = #{@view_win.get_current_pos()}, pos1 = #{pos1}"
       if pos1 != -1 and c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord
@@ -167,14 +158,14 @@ module Mrbmacs
             input_text = @echo_win.sci_get_line(0)[prompt.length..-1]
             break
           else
-            cur_text = @echo_win.sci_autoc_get_current_text()
-            if cur_text != nil
-              @echo_win.sci_add_text(cur_text.length, cur_text)
-            end
-            @echo_win.sci_autoc_cancel
-            @view_win.refresh
-            @mode_win.refresh
-#            send_key(key, echo_win)
+#            cur_text = @echo_win.sci_autoc_get_current_text()
+#            if cur_text != nil
+#              @echo_win.sci_add_text(cur_text.length, cur_text)
+#            end
+#            @echo_win.sci_autoc_cancel
+#            @view_win.refresh
+#            @mode_win.refresh
+            send_key(key, echo_win)
           end
         when TermKey::SYM_TAB
           if @echo_win.sci_autoc_active == 0
