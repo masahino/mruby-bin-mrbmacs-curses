@@ -108,28 +108,7 @@ module Mrbmacs
     def modeline(app)
       @mode_win.clear()
       @mode_win.move(0, 0)
-      newline = case @view_win.sci_get_eol_mode
-      when 0
-        "dos"
-      when 1
-        "mac"
-      when 2
-        "unix"
-      else
-        ""
-      end
-      mode_text = " (#{app.current_buffer.encoding}-#{newline}):"
-      if @view_win.sci_get_modify != 0
-        mode_text += "**-"
-      else
-        mode_text += "---"
-      end
-      mode_text += sprintf("    %-20s", app.current_buffer.name)
-      x = @view_win.sci_get_column(@view_win.sci_get_current_pos)+1
-      y = @view_win.sci_line_from_position(@view_win.sci_get_current_pos)+1
-      mode_text += sprintf("%-10s", "(#{x},#{y})")
-      mode_text += "["+app.mode.name+"]"
-      @mode_win.addstr(mode_text)
+      @mode_win.addstr(get_mode_str(app))
       @mode_win.refresh
     end
 

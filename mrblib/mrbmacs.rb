@@ -23,15 +23,14 @@ module Mrbmacs
         buffer = Mrbmacs::Buffer.new(file)
         @current_buffer = buffer
         Mrbmacs::load_file(self, file)
-        @mode = Mrbmacs::Mode.set_mode_by_filename(file)
-        @frame.view_win.sci_set_lexer_language(@mode.name)
+        @frame.view_win.sci_set_lexer_language(buffer.mode.name)
         if $DEBUG
           $stderr.puts "["+@frame.view_win.sci_get_lexer_language()+"]"
         end
         @frame.view_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, @theme.foreground_color)
         @frame.view_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, @theme.background_color)
         @frame.view_win.sci_style_clear_all
-        @mode.set_style(@frame.view_win, @theme)
+        @current_buffer.mode.set_style(@frame.view_win, @theme)
         @frame.view_win.sci_set_sel_back(true, 0xff0000)
         @frame.view_win.refresh
         @filename = file
