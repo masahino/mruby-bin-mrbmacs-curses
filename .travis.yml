@@ -1,0 +1,7 @@
+sudo: false
+addons:
+  apt:
+    packages:
+      - gperf
+script:
+  - ./build.sh

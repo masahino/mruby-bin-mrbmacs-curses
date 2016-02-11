@@ -24,6 +24,9 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
+    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
+  end
   conf.gem "#{MRUBY_ROOT}/.."
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
@@ -88,4 +91,7 @@ MRuby::Build.new do |conf|
 
   # bintest
   # conf.enable_bintest
+  conf.enable_bintest
+  conf.enable_test
+  conf.gem :github => 'mattn/mruby-require'
 end
