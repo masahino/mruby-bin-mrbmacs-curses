@@ -50,9 +50,9 @@ module Mrbmacs
         y = @frame.view_win.sci_point_y_from_position(0, @frame.view_win.sci_get_current_pos)
         @frame.view_win.setpos(y, x)
         doin()
-              if @mark_pos != nil
-                @frame.view_win.sci_set_anchor(@mark_pos)
-              end
+        if @mark_pos != nil
+          @frame.view_win.sci_set_anchor(@mark_pos)
+        end
         @frame.view_win.refresh
         @frame.modeline(self)
         next
