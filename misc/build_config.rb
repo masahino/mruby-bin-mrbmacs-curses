@@ -24,9 +24,6 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'masahino/mruby-termkey' do |g|
-    g.download_libtermkey
-  end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
   end

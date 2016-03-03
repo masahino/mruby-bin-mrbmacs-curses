@@ -3,5 +3,6 @@ addons:
   apt:
     packages:
       - gperf
+      - libtermkey-dev
 script:
   - ./build.sh
