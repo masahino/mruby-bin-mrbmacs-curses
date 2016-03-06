@@ -5,4 +5,14 @@ addons:
       - gperf
       - libtermkey-dev
 script:
-  - ./build.sh
+  - export MRUBY_CONFIG=`pwd`/.travis_config.rb
+  - SCINTILLA_FILE='scintilla362.tgz'
+  - SCINTERM_VER='scinterm_1.6'
+  - wget http://www.scintilla.org/$SCINTILLA_FILE
+  - tar zxf $SCINTILLA_FILE
+  - wget http://foicica.com/scinterm/download/${SCINTERM_VER}.zip
+  - (cd scintilla; unzip ../${SCINTERM_VER}.zip; patch -p0 < ../misc/${SCINTERM_VER}.patch)
+  - (cd scintilla/${SCINTERM_VER} ; make)
+  - git clone https://github.com/mruby/mruby.git
+  - (cd mruby; ./minirake)
+  - (cd mruby; ./minirake test)
