@@ -6,7 +6,7 @@ addons:
       - libtermkey-dev
 script:
   - export MRUBY_CONFIG=`pwd`/.travis_config.rb
-  - SCINTILLA_FILE='scintilla366.tgz'
+  - SCINTILLA_FILE='scintilla365.tgz'
   - SCINTERM_VER='scinterm_1.8'
   - wget http://www.scintilla.org/$SCINTILLA_FILE
   - tar zxf $SCINTILLA_FILE
