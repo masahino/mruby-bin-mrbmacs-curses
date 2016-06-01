@@ -36,7 +36,7 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/.."
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/scinterm_1.6"
+  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/scinterm_1.8"
   linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
 
   # conf.cc do |cc|
