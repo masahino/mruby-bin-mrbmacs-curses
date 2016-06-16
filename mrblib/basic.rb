@@ -1,9 +1,9 @@
 module Mrbmacs
-  class << self
-    def isearch_forward(app)
+  class Application
+    def isearch_forward()
       prompt = "I-search: "
-      view_win = app.frame.view_win
-      echo_win = app.frame.echo_win
+      view_win = @frame.view_win
+      echo_win = @frame.echo_win
       echo_win.sci_clear_all
       echo_win.sci_add_text(prompt.length, prompt)
       echo_win.refresh
@@ -11,8 +11,8 @@ module Mrbmacs
       view_win.sci_set_target_end(view_win.sci_get_length)
       search_text = ""
       while true
-        ret, key = app.frame.tk.waitkey
-        key_str = app.frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+        ret, key = @frame.tk.waitkey
+        key_str = @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
         if key_str == "C-s"
           if search_text != ""
             view_win.sci_set_target_start(view_win.sci_get_current_pos)
@@ -22,7 +22,7 @@ module Mrbmacs
         elsif (key.modifiers & TermKey::KEYMOD_CTRL > 0) or (key.modifiers & TermKey::KEYMOD_ALT > 0)
           break
         else
-          app.frame.send_key(key, echo_win)
+          @frame.send_key(key, echo_win)
           echo_win.refresh
           search_text += key_str #echo_win.get_line(0)[prompt.length..-1]
         end
