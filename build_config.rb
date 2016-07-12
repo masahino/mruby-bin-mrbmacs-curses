@@ -2,11 +2,10 @@ def gem_config(conf)
   conf.gembox 'default'
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
-  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
   end
-  conf.gem :github => 'gromnitsky/mruby-dir-glob'
+#  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'masahino/mruby-mrbmacs-base'
   conf.gem :github => 'masahino/mruby-scinterm' do |g|
     g.download_scintilla
@@ -16,7 +15,6 @@ def gem_config(conf)
   end
 
   conf.gem File.expand_path(File.dirname(__FILE__))
-  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::Build.new do |conf|
@@ -29,6 +27,8 @@ MRuby::Build.new do |conf|
   conf.enable_test
 
   gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
@@ -47,4 +47,28 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
   gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-require'
+end
+
+MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
+  toolchain :gcc
+
+  [conf.cc, conf.linker].each do |cc|
+    cc.command = 'i686-w64-mingw32-gcc'
+  end
+  conf.cxx.command      = 'i686-w64-mingw32-g++'
+  conf.archiver.command = 'i686-w64-mingw32-gcc-ar'
+  conf.exts.executable  = ".exe"
+
+  conf.build_target     = 'i686-pc-linux-gnu'
+  conf.host_target      = 'i686-w64-mingw32'
+
+  gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+    g.cc.flags << '-DPCRE_STATIC'
+  end
+  conf.cc.include_paths << '/usr/i686-w64-mingw32/include/ncurses'
+  conf.linker.libraries << 'iconv'
+  conf.linker.libraries << 'stdc++'
 end
