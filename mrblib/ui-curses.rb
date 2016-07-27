@@ -6,7 +6,7 @@ module Mrbmacs
 
     def initialize
       print "\033[?1000h" # enable mouse
-      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
+#      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
       Curses::curs_set(0)
@@ -41,6 +41,12 @@ module Mrbmacs
 #            @view_win.brace_highlight(pos, @view_win.get_current_pos)
 #          end
 #        end
+      end
+      @tk = 
+      if Scintilla::PLATFORM == :CURSES_WIN32
+        TermKey.new(@view_win.get_window, TermKey::FLAG_UTF8)
+      else 
+        TermKey.new(0, TermKey::FLAG_UTF8)
       end
       @view_win.resize_window(Curses::lines - 2, Curses::cols)
 
