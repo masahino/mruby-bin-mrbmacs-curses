@@ -1,6 +1,7 @@
 require 'fileutils'
 
 MRUBY_VERSION="1.2.0"
+APP_VERSION="0.0.1"
 
 file :mruby do
   sh "git clone --depth=1 https://github.com/mruby/mruby"
@@ -9,6 +10,7 @@ file :mruby do
 end
 
 APP_NAME=ENV["APP_NAME"] || "mruby-bin-mrbmacs-curses"
+BIN_NAME="mrbmacs-curses"
 APP_ROOT=ENV["APP_ROOT"] || Dir.pwd
 # avoid redefining constants in mruby Rakefile
 mruby_root=File.expand_path(ENV["MRUBY_ROOT"] || "#{APP_ROOT}/mruby")
@@ -68,4 +70,37 @@ task :test => ["test:mtest", "test:bintest"]
 desc "cleanup"
 task :clean do
   sh "rake deep_clean"
+end
+
+desc "generate a release tarball"
+task :release => :compile do
+  require 'tmpdir'
+
+  # since we're in the mruby/
+  release_dir  = "releases/v#{APP_VERSION}"
+  release_path = Dir.pwd + "/../#{release_dir}"
+  app_name     = "#{APP_NAME}-#{APP_VERSION}"
+  FileUtils.mkdir_p(release_path)
+
+  Dir.mktmpdir do |tmp_dir|
+    Dir.chdir(tmp_dir) do
+      MRuby.each_target do |target|
+        next if name == "host"
+
+        arch = name
+        bin  = "#{build_dir}/bin/#{exefile(BIN_NAME)}"
+        FileUtils.mkdir_p(name)
+        FileUtils.cp(bin, name)
+
+        Dir.chdir(arch) do
+          arch_release = "#{app_name}-#{arch}"
+          puts "Writing #{release_dir}/#{arch_release}.tgz"
+          `tar czf #{release_path}/#{arch_release}.tgz *`
+        end
+      end
+
+      puts "Writing #{release_dir}/#{app_name}.tgz"
+      `tar czf #{release_path}/#{app_name}.tgz *`
+    end
+  end
 end

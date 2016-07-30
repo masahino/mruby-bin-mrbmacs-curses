@@ -4,6 +4,9 @@ module Mrbmacs
 
     def doscan(prefix)
       ret, key = @frame.tk.waitkey
+      if ret != TermKey::RES_KEY
+        return [nil, nil]
+      end
       key_str = prefix + @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
       if $DEBUG
         $stderr.puts '['+key_str+']'

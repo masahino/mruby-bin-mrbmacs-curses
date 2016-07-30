@@ -6,7 +6,9 @@ def gem_config(conf)
     g.linker.libraries.delete 'iconv'
   end
 #  conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'masahino/mruby-mrbmacs-base'
+  conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
+    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
+  end
   conf.gem :github => 'masahino/mruby-scinterm' do |g|
     g.download_scintilla
   end
@@ -31,37 +33,29 @@ MRuby::Build.new do |conf|
   conf.gem :github => 'mattn/mruby-require'
 end
 
-#MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
-#  toolchain :gcc
-#
-#  conf.enable_debug
-#  conf.enable_cxx_abi
-#
-#  conf.enable_bintest
-#  conf.enable_test
-#
-#  gem_config(conf)
-#  conf.gem :github => 'iij/mruby-regexp-pcre'
-##  conf.gem :github => 'mattn/mruby-require'
-#end
+MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
+  toolchain :gcc
 
-#MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
-#  toolchain :gcc
-#
-#  [conf.cc, conf.cxx, conf.linker].each do |cc|
-#    cc.flags << "-m32"
-#  end
-#
-#  conf.enable_debug
-#  conf.enable_cxx_abi
-#
-#  conf.enable_bintest
-#  conf.enable_test
-#
-#  gem_config(conf)
-#  conf.gem :github => 'iij/mruby-regexp-pcre'
-##  conf.gem :github => 'mattn/mruby-require'
-#end
+  conf.enable_cxx_abi
+
+  gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-require'
+end
+
+MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
+  toolchain :gcc
+
+  [conf.cc, conf.cxx, conf.linker].each do |cc|
+    cc.flags << "-m32"
+  end
+
+  conf.enable_cxx_abi
+
+  gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-require'
+end
 
 MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   toolchain :clang
@@ -132,25 +126,29 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.linker.libraries << 'stdc++'
 end
 
-#MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
-#  toolchain :gcc
-#
-#  [conf.cc, conf.linker].each do |cc|
-#    cc.command = 'x86_64-w64-mingw32-gcc'
-#  end
-#  conf.cxx.command      = 'x86_64-w64-mingw32-g++'
-#  conf.archiver.command = 'x86_64-w64-mingw32-gcc-ar'
-#  conf.exts.executable  = ".exe"
-#
-#  conf.build_target     = 'x86_64-pc-linux-gnu'
-#  conf.host_target      = 'x86_64-w64-mingw32'
-#
-#  gem_config(conf)
-#  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
-#    g.cc.flags << '-DPCRE_STATIC'
-#  end
-#  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
-#  conf.linker.flags << '-static'
-#  conf.linker.libraries << 'iconv'
-#  conf.linker.libraries << 'stdc++'
-#end
+MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
+  toolchain :gcc
+
+  [conf.cc, conf.linker].each do |cc|
+    cc.command = 'x86_64-w64-mingw32-gcc'
+  end
+  conf.cxx.command      = 'x86_64-w64-mingw32-g++'
+  conf.archiver.command = 'x86_64-w64-mingw32-gcc-ar'
+  conf.exts.executable  = ".exe"
+
+  conf.build_target     = 'x86-pc-linux-gnu'
+  conf.host_target      = 'x86_64-w64-mingw32'
+
+  conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
+    g.cc.flags << '-DHAVE_ICONVLIST'
+  end
+  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+    g.cc.flags << '-DPCRE_STATIC'
+  end
+  gem_config(conf)
+  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
+  conf.linker.flags << '-static'
+  conf.linker.libraries << 'iconv'
+  conf.linker.libraries << 'stdc++'
+end
+
