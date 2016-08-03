@@ -5,7 +5,7 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
     g.linker.libraries.delete 'iconv'
   end
-#  conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
   end
