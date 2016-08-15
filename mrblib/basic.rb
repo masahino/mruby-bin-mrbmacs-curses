@@ -11,7 +11,7 @@ module Mrbmacs
       view_win.sci_set_target_end(view_win.sci_get_length)
       search_text = ""
       while true
-        ret, key = @frame.tk.waitkey
+        ret, key = @frame.waitkey(echo_win)
         key_str = @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
         if key_str == "C-s"
           if search_text != ""

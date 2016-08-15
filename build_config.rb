@@ -5,7 +5,6 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
     g.linker.libraries.delete 'iconv'
   end
-  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
   end
@@ -29,6 +28,7 @@ MRuby::Build.new do |conf|
   conf.enable_test
 
   gem_config(conf)
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'mattn/mruby-require'
 end
@@ -38,6 +38,7 @@ MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
 
   conf.enable_cxx_abi
 
+  conf.gem :github => 'iij/mruby-process'
   gem_config(conf)
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'mattn/mruby-require'
@@ -53,6 +54,7 @@ MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
   conf.enable_cxx_abi
 
   gem_config(conf)
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'mattn/mruby-require'
 end
@@ -76,6 +78,7 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
     g.cc.flags << '-DHAVE_ICONVLIST'
   end
   gem_config(conf)
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'mattn/mruby-require'
 end

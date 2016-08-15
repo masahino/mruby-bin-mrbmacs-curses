@@ -6,7 +6,7 @@ module Mrbmacs
 
     def initialize
       print "\033[?1000h" # enable mouse
-#      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
+      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
       Curses::curs_set(0)
@@ -42,12 +42,6 @@ module Mrbmacs
 #          end
 #        end
       end
-      @tk = 
-      if Scintilla::PLATFORM == :CURSES_WIN32
-        TermKey.new(@view_win.get_window, TermKey::FLAG_UTF8)
-      else 
-        TermKey.new(0, TermKey::FLAG_UTF8)
-      end
       @view_win.resize_window(Curses::lines - 2, Curses::cols)
 
       @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
@@ -77,6 +71,13 @@ module Mrbmacs
       @echo_win.sci_auto_cset_choose_single(1)
       @echo_win.sci_auto_cset_auto_hide(false)
       @echo_win.refresh
+    end
+
+    def waitkey(win)
+      if Scintilla::PLATFORM == :CURSES_WIN32
+        @tk.set_fd(win.get_window)
+      end
+      @tk.waitkey
     end
 
     def send_key(key, win = nil)
@@ -128,7 +129,7 @@ module Mrbmacs
       @echo_win.refresh
       input_text = nil
       while true
-        ret, key = @tk.waitkey
+        ret, key = waitkey(@echo_win)
         key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
         if key_str == "C-g"
           @echo_win.sci_clear_all

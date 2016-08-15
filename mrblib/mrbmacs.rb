@@ -3,7 +3,7 @@ module Mrbmacs
     include Scintilla
 
     def doscan(prefix)
-      ret, key = @frame.tk.waitkey
+      ret, key = @frame.waitkey(@frame.view_win)
       if ret != TermKey::RES_KEY
         return [nil, nil]
       end
