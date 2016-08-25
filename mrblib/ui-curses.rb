@@ -113,7 +113,7 @@ module Mrbmacs
     end
 
     def modeline(app)
-      @mode_win.clear()
+#      @mode_win.clear()
       @mode_win.move(0, 0)
       @mode_win.addstr(get_mode_str(app))
       @mode_win.refresh

@@ -31,9 +31,10 @@ module Mrbmacs
         if @mark_pos != nil
           @frame.view_win.sci_set_anchor(@mark_pos)
         end
-        @frame.view_win.refresh
-        @frame.modeline(self)
-        next
+        if @frame.tk.get_buffer_remaining == @frame.tk.get_buffer_size
+          @frame.view_win.refresh
+          @frame.modeline(self)
+        end
       end
     end
   end
