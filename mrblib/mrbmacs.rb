@@ -11,6 +11,8 @@ module Mrbmacs
       if $DEBUG
         $stderr.puts '['+key_str+']'
       end
+      key_str.gsub!(/^Escape /, "M-")
+
       if @command_list.has_key?(key_str)
         if @command_list[key_str] == "prefix"
           return doscan(key_str + " ")
