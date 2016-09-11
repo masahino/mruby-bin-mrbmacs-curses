@@ -15,12 +15,11 @@ module Mrbmacs
   COLOR_BLUE   = Scintilla::COLOR_BLUE
   COLOR_CYAN   = Scintilla::COLOR_CYAN
   COLOR_GREEN  = Scintilla::COLOR_GREEN
-  class << self
+  class SolarizedDarkTheme
     def set_pallete
       color_list = [235, 160, 64, 136, 33, 125, 37, 254,
                     234, 166, 240, 241, 244, 61, 245, 230]
       Scintilla::ScinTerm.set_pallete(color_list)
     end
   end
-
 end

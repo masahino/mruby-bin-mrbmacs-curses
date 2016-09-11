@@ -70,6 +70,7 @@ module Mrbmacs
       @echo_win.sci_set_focus(false)
       @echo_win.sci_auto_cset_choose_single(1)
       @echo_win.sci_auto_cset_auto_hide(false)
+      @echo_win.sci_set_margin_typen(3, 4)
       @echo_win.refresh
     end
 
@@ -124,7 +125,8 @@ module Mrbmacs
       @view_win.refresh
       @echo_win.sci_set_focus(true)
       @echo_win.sci_clear_all
-      prefix_text = prompt + text
+      echo_set_prompt(prompt)
+      prefix_text = text
       @echo_win.sci_add_text(prefix_text.length, prefix_text)
       @echo_win.refresh
       input_text = nil
@@ -141,7 +143,7 @@ module Mrbmacs
         when TermKey::SYM_ENTER
           if @echo_win.sci_autoc_active == 0
             @echo_win.sci_autoc_cancel
-            input_text = @echo_win.sci_get_line(0)[prompt.length..-1]
+            input_text = @echo_win.sci_get_line(0)
             break
           else
 #            cur_text = @echo_win.sci_autoc_get_current_text()
@@ -155,7 +157,7 @@ module Mrbmacs
           end
         when TermKey::SYM_TAB
           if @echo_win.sci_autoc_active == 0
-            input_text = @echo_win.sci_get_line(0)[prompt.length..-1]
+            input_text = @echo_win.sci_get_line(0)
             if block != nil
               comp_list, len = block.call(input_text)
 #              len = input_text.length - text.length
@@ -188,6 +190,11 @@ module Mrbmacs
       return input_text
     end
 
+    def echo_set_prompt(prompt)
+      @echo_win.sci_set_margin_widthn(3, @echo_win.sci_text_width(Scintilla::STYLE_DEFAULT, prompt))
+      @echo_win.sci_margin_set_text(0, prompt)
+    end
+ 
     def read_buffername(prompt)
       echo_gets(prompt)
     end
