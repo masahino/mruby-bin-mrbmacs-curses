@@ -139,6 +139,11 @@ module Mrbmacs
           input_text = nil
           break
         end
+        if key_str == "C-k"
+          @echo_win.send_message(SCI_DELLINERIGHT)
+          @echo_win.refresh
+          next
+        end
         case key.code
         when TermKey::SYM_ENTER
           if @echo_win.sci_autoc_active == 0
@@ -193,10 +198,25 @@ module Mrbmacs
     def echo_set_prompt(prompt)
       @echo_win.sci_set_margin_widthn(3, @echo_win.sci_text_width(Scintilla::STYLE_DEFAULT, prompt))
       @echo_win.sci_margin_set_text(0, prompt)
+      @echo_win.refresh
     end
  
     def read_buffername(prompt)
       echo_gets(prompt)
+    end
+
+    def y_or_n(prompt)
+      $stderr.puts prompt
+      @echo_win.sci_clear_all
+      echo_set_prompt(prompt)
+      ret, key = waitkey(@echo_win)
+      key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+      echo_set_prompt("")
+      if key_str == "Y" or key_str == "y"
+        return true
+      else
+        return false
+      end
     end
 
     def exit
