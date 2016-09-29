@@ -29,6 +29,7 @@ module Mrbmacs
         x = @frame.view_win.sci_point_x_from_position(0, @frame.view_win.sci_get_current_pos)
         y = @frame.view_win.sci_point_y_from_position(0, @frame.view_win.sci_get_current_pos)
         @frame.view_win.setpos(y, x)
+        @frame.view_win.sci_set_empty_selection(@frame.view_win.sci_get_current_pos)
         doin()
         if @mark_pos != nil
           @frame.view_win.sci_set_anchor(@mark_pos)
