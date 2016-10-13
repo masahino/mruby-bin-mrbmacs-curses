@@ -51,7 +51,10 @@ module Mrbmacs
       @view_win.sci_set_margin_widthn(1, 1)
       @view_win.sci_set_margin_typen(1, 0)
       @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
-      
+
+      @view_win.sci_set_marginsensitiven(1, 1)
+      @view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+      $stderr.puts @view_win.sci_get_automatic_fold
       @view_win.sci_set_focus(true)
       @view_win.refresh
 
@@ -96,10 +99,13 @@ module Mrbmacs
         c = @keysyms[key.code]
       when TermKey::TYPE_MOUSE
         ev, button, line, col = @tk.interpret_mouse(key)
+        time = Time.now
+        millis = (time.to_i * 1000 + time.usec/1000).to_i
         if $DEBUG
-          $stderr.puts "ev = #{ev}, button = #{button}, line = #{line}, col = #{col}"
+          $stderr.puts "ev = #{ev}, millis = #{millis}, button = #{button}, line = #{line-1}, col = #{col-1}"
+          $stderr.puts "shift = #{mod_shift}, ctrl = #{mod_ctrl}, alt = #{mod_alt}"
         end
-        win.send_mouse(ev, 0, button, line-1, col-1, mod_shift, mod_ctrl, mod_alt)
+        win.send_mouse(ev, millis, button, line-1, col-1, mod_shift, mod_ctrl, mod_alt)
         return
       end
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
