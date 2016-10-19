@@ -105,7 +105,7 @@ module Mrbmacs
           $stderr.puts "ev = #{ev}, millis = #{millis}, button = #{button}, line = #{line-1}, col = #{col-1}"
           $stderr.puts "shift = #{mod_shift}, ctrl = #{mod_ctrl}, alt = #{mod_alt}"
         end
-        win.send_mouse(ev, 0, button, line-1, col-1, mod_shift, mod_ctrl, mod_alt)
+        win.send_mouse(ev, millis, button, line-1, col-1, mod_shift, mod_ctrl, mod_alt)
         return
       end
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
