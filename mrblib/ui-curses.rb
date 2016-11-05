@@ -212,7 +212,9 @@ module Mrbmacs
     end
 
     def y_or_n(prompt)
-      $stderr.puts prompt
+      if $DEBUG
+        $stderr.puts prompt
+      end
       @echo_win.sci_clear_all
       echo_set_prompt(prompt)
       ret, key = waitkey(@echo_win)
