@@ -1,5 +1,5 @@
 export MRUBY_CONFIG=`pwd`/misc/build_config.rb
-SCINTILLA_FILE='scintilla366.tgz'
+SCINTILLA_FILE='scintilla372.tgz'
 SCINTERM_VER='scinterm_1.8'
 
 if [ ! -f "./scintilla/bin/scintilla.a" ]; then
