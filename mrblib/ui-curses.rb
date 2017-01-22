@@ -232,6 +232,7 @@ module Mrbmacs
       Curses::noraw
       Curses::curs_set(1)
       Curses::endwin
+      @tk.destroy
       print "\033[?1000l" # disable mouse
     end
   end
