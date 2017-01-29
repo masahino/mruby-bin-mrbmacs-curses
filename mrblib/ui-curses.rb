@@ -4,7 +4,7 @@ module Mrbmacs
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk
 
-    def initialize
+    def initialize()
       print "\033[?1000h" # enable mouse
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
@@ -109,13 +109,14 @@ module Mrbmacs
         return
       end
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
-#      win.refresh
-      pos1 = win.sci_brace_match(win.sci_get_current_pos()-1, 0)
-      # $stderr.puts "cur = #{@view_win.get_current_pos()}, pos1 = #{pos1}"
-      if pos1 != -1 and c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord
-        win.sci_brace_highlight(pos1, win.sci_get_current_pos()-1)
-      else
-        win.sci_brace_highlight(-1, -1)
+      if @tk.buffer_remaining == @tk.buffer_size
+        win.refresh
+        pos1 = win.sci_brace_match(win.sci_get_current_pos() - 1, 0)
+        if pos1 != -1 and (c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord)
+          win.sci_brace_highlight(pos1, win.sci_get_current_pos() - 1)
+        else
+          win.sci_brace_highlight(-1, -1)
+        end
       end
     end
 
