@@ -1,11 +1,7 @@
-sudo: false
+sudo: required
 before_install:
   - sudo apt-get update
-addons:
-  apt:
-    packages:
-      - gperf
-      - libtermkey-dev
+  - sudo apt-get install gperf libtermkey-dev
 script:
   - export MRUBY_CONFIG=`pwd`/.travis_config.rb
   - SCINTILLA_FILE='scintilla365.tgz'
