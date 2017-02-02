@@ -1,16 +1,11 @@
+language: c
 sudo: required
+services:
+  - docker
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y gperf
+install:
+  - sudo sh -c "curl -L https://github.com/docker/compose/releases/download/1.3.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+  - sudo chmod +x /usr/local/bin/docker-compose
 script:
-  - export MRUBY_CONFIG=`pwd`/.travis_config.rb
-  - SCINTILLA_FILE='scintilla365.tgz'
-  - SCINTERM_VER='scinterm_1.8'
-  - wget http://www.scintilla.org/$SCINTILLA_FILE
-  - tar zxf $SCINTILLA_FILE
-  - wget http://foicica.com/scinterm/download/${SCINTERM_VER}.zip
-  - (cd scintilla; unzip ../${SCINTERM_VER}.zip)
-  - (cd scintilla/${SCINTERM_VER} ; make)
-  - git clone https://github.com/mruby/mruby.git
-  - (cd mruby; ./minirake)
-  - (cd mruby; ./minirake test)
+  - docker-compose run test
