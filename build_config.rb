@@ -29,7 +29,7 @@ MRuby::Build.new do |conf|
 
   gem_config(conf)
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-pcre-regexp'
   conf.gem :github => 'mattn/mruby-require'
 end
 
@@ -40,24 +40,24 @@ MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
 
   conf.gem :github => 'iij/mruby-process'
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-pcre-regexp'
   conf.gem :github => 'mattn/mruby-require'
 end
 
-MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
-  toolchain :gcc
-
-  [conf.cc, conf.cxx, conf.linker].each do |cc|
-    cc.flags << "-m32"
-  end
-
-  conf.enable_cxx_abi
-
-  gem_config(conf)
-  conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'iij/mruby-regexp-pcre'
-  conf.gem :github => 'mattn/mruby-require'
-end
+#MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
+#  toolchain :gcc
+#
+#  [conf.cc, conf.cxx, conf.linker].each do |cc|
+#    cc.flags << "-m32"
+#  end
+#
+#  conf.enable_cxx_abi
+#
+#  gem_config(conf)
+#  conf.gem :github => 'gromnitsky/mruby-dir-glob'
+#  conf.gem :github => 'iij/mruby-regexp-pcre'
+#  conf.gem :github => 'mattn/mruby-require'
+#end
 
 MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   toolchain :clang
@@ -79,7 +79,7 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   end
   gem_config(conf)
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-pcre-regexp'
   conf.gem :github => 'mattn/mruby-require'
 end
 
@@ -119,7 +119,7 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
     g.cc.flags << '-DHAVE_ICONVLIST'
   end
-  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+  conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
   gem_config(conf)
@@ -145,7 +145,7 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
     g.cc.flags << '-DHAVE_ICONVLIST'
   end
-  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+  conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
   gem_config(conf)
