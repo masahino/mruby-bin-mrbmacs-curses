@@ -2,7 +2,7 @@
 module Mrbmacs
   class Frame
     include Scintilla
-    attr_accessor :view_win, :echo_win, :tk
+    attr_accessor :view_win, :echo_win, :tk, :char_added
 
     def initialize()
       print "\033[?1000h" # enable mouse
@@ -32,6 +32,9 @@ module Mrbmacs
 
 
       @view_win = ScinTerm.new do |msg|
+        if msg == Scintilla::SCN_CHARADDED
+          @char_added = true
+        end
         if $DEBUG
           $stderr.puts "sci callback #{msg}"
         end
@@ -75,6 +78,8 @@ module Mrbmacs
       @echo_win.sci_auto_cset_auto_hide(false)
       @echo_win.sci_set_margin_typen(3, 4)
       @echo_win.refresh
+
+      @char_added = false
     end
 
     def waitkey(win)
@@ -187,10 +192,6 @@ module Mrbmacs
           end
         else
           send_key(key, echo_win)
-#          if @echo_win.autoc_active != 0
- #           @echo_win.autoc_cancel()
-#            $stderr.puts "autoc_active = #{@echo_win.autoc_active}"
-#          end
         end
         @echo_win.refresh
       end
