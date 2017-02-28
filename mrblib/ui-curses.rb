@@ -157,7 +157,7 @@ module Mrbmacs
           next
         end
         case key.code
-        when TermKey::SYM_ENTER
+        when TermKey::SYM_ENTER, TermKey::SYM_INSERT
           if @echo_win.sci_autoc_active == 0
             @echo_win.sci_autoc_cancel
             input_text = @echo_win.sci_get_line(0)
