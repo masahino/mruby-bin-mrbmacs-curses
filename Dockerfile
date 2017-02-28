@@ -29,10 +29,11 @@ RUN cd /tmp/i686 \
   && tar jxf ../pcre-8.39.tar.bz2 && cd pcre-8.39 \
   && ./configure --prefix=/usr/i686-w64-mingw32/ --host=i686-w64-mingw32 --enable-static \
   && make install
-RUN cd /tmp/i686 \
-  && tar zxf ../ncurses-6.0.tar.gz && cd ncurses-6.0 \
-  && ./configure --prefix=/usr/i686-w64-mingw32/ --host=i686-w64-mingw32 --enable-database --enable-term-driver --enable-sp-funcs --enable-static \
-  && make install
+#RUN cd /tmp/i686 \
+#  && tar zxf ../ncurses-6.0.tar.gz && cd ncurses-6.0 \
+#  && ./configure --prefix=/usr/i686-w64-mingw32/ --host=i686-w64-mingw32 --enable-database --enable-term-driver --enable-sp-funcs --enable-static \
+#  && make install \
+#  && cp include/nc_termios.h /usr/i686-w64-mingw32/include/termios.h
 ####################
 # x86_64-w64-mingw32
 RUN mkdir /tmp/x86_64 && cd /tmp/x86_64 \
@@ -49,10 +50,10 @@ RUN cd /tmp/x86_64 \
   && tar jxf ../pcre-8.39.tar.bz2 && cd pcre-8.39 \
   && ./configure --prefix=/usr/x86_64-w64-mingw32/ --host=x86_64-w64-mingw32 --enable-static \
   && make install
-RUN cd /tmp/i686 \
-  && tar zxf ../ncurses-6.0.tar.gz && cd ncurses-6.0 \
-  && ./configure --prefix=/usr/x86_64-w64-mingw32/ --host=x86_64-w64-mingw32 --enable-database --enable-term-driver --enable-sp-funcs --enable-static \
-  && make install
+#RUN cd /tmp/i686 \
+#  && tar zxf ../ncurses-6.0.tar.gz && cd ncurses-6.0 \
+#  && ./configure --prefix=/usr/x86_64-w64-mingw32/ --host=x86_64-w64-mingw32 --enable-database --enable-term-driver --enable-sp-funcs --enable-static \
+#  && make install
 #####################
 # x86_64-apple-darwin
 RUN mkdir /tmp/x86_64-apple && cd /tmp/x86_64-apple \

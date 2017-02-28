@@ -106,6 +106,7 @@ end
 MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   toolchain :gcc
 
+  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'i686-w64-mingw32-gcc'
   end
@@ -132,6 +133,7 @@ end
 MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   toolchain :gcc
 
+  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'x86_64-w64-mingw32-gcc'
   end
