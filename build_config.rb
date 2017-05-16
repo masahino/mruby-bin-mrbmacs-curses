@@ -1,8 +1,10 @@
 def gem_config(conf)
   conf.gembox 'default'
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
+  conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
-  conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
+  conf.gem :github => 'masahino/mruby-file-stat', :branch => 'cross_compile'
+  conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
@@ -16,6 +18,7 @@ def gem_config(conf)
   end
 
   conf.gem File.expand_path(File.dirname(__FILE__))
+  conf.gem :github => 'mattn/mruby-pcre-regexp'
 end
 
 MRuby::Build.new do |conf|
@@ -24,12 +27,11 @@ MRuby::Build.new do |conf|
   conf.enable_debug
   conf.enable_cxx_abi
 
-  conf.enable_bintest
-  conf.enable_test
 
   gem_config(conf)
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
+  conf.enable_bintest
+#  conf.enable_test
   conf.gem :github => 'mattn/mruby-require'
 end
 
@@ -38,9 +40,8 @@ MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
 
   conf.enable_cxx_abi
 
-  conf.gem :github => 'iij/mruby-process'
   gem_config(conf)
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-require'
 end
 
@@ -79,7 +80,6 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   end
   gem_config(conf)
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
   conf.gem :github => 'mattn/mruby-require'
 end
 
@@ -117,9 +117,6 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.build_target     = 'i686-pc-linux-gnu'
   conf.host_target      = 'i686-w64-mingw32'
 
-  conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
-    g.cc.flags << '-DHAVE_ICONVLIST'
-  end
   conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
@@ -128,6 +125,7 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
+#  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
@@ -144,9 +142,6 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.build_target     = 'x86-pc-linux-gnu'
   conf.host_target      = 'x86_64-w64-mingw32'
 
-  conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
-    g.cc.flags << '-DHAVE_ICONVLIST'
-  end
   conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
@@ -155,5 +150,6 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
+#  conf.gem :github => 'mattn/mruby-require'
 end
 
