@@ -1,7 +1,7 @@
 sudo: required
 before_install:
   - sudo apt-get update
-  - sudo apt-get install gperf
+  - sudo apt-get install gperf libpcre3-dev
 script:
   - export MRUBY_CONFIG=`pwd`/.travis_config.rb
   - SCINTILLA_FILE='scintilla365.tgz'
