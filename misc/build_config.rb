@@ -22,9 +22,13 @@ MRuby::Build.new do |conf|
   conf.gembox 'default'
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
+  conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem :github => 'mattn/mruby-pcre-regexp'
 #  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.gem :github => 'masahino/mruby-termkey' do |g|
+    g.download_libtermkey
+  end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
   end
@@ -94,7 +98,7 @@ MRuby::Build.new do |conf|
 
   # bintest
   # conf.enable_bintest
-  conf.enable_bintest
-  conf.enable_test
+#  conf.enable_bintest
+#  conf.enable_test
   conf.gem :github => 'mattn/mruby-require'
 end
