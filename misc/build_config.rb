@@ -1,3 +1,23 @@
+def gem_config(conf)
+  conf.gem :github => 'mattn/mruby-pcre-regexp'
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.gem :github => 'mattn/mruby-iconv' do |g|
+    if RUBY_PLATFORM.include?('linux')
+      g.linker.libraries.delete 'iconv'
+    end
+  end
+  conf.gem :github => 'masahino/mruby-termkey' do |g|
+    g.download_libtermkey
+  end
+  conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
+    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
+  end
+  conf.gem :github => 'masahino/mruby-scinterm' do |g|
+    g.download_scintilla
+  end
+  conf.gem "#{MRUBY_ROOT}/.."
+end
+
 MRuby::Build.new do |conf|
   # load specific toolchain settings
 
@@ -23,23 +43,7 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
-#  conf.gem :github => 'iij/mruby-regexp-pcre'
-  conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'masahino/mruby-termkey' do |g|
-    g.download_libtermkey
-  end
-  conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
-    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
-  end
-  conf.gem "#{MRUBY_ROOT}/.."
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/scinterm_1.8"
-  cc.include_paths << "/usr/local/include"
-  linker.library_paths << "/usr/local/lib"
-  linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
-
+  gem_config(conf)
   # conf.cc do |cc|
   #   cc.command = ENV['CC'] || 'gcc'
   #   cc.flags = [ENV['CFLAGS'] || %w()]
@@ -98,7 +102,22 @@ MRuby::Build.new do |conf|
 
   # bintest
   # conf.enable_bintest
-#  conf.enable_bintest
-#  conf.enable_test
   conf.gem :github => 'mattn/mruby-require'
+end
+
+MRuby::Build.new('test') do |conf|
+  # Gets set by the VS command prompts.
+  if ENV['VisualStudioVersion'] || ENV['VSINSTALLDIR']
+    toolchain :visualcpp
+  else
+    toolchain :gcc
+  end
+
+  enable_debug
+  conf.enable_cxx_abi
+
+  conf.gembox 'default'
+  gem_config(conf)
+  conf.enable_bintest
+  conf.enable_test
 end
