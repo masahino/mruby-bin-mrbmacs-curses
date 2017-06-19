@@ -1,7 +1,7 @@
 require 'fileutils'
 
 MRUBY_VERSION="1.2.0"
-APP_VERSION="0.0.1"
+APP_VERSION="0.1"
 
 file :mruby do
   sh "git clone --depth=1 https://github.com/mruby/mruby"
