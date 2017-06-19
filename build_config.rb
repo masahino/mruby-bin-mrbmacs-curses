@@ -153,3 +153,22 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
 #  conf.gem :github => 'mattn/mruby-require'
 end
 
+MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
+  toolchain :gcc
+
+  conf.enable_cxx_abi
+  [conf.cc, conf.linker].each do |cc|
+    cc.command = 'arm-linux-gnueabihf-gcc'
+  end
+  conf.cxx.command      = 'arm-linux-gnueabihf-g++'
+  conf.archiver.command = 'arm-linux-gnueabihf-ar'
+
+  conf.build_target     = 'x86-pc-linux-gnu'
+  conf.host_target      = 'arm-linux-gnueabihf'
+
+  gem_config(conf)
+  conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
+  conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.linker.libraries << 'stdc++'
+  conf.gem :github => 'mattn/mruby-require'
+end
