@@ -1,5 +1,5 @@
 def gem_config(conf)
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     if RUBY_PLATFORM.include?('linux')
@@ -29,7 +29,6 @@ MRuby::Build.new do |conf|
   end
 
   enable_debug
-  conf.enable_cxx_abi
 
   # Use mrbgems
   # conf.gem 'examples/mrbgems/ruby_extension_example'
@@ -71,6 +70,7 @@ MRuby::Build.new do |conf|
   #   linker.option_library_path = '-L%s'
   #   linker.link_options = "%{flags} -o %{outfile} %{objs} %{libs}"
   # end
+  conf.linker.libraries << "stdc++"
 
   # Archiver settings
   # conf.archiver do |archiver|
@@ -102,7 +102,7 @@ MRuby::Build.new do |conf|
 
   # bintest
   # conf.enable_bintest
-  conf.gem :github => 'mattn/mruby-require'
+  conf.gem :github => 'iij/mruby-require'
 end
 
 MRuby::Build.new('test') do |conf|
@@ -114,10 +114,10 @@ MRuby::Build.new('test') do |conf|
   end
 
   enable_debug
-  conf.enable_cxx_abi
 
   conf.gembox 'default'
   gem_config(conf)
+  conf.linker.libraries << "stdc++"
   conf.enable_bintest
   conf.enable_test
 end
