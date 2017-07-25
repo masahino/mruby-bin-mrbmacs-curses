@@ -10,7 +10,7 @@ script:
   - tar zxf $SCINTILLA_FILE
   - wget http://foicica.com/scinterm/download/${SCINTERM_VER}.zip
   - (cd scintilla; unzip ../${SCINTERM_VER}.zip)
-  - (cd scintilla/${SCINTERM_VER} ; make)
+  - (cd scintilla/${SCINTERM_VER} ; make CURSES_FLAGS="-DNO_CXX11_REGEX")
   - git clone https://github.com/mruby/mruby.git
   - (cd mruby; ./minirake)
   - (cd mruby; ./minirake test)
