@@ -21,6 +21,7 @@ MRuby::Build.new do |conf|
   conf.gembox 'default'
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
+  conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
