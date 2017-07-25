@@ -9,7 +9,6 @@ MRuby::Build.new do |conf|
   end
 
   enable_debug
-  conf.enable_cxx_abi
 
   # Use mrbgems
   # conf.gem 'examples/mrbgems/ruby_extension_example'
@@ -22,8 +21,7 @@ MRuby::Build.new do |conf|
   conf.gembox 'default'
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
-  conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
@@ -39,6 +37,7 @@ MRuby::Build.new do |conf|
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
   cc.include_paths << "#{MRUBY_ROOT}/../scintilla/scinterm_1.8"
   linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
+  conf.linker.libraries << "stdc++"
 
   # conf.cc do |cc|
   #   cc.command = ENV['CC'] || 'gcc'
@@ -97,8 +96,7 @@ MRuby::Build.new do |conf|
   # conf.file_separator = '/'
 
   # bintest
-  # conf.enable_bintest
-#  conf.enable_bintest
-#  conf.enable_test
+  conf.enable_bintest
+  conf.enable_test
   conf.gem :github => 'mattn/mruby-require'
 end
