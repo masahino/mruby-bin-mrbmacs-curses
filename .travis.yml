@@ -1,16 +1,16 @@
 sudo: required
 before_install:
   - sudo apt-get update
-  - sudo apt-get install gperf libpcre3-dev
+  - sudo apt-get install gperf
 script:
   - export MRUBY_CONFIG=`pwd`/.travis_config.rb
-  - SCINTILLA_FILE='scintilla365.tgz'
+  - SCINTILLA_FILE='scintilla373.tgz'
   - SCINTERM_VER='scinterm_1.8'
   - wget http://www.scintilla.org/$SCINTILLA_FILE
   - tar zxf $SCINTILLA_FILE
   - wget http://foicica.com/scinterm/download/${SCINTERM_VER}.zip
   - (cd scintilla; unzip ../${SCINTERM_VER}.zip)
-  - (cd scintilla/${SCINTERM_VER} ; make)
+  - (cd scintilla/${SCINTERM_VER} ; make CURSES_FLAGS="-DNO_CXX11_REGEX")
   - git clone https://github.com/mruby/mruby.git
   - (cd mruby; ./minirake)
   - (cd mruby; ./minirake test)

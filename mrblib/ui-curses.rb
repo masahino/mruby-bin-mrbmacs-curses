@@ -137,6 +137,13 @@ module Mrbmacs
       modeline(app)
     end
 
+    def echo_puts(text)
+      @echo_win.sci_clear_all
+      echo_set_prompt("[Message]")
+      @echo_win.sci_add_text(text.length, text)
+      @echo_win.refresh
+    end
+
     def echo_gets(prompt, text = "", &block)
       @view_win.sci_set_focus(false)
       @view_win.refresh
