@@ -132,6 +132,11 @@ module Mrbmacs
       @mode_win.refresh
     end
 
+    def modeline_refresh(app)
+      @mode_win.clear()
+      modeline(app)
+    end
+
     def echo_gets(prompt, text = "", &block)
       @view_win.sci_set_focus(false)
       @view_win.refresh
