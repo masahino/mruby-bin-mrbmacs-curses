@@ -14,7 +14,7 @@ RUN mkdir /tmp/i686 && cd /tmp/i686 \
   && make install
 RUN cd /tmp/i686 \
   && tar zxf ../PDCurses-3.4.tar.gz && cd PDCurses-3.4/win32 \
-  && make -f mingwin32.mak CC=i686-w64-mingw32-gcc LINK=i686-w64-mingw32-gcc LIBCURSES=libcurses.a \
+  && make -f mingwin32.mak CC=i686-w64-mingw32-gcc LINK=i686-w64-mingw32-gcc LIBCURSES=libcurses.a WIDE=Y UTF8=Y \
   && cp ../curses.h /usr/i686-w64-mingw32/include \
   && cp ../term.h /usr/i686-w64-mingw32/include \
   && cp libcurses.a /usr/i686-w64-mingw32/lib

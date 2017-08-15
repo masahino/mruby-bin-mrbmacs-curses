@@ -3,7 +3,7 @@ def gem_config(conf)
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
-  conf.gem :github => 'masahino/mruby-file-stat', :branch => 'cross_compile'
+  conf.gem :github => 'ksss/mruby-file-stat'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
   end
@@ -16,33 +16,30 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
-
+  conf.gem :github => 'iij/mruby-require'
   conf.gem File.expand_path(File.dirname(__FILE__))
-  conf.gem :github => 'mattn/mruby-pcre-regexp'
 end
 
 MRuby::Build.new do |conf|
   toolchain :clang
 
   conf.enable_debug
-  conf.enable_cxx_abi
-
 
   gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.linker.libraries << "stdc++"
   conf.enable_bintest
 #  conf.enable_test
-  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
   toolchain :gcc
 
-  conf.enable_cxx_abi
-
   gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'mattn/mruby-require'
+  conf.linker.libraries << "stdc++"
 end
 
 #MRuby::CrossBuild.new('i386-pc-linux-gnu') do |conf|
@@ -63,7 +60,6 @@ end
 MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   toolchain :clang
 
-  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'x86_64-apple-darwin14-clang'
   end
@@ -75,12 +71,9 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
 
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
-  conf.gem :github => 'masahino/mruby-iconv', :branch => 'add_iconvlist' do |g|
-    g.cc.flags << '-DHAVE_ICONVLIST'
-  end
   gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
-  conf.gem :github => 'mattn/mruby-require'
 end
 
 #MRuby::CrossBuild.new('i386-apple-darwin14') do |conf|
@@ -106,7 +99,6 @@ end
 MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   toolchain :gcc
 
-  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'i686-w64-mingw32-gcc'
   end
@@ -117,21 +109,19 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.build_target     = 'i686-pc-linux-gnu'
   conf.host_target      = 'i686-w64-mingw32'
 
-  conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
+  gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
-  gem_config(conf)
   conf.cc.include_paths << '/usr/i686-w64-mingw32/include/ncurses'
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
-#  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   toolchain :gcc
 
-  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'x86_64-w64-mingw32-gcc'
   end
@@ -142,21 +132,19 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.build_target     = 'x86-pc-linux-gnu'
   conf.host_target      = 'x86_64-w64-mingw32'
 
-  conf.gem :github => 'mattn/mruby-pcre-regexp' do |g|
+  gem_config(conf)
+  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
     g.cc.flags << '-DPCRE_STATIC'
   end
-  gem_config(conf)
   conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
-#  conf.gem :github => 'mattn/mruby-require'
 end
 
 MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
   toolchain :gcc
 
-  conf.enable_cxx_abi
   [conf.cc, conf.linker].each do |cc|
     cc.command = 'arm-linux-gnueabihf-gcc'
   end
@@ -167,8 +155,8 @@ MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
   conf.host_target      = 'arm-linux-gnueabihf'
 
   gem_config(conf)
-  conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
+  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
+  conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
   conf.linker.libraries << 'stdc++'
-  conf.gem :github => 'mattn/mruby-require'
 end
