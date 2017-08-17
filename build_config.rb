@@ -3,7 +3,7 @@ def gem_config(conf)
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
-  conf.gem :github => 'ksss/mruby-file-stat'
+  conf.gem :github => 'masahino/mruby-file-stat', :branch => 'cross_build'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
   end
