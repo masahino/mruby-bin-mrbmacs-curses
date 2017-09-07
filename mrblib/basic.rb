@@ -13,6 +13,7 @@ module Mrbmacs
       echo_win = @frame.echo_win
 
       start_pos = view_win.sci_get_current_pos
+      orig_pos = start_pos
       end_pos = backward == false ? view_win.sci_get_length : 0
       echo_win.sci_clear_all
       @frame.echo_set_prompt(prompt)
@@ -42,6 +43,9 @@ module Mrbmacs
           else
             next
           end
+        elsif key_str == "C-g"
+          view_win.sci_goto_pos(orig_pos)
+          break
         elsif (key.modifiers & TermKey::KEYMOD_CTRL > 0) or (key.modifiers & TermKey::KEYMOD_ALT > 0)
           break
         else
@@ -56,6 +60,12 @@ module Mrbmacs
             view_win.sci_set_target_start(start_pos)
           end
           view_win.sci_set_target_end(end_pos)
+        else
+          if backward == true
+            view_win.sci_goto_pos(view_win.sci_get_length)
+          else
+            view_win.sci_goto_pos(0)
+          end
         end
         view_win.refresh
       end
