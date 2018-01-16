@@ -3,8 +3,9 @@ module Mrbmacs
   class Frame
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :char_added
+    attr_accessor :edit_win
 
-    def initialize()
+    def initialize(buffer)
       print "\033[?1000h" # enable mouse
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
@@ -29,9 +30,37 @@ module Mrbmacs
                   Scintilla::SCK_NEXT,
                   Scintilla::SCK_HOME,
                   Scintilla::SCK_END]
+      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses::cols, Curses::lines-2)
+      @view_win = @edit_win.sci
+      @mode_win = Curses::Window.new(1, Curses::cols, Curses::lines-2, 0)
+      @mode_win.bkgd(Curses::A_REVERSE)
+      @mode_win.refresh
+      @echo_win = new_echowin
 
+      @char_added = false
+    end
 
-      @view_win = ScinTerm.new do |msg|
+    def new_echowin
+      echo_win = ScinTerm.new do |msg|
+#        $stderr.puts "echo win callback #{msg}"
+      end
+      echo_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
+      echo_win.resize_window(1, Curses::cols)
+      echo_win.move_window(Curses::lines-1, 0)
+      echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_WHITE)
+      echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
+      echo_win.sci_style_clear_all()
+      echo_win.sci_set_focus(false)
+      echo_win.sci_auto_cset_choose_single(1)
+      echo_win.sci_auto_cset_auto_hide(false)
+      echo_win.sci_set_margin_typen(3, 4)
+      echo_win.refresh
+
+      return echo_win
+    end
+
+    def new_viewwin
+      view_win = ScinTerm.new do |msg|
         if msg == Scintilla::SCN_CHARADDED
           @char_added = true
         end
@@ -45,41 +74,22 @@ module Mrbmacs
 #          end
 #        end
       end
-      @view_win.resize_window(Curses::lines - 2, Curses::cols)
+      view_win.resize_window(Curses::lines - 2, Curses::cols)
 
-      @view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
+      view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
 
-      @view_win.sci_set_margin_widthn(0, @view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      @view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
-      @view_win.sci_set_margin_widthn(1, 1)
-      @view_win.sci_set_margin_typen(1, 0)
-      @view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
+      view_win.sci_set_margin_widthn(0, view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
+      view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
+      view_win.sci_set_margin_widthn(1, 1)
+      view_win.sci_set_margin_typen(1, 0)
+      view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
 
-      @view_win.sci_set_marginsensitiven(1, 1)
-      @view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+      view_win.sci_set_marginsensitiven(1, 1)
+      view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
 #      $stderr.puts @view_win.sci_get_automatic_fold
-      @view_win.sci_set_focus(true)
-      @view_win.refresh
-
-      @mode_win = Curses::Window.new(1, Curses::cols, Curses::lines-2, 0)
-      @mode_win.bkgd(Curses::A_REVERSE)
-      @mode_win.refresh 
-      @echo_win = ScinTerm.new do |msg|
-#        $stderr.puts "echo win callback #{msg}"
-      end
-      @echo_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
-      @echo_win.resize_window(1, Curses::cols)
-      @echo_win.move_window(Curses::lines-1, 0)
-      @echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_WHITE)
-      @echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
-      @echo_win.sci_style_clear_all()
-      @echo_win.sci_set_focus(false)
-      @echo_win.sci_auto_cset_choose_single(1)
-      @echo_win.sci_auto_cset_auto_hide(false)
-      @echo_win.sci_set_margin_typen(3, 4)
-      @echo_win.refresh
-
-      @char_added = false
+      view_win.sci_set_focus(true)
+      view_win.refresh
+      return view_win
     end
 
     def waitkey(win)
