@@ -1,9 +1,7 @@
 # coding: utf-8
 module Mrbmacs
   class EditWindow
-    attr_accessor :sci, :frame
-    attr_accessor :buffer, :x1, :y1, :width, :height
-    def initialize(frame, buffer, x1, y1, width, height)
+     def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
       @sci = Scintilla::ScinTerm.new do |msg|
         if msg == Scintilla::SCN_CHARADDED
@@ -16,10 +14,12 @@ module Mrbmacs
       @buffer = buffer
       @x1 = x1
       @y1 = y1
+      @x2 = x1 + width
+      @y2 = y1 + height
       @width = width
       @height = height
-      @sci.resize_window(height, width)
-      @sci.move_window(x1, y1)
+      @sci.resize_window(@height - 1, @width)
+      @sci.move_window(@y1, @x1)
 
       @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
 
@@ -33,6 +33,25 @@ module Mrbmacs
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
       @sci.sci_set_focus(true)
       @sci.refresh
+
+      set_buffer(buffer)
+      @modeline = Curses::Window.new(1, width, y1 + height - 1, 0)
+      @modeline.bkgd(Curses::A_REVERSE)
+      @modeline.refresh
+    end
+
+    def compute_area
+#      @modeline.move(1, @width, @y2-1, 0)
+      @modeline.mvwin(@y2-1, @x1)
+      @modeline.refresh
+    end
+
+    def refresh
+      @width = @x2 - @x1
+      @height = @y2 - @y1
+      @sci.resize_window(@height - 1, @width)
+      @sci.refresh
+      @modeline.refresh
     end
   end
 end

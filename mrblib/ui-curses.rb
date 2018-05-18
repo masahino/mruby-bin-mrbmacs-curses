@@ -3,7 +3,8 @@ module Mrbmacs
   class Frame
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :char_added
-    attr_accessor :edit_win
+    attr_accessor :edit_win, :mode_win
+    attr_accessor :edit_win_list
 
     def initialize(buffer)
       print "\033[?1000h" # enable mouse
@@ -30,12 +31,11 @@ module Mrbmacs
                   Scintilla::SCK_NEXT,
                   Scintilla::SCK_HOME,
                   Scintilla::SCK_END]
-      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses::cols, Curses::lines-2)
+      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses::cols, Curses::lines-1)
       @view_win = @edit_win.sci
-      @mode_win = Curses::Window.new(1, Curses::cols, Curses::lines-2, 0)
-      @mode_win.bkgd(Curses::A_REVERSE)
-      @mode_win.refresh
+      @mode_win = @edit_win.modeline
       @echo_win = new_echowin
+      @edit_win_list = [@edit_win]
 
       @char_added = false
     end
