@@ -30,14 +30,20 @@ MRuby::Build.new do |conf|
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
+  conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
+    g.download_scintilla
+  end
+  conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
+    g.download_scintilla
+  end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
-    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
+    g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
   conf.gem "#{MRUBY_ROOT}/.."
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
-  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/scinterm_1.8"
-  linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
+#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
+#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
+#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/curses"
+#  linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
   conf.linker.libraries << "stdc++"
 
   # conf.cc do |cc|

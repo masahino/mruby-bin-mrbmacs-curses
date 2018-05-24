@@ -12,7 +12,10 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
   end
-  conf.gem :github => 'masahino/mruby-scinterm' do |g|
+  conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
+    g.download_scintilla
+  end
+  conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
     g.download_scintilla
   end
   conf.gem "#{MRUBY_ROOT}/.."

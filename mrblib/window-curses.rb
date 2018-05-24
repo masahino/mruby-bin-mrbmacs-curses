@@ -3,7 +3,7 @@ module Mrbmacs
   class EditWindow
      def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
-      @sci = Scintilla::ScinTerm.new do |msg|
+      @sci = Scintilla::ScintillaCurses.new do |msg|
         if msg == Scintilla::SCN_CHARADDED
           @frame.char_added = true
         end
@@ -35,9 +35,9 @@ module Mrbmacs
       @sci.refresh
 
       set_buffer(buffer)
-      @modeline = Curses::Window.new(1, width, y1 + height - 1, 0)
-      @modeline.bkgd(Curses::A_REVERSE)
-      @modeline.refresh
+      @modeline = Curses.newwin(1, width, y1 + height - 1, 0)
+      Curses.wbkgd(@modeline, Curses::A_REVERSE)
+      Curses.wrefresh(@modeline)
     end
 
     def compute_area

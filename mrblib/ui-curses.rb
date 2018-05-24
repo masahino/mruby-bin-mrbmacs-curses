@@ -31,7 +31,7 @@ module Mrbmacs
                   Scintilla::SCK_NEXT,
                   Scintilla::SCK_HOME,
                   Scintilla::SCK_END]
-      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses::cols, Curses::lines-1)
+      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses.COLS, Curses.LINES-1)
       @view_win = @edit_win.sci
       @mode_win = @edit_win.modeline
       @echo_win = new_echowin
@@ -41,12 +41,12 @@ module Mrbmacs
     end
 
     def new_echowin
-      echo_win = ScinTerm.new do |msg|
+      echo_win = ScintillaCurses.new do |msg|
 #        $stderr.puts "echo win callback #{msg}"
       end
       echo_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
-      echo_win.resize_window(1, Curses::cols)
-      echo_win.move_window(Curses::lines-1, 0)
+      echo_win.resize_window(1, Curses.COLS)
+      echo_win.move_window(Curses.LINES-1, 0)
       echo_win.sci_style_set_fore(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_WHITE)
       echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
       echo_win.sci_style_clear_all()
@@ -136,13 +136,13 @@ module Mrbmacs
 
     def modeline(app)
 #      @mode_win.clear()
-      @mode_win.move(0, 0)
-      @mode_win.addstr(get_mode_str(app))
-      @mode_win.refresh
+      Curses.wmove(@mode_win, 0, 0)
+      Curses.waddstr(@mode_win, get_mode_str(app))
+      Curses.wrefresh(@mode_win)
     end
 
     def modeline_refresh(app)
-      @mode_win.clear()
+      Curses.wclear(@mode_win)
       modeline(app)
     end
 
@@ -205,7 +205,7 @@ module Mrbmacs
 #              end
               @echo_win.sci_autoc_cancel
               @view_win.refresh
-              @mode_win.refresh
+              Curses.wrefresh(@mode_win)
               @echo_win.sci_autoc_show(len, comp_list)
             end
           else
