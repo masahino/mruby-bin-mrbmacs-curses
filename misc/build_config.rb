@@ -6,6 +6,7 @@ def gem_config(conf)
       g.linker.libraries.delete 'iconv'
     end
   end
+  conf.gem :github => 'jbreeden/mruby-curses'
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
