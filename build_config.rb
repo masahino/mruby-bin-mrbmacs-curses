@@ -8,7 +8,7 @@ def gem_config(conf)
     g.linker.libraries.delete 'iconv'
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
-    g.add_test_dependency 'mruby-scinterm',  :github => 'masahino/mruby-scinterm'
+    g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
   conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
     g.download_scintilla
