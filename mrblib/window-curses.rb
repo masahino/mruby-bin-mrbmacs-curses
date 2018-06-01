@@ -42,8 +42,8 @@ module Mrbmacs
 
     def compute_area
 #      @modeline.move(1, @width, @y2-1, 0)
-      @modeline.mvwin(@y2-1, @x1)
-      @modeline.refresh
+      Curses.mvwin(@modeline, @y2-1, @x1)
+      Curses.refresh(@modeline)
     end
 
     def refresh
@@ -51,7 +51,7 @@ module Mrbmacs
       @height = @y2 - @y1
       @sci.resize_window(@height - 1, @width)
       @sci.refresh
-      @modeline.refresh
+      Curses.refresh(@modeline)
     end
   end
 end
