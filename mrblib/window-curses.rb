@@ -8,7 +8,7 @@ module Mrbmacs
           @frame.char_added = true
         end
         if $DEBUG
-          $stderr.puts "sci callback #{msg}"
+          $stderr.puts "sci(#{@sci}) callback #{msg}"
         end
       end
       @buffer = buffer
@@ -52,6 +52,21 @@ module Mrbmacs
       @sci.resize_window(@height - 1, @width)
       @sci.refresh
       Curses.refresh(@modeline)
+    end
+
+    def focus_in()
+      @sci.sci_set_focus(true)
+      Curses.wbkgd(@modeline,
+        Curses.color_pair(Scintilla::ScintillaCurses.color_pair(0, 15)))
+      @sci.refresh
+    end
+
+    def focus_out()
+      @sci.sci_set_focus(false)
+      @sci.refresh
+      Curses.wbkgd(@modeline,
+        Curses.color_pair(Scintilla::ScintillaCurses.color_pair(15, 10)))
+      Curses.wrefresh(@modeline)
     end
   end
 end

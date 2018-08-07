@@ -92,6 +92,23 @@ module Mrbmacs
       return view_win
     end
 
+    def switch_window(new_win)
+      @edit_win.focus_out()
+      @edit_win = new_win
+      @view_win = new_win.sci
+      @mode_win = new_win.modeline
+      new_win.focus_in()
+    end
+
+    def get_edit_win_from_pos(line, col)
+      @edit_win_list.each do |w|
+        if line >= w.y1 and line <= w.y2 and col >= w.x1 and col <= w.x2
+          return w
+        end
+      end
+      return nil
+    end
+
     def waitkey(win)
       if Scintilla::PLATFORM == :CURSES_WIN32
         @tk.set_fd(win.get_window)
@@ -116,6 +133,11 @@ module Mrbmacs
         ev, button, line, col = @tk.interpret_mouse(key)
         time = Time.now
         millis = (time.to_i * 1000 + time.usec/1000).to_i
+        tmp_win = get_edit_win_from_pos(line, col)
+        if tmp_win.sci != win and tmp_win != nil
+          switch_window(tmp_win)
+          win = tmp_win.sci
+        end
         if $DEBUG
           $stderr.puts "ev = #{ev}, millis = #{millis}, button = #{button}, line = #{line-1}, col = #{col-1}"
           $stderr.puts "shift = #{mod_shift}, ctrl = #{mod_ctrl}, alt = #{mod_alt}"
@@ -134,11 +156,11 @@ module Mrbmacs
       end
     end
 
-    def modeline(app)
+    def modeline(app, win = @mode_win)
 #      @mode_win.clear()
-      Curses.wmove(@mode_win, 0, 0)
-      Curses.waddstr(@mode_win, get_mode_str(app))
-      Curses.wrefresh(@mode_win)
+      Curses.wmove(win, 0, 0)
+      Curses.waddstr(win, get_mode_str(app))
+      Curses.wrefresh(win)
     end
 
     def modeline_refresh(app)
