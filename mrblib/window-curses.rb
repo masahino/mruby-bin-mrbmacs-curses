@@ -40,10 +40,16 @@ module Mrbmacs
       Curses.wrefresh(@modeline)
     end
 
+    def delete
+      @sci.delete
+      Curses.delwin(@modeline)
+    end
+
     def compute_area
       @width = @x2 - @x1
       @height = @y2 - @y1
       @sci.resize_window(@height - 1, @width)
+      @sci.move_window(@y1, @x1)
       Curses.wresize(@modeline, 1, @width)
       Curses.mvwin(@modeline, @y2-1, @x1)
      end
