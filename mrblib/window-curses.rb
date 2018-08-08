@@ -35,21 +35,20 @@ module Mrbmacs
       @sci.refresh
 
       set_buffer(buffer)
-      @modeline = Curses.newwin(1, width, y1 + height - 1, 0)
+      @modeline = Curses.newwin(1, width, y1 + height - 1, x1)
       Curses.wbkgd(@modeline, Curses::A_REVERSE)
       Curses.wrefresh(@modeline)
     end
 
     def compute_area
-#      @modeline.move(1, @width, @y2-1, 0)
-      Curses.mvwin(@modeline, @y2-1, @x1)
-      Curses.refresh(@modeline)
-    end
-
-    def refresh
       @width = @x2 - @x1
       @height = @y2 - @y1
       @sci.resize_window(@height - 1, @width)
+      Curses.wresize(@modeline, 1, @width)
+      Curses.mvwin(@modeline, @y2-1, @x1)
+     end
+
+    def refresh
       @sci.refresh
       Curses.refresh(@modeline)
     end
