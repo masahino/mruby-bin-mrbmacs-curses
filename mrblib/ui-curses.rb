@@ -51,8 +51,8 @@ module Mrbmacs
       echo_win.sci_style_set_back(Scintilla::STYLE_DEFAULT, Scintilla::COLOR_BLACK)
       echo_win.sci_style_clear_all()
       echo_win.sci_set_focus(false)
-      echo_win.sci_auto_cset_choose_single(1)
-      echo_win.sci_auto_cset_auto_hide(false)
+      echo_win.sci_autoc_set_choose_single(1)
+      echo_win.sci_autoc_set_auto_hide(false)
       echo_win.sci_set_margin_typen(3, 4)
       echo_win.refresh
 
@@ -90,6 +90,21 @@ module Mrbmacs
       view_win.sci_set_focus(true)
       view_win.refresh
       return view_win
+    end
+
+    def delete_other_window
+      @edit_win_list.each do |w|
+        if w != @edit_win
+          w.delete
+        end
+      end
+      @edit_win_list.delete_if { |w| w != @edit_win }
+      @edit_win.x1 = 0
+      @edit_win.x2 = Curses.COLS
+      @edit_win.y1 = 0
+      @edit_win.y2 = Curses.LINES-1
+      @edit_win.compute_area
+      @edit_win.refresh
     end
 
     def switch_window(new_win)
@@ -213,7 +228,7 @@ module Mrbmacs
 #            @echo_win.sci_autoc_cancel
 #            @view_win.refresh
 #            @mode_win.refresh
-            send_key(key, echo_win)
+            send_key(key, @echo_win)
           end
         when TermKey::SYM_TAB
           if @echo_win.sci_autoc_active == 0
@@ -231,10 +246,10 @@ module Mrbmacs
               @echo_win.sci_autoc_show(len, comp_list)
             end
           else
-            send_key(key, echo_win)
+            send_key(key, @echo_win)
           end
         else
-          send_key(key, echo_win)
+          send_key(key, @echo_win)
         end
         @echo_win.refresh
       end
@@ -267,6 +282,8 @@ module Mrbmacs
       echo_set_prompt("")
       if key_str == "Y" or key_str == "y"
         return true
+      elsif key_str == "C-g"
+        return false
       else
         return false
       end
