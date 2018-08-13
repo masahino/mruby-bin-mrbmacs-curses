@@ -15,8 +15,12 @@ module Mrbmacs
         if query == true
           @frame.view_win.sci_set_sel(@frame.view_win.sci_get_target_start, @frame.view_win.sci_get_target_end)
           @frame.view_win.refresh
-          if @frame.y_or_n("Query replacing #{str} with #{newstr}:") == true
+          case @frame.y_or_n("Query replacing #{str} with #{newstr}:")
+          when true
             @frame.view_win.sci_replace_target(newstr.length, newstr)
+          when false # cancel
+            @frame.echo_puts("Quit")
+            break
           end
           @frame.view_win.refresh
         else
