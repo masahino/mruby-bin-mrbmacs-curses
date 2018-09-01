@@ -211,6 +211,7 @@ module Mrbmacs
         end
         if key_str == "C-k"
           @echo_win.send_message(SCI_DELLINERIGHT)
+          echo_set_prompt(prompt)
           @echo_win.refresh
           next
         end
