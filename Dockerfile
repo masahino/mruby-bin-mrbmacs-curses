@@ -17,6 +17,7 @@ RUN cd /tmp/i686 \
   && make -f mingwin32.mak CC=i686-w64-mingw32-gcc LINK=i686-w64-mingw32-gcc LIBCURSES=libcurses.a WIDE=Y UTF8=Y \
   && cp ../curses.h /usr/i686-w64-mingw32/include \
   && cp ../term.h /usr/i686-w64-mingw32/include \
+  && cp ../panel.h /usr/i686-w64-mingw32/include \
   && cp libcurses.a /usr/i686-w64-mingw32/lib
 RUN cd /tmp/i686 \
   && tar jxf ../pcre-8.39.tar.bz2 && cd pcre-8.39 \
@@ -38,6 +39,7 @@ RUN cd /tmp/x86_64 \
   && make -f mingwin32.mak CC=x86_64-w64-mingw32-gcc LINK=x86_64-w64-mingw32-gcc LIBCURSES=libcurses.a \
   && cp ../curses.h /usr/x86_64-w64-mingw32/include \
   && cp ../term.h /usr/x86_64-w64-mingw32/include \
+  && cp ../panel.h /usr/x86_64-w64-mingw32/include \
   && cp libcurses.a /usr/x86_64-w64-mingw32/lib
 RUN cd /tmp/x86_64 \
   && tar jxf ../pcre-8.39.tar.bz2 && cd pcre-8.39 \

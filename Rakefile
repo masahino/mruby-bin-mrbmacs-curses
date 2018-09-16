@@ -1,11 +1,11 @@
 require 'fileutils'
 
-MRUBY_VERSION="1.2.0"
+MRUBY_VERSION="1.4.0"
 APP_VERSION="0.1"
 
 file :mruby do
   sh "git clone --depth=1 https://github.com/mruby/mruby"
-  #sh "curl -L --fail --retry 3 --retry-delay 1 https://github.com/mruby/mruby/archive/1.2.0.tar.gz -s -o - | tar zxf -"
+  #sh "curl -L --fail --retry 3 --retry-delay 1 https://github.com/mruby/mruby/archive/1.4.0.tar.gz -s -o - | tar zxf -"
   #FileUtils.mv("mruby-1.2.0", "mruby")
 end
 
