@@ -106,7 +106,7 @@ MRuby::Build.new do |conf|
 
   # bintest
   # conf.enable_bintest
-  conf.gem :github => 'masahino/mruby-require', :branch => 'latest_mruby'
+  conf.gem :github => 'iij/mruby-require'
 end
 
 MRuby::Build.new('test') do |conf|

@@ -16,7 +16,7 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
-  conf.gem :github => 'masahino/mruby-require', :branch => 'latest_mruby'
+  conf.gem :github => 'iij/mruby-require'
   conf.gem File.expand_path(File.dirname(__FILE__))
 end
 
