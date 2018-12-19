@@ -23,7 +23,7 @@ module Mrbmacs
       search_text = ""
       while true
         ret, key = @frame.waitkey(echo_win)
-        key_str = @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+        key_str = @frame.strfkey(key)
         if key_str == "C-s"
           if search_text != ""
             backward = false
@@ -46,7 +46,8 @@ module Mrbmacs
         elsif key_str == "C-g"
           view_win.sci_goto_pos(orig_pos)
           break
-        elsif (key.modifiers & TermKey::KEYMOD_CTRL > 0) or (key.modifiers & TermKey::KEYMOD_ALT > 0)
+        elsif key_str =~ /^[CM]-/
+    #    elsif (key.modifiers & TermKey::KEYMOD_CTRL > 0) or (key.modifiers & TermKey::KEYMOD_ALT > 0)
           break
         else
           @frame.send_key(key, echo_win)

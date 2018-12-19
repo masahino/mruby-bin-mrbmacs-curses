@@ -131,6 +131,10 @@ module Mrbmacs
       @tk.waitkey
     end
 
+    def strfkey(key)
+      @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+    end
+
     def send_key(key, win = nil)
       if win == nil
         win = @view_win
@@ -202,6 +206,9 @@ module Mrbmacs
       input_text = nil
       while true
         ret, key = waitkey(@echo_win)
+        if ret != TermKey::RES_KEY
+          break
+        end
         key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
         if key_str == "C-g"
           @echo_win.sci_clear_all

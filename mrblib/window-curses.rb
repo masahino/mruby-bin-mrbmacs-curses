@@ -3,12 +3,12 @@ module Mrbmacs
   class EditWindow
      def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
-      @sci = Scintilla::ScintillaCurses.new do |msg|
-        if msg == Scintilla::SCN_CHARADDED
+      @sci = Scintilla::ScintillaCurses.new do |scn|
+        if scn['code'] == Scintilla::SCN_CHARADDED
           @frame.char_added = true
         end
         if $DEBUG
-          $stderr.puts "sci(#{@sci}) callback #{msg}"
+          $stderr.puts "sci(#{@sci}) callback #{scn['code']}"
         end
       end
       @buffer = buffer
@@ -20,7 +20,6 @@ module Mrbmacs
       @height = height
       @sci.resize_window(@height - 1, @width)
       @sci.move_window(@y1, @x1)
-
       @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
 
       @sci.sci_set_margin_widthn(0, @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
