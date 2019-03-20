@@ -3,6 +3,7 @@ def gem_config(conf)
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
+  conf.gem :github => 'fastly/mruby-optparse'
   conf.gem :github => 'masahino/mruby-file-stat', :branch => 'cross_build'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
@@ -16,8 +17,11 @@ def gem_config(conf)
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
+  conf.gem :github => 'fastly/mruby-optparse'
   conf.gem :github => 'iij/mruby-require'
   conf.gem File.expand_path(File.dirname(__FILE__))
+
+  conf.cc.defines = %w(MRB_ENABLE_ALL_SYMBOLS)
 end
 
 MRuby::Build.new do |conf|
@@ -26,7 +30,7 @@ MRuby::Build.new do |conf|
   conf.enable_debug
 
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.linker.libraries << "stdc++"
   conf.enable_bintest
@@ -37,7 +41,7 @@ MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
   toolchain :gcc
 
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.linker.libraries << "stdc++"
 end
@@ -72,7 +76,7 @@ MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
   conf.linker.libraries << 'iconv'
   conf.linker.libraries << 'stdc++'
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
 end
 
@@ -110,9 +114,10 @@ MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
   conf.host_target      = 'i686-w64-mingw32'
 
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
-    g.cc.flags << '-DPCRE_STATIC'
-  end
+  conf.gem :github => 'mattn/mruby-onig-regexp'
+#  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+#    g.cc.flags << '-DPCRE_STATIC'
+#  end
   conf.cc.include_paths << '/usr/i686-w64-mingw32/include/ncurses'
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
@@ -155,7 +160,7 @@ MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
   conf.host_target      = 'arm-linux-gnueabihf'
 
   gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
   conf.linker.libraries << 'stdc++'

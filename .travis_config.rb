@@ -10,6 +10,8 @@ MRuby::Build.new do |conf|
 
   enable_debug
 
+  conf.cc.defines = %w(MRB_ENABLE_ALL_SYMBOLS)
+
   # Use mrbgems
   # conf.gem 'examples/mrbgems/ruby_extension_example'
   # conf.gem 'examples/mrbgems/c_extension_example' do |g|
@@ -22,6 +24,7 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
+  conf.gem :github => 'fastly/mruby-optparse'
   conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|

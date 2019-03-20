@@ -1,5 +1,6 @@
 def gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre'
+  conf.gem :github => 'fastly/mruby-optparse'
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     if RUBY_PLATFORM.include?('linux')
@@ -20,6 +21,8 @@ def gem_config(conf)
     g.download_scintilla
   end
   conf.gem "#{MRUBY_ROOT}/.."
+
+  conf.cc.defines = %w(MRB_ENABLE_ALL_SYMBOLS)
 end
 
 MRuby::Build.new do |conf|
