@@ -254,7 +254,15 @@ module Mrbmacs
               @echo_win.sci_autoc_show(len, comp_list)
             end
           else
-            send_key(key, @echo_win)
+            if @echo_win.sci_autoc_active == 1
+              current = @echo_win.sci_autoc_get_current
+              @echo_win.sci_linedown
+              if current == @echo_win.sci_autoc_get_current
+                @echo_win.sci_vchome
+              end
+            else
+              send_key(key, @echo_win)
+            end
           end
         else
           send_key(key, @echo_win)

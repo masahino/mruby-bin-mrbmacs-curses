@@ -48,7 +48,7 @@ module Mrbmacs
           # autocomp
           if @frame.view_win.sci_autoc_active == 0 and @frame.char_added == true
             len, candidates = @current_buffer.mode.get_completion_list(@frame.view_win)
-            if len > 0
+            if len > 0 and candidates.length > 0
               @frame.view_win.sci_autoc_show(len, candidates)
             end
             @frame.char_added = false
