@@ -24,8 +24,8 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
+  conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'fastly/mruby-optparse'
-  conf.gem :github => 'iij/mruby-regexp-pcre'
   conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv'
