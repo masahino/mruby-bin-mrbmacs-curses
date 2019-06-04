@@ -31,12 +31,12 @@ module Mrbmacs
                   Scintilla::SCK_NEXT,
                   Scintilla::SCK_HOME,
                   Scintilla::SCK_END]
+      @sci_notifications = []
       @edit_win = EditWindow.new(self, buffer, 0, 0, Curses.COLS, Curses.LINES-1)
       @view_win = @edit_win.sci
       @mode_win = @edit_win.modeline
       @echo_win = new_echowin
       @edit_win_list = [@edit_win]
-
       @char_added = false
     end
 

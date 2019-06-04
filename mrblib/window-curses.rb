@@ -4,6 +4,7 @@ module Mrbmacs
      def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
       @sci = Scintilla::ScintillaCurses.new do |scn|
+        @frame.sci_notifications.push(scn)
         if scn['code'] == Scintilla::SCN_CHARADDED
           @frame.char_added = true
         end
@@ -30,6 +31,8 @@ module Mrbmacs
 
       @sci.sci_set_marginsensitiven(1, 1)
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
+
+      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
       @sci.sci_set_focus(true)
       @sci.refresh
 
