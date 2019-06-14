@@ -28,3 +28,6 @@ $ git clone https://github.com/masahino/mruby-bin-mrbmacs-curses
 $ cd mruby-bin-mrbmacs-curses
 $ ./build.sh
 ```
+## Related Project
+
++ [mrbmacs-gtk](https://github.com/masahino/mruby-bin-mrbmacs-gtk/)
