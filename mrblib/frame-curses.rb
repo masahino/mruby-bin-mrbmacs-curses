@@ -204,6 +204,7 @@ module Mrbmacs
       @echo_win.sci_add_text(prefix_text.length, prefix_text)
       @echo_win.refresh
       input_text = nil
+      last_input = nil
       while true
         ret, key = waitkey(@echo_win)
         if ret != TermKey::RES_KEY
@@ -229,39 +230,23 @@ module Mrbmacs
             input_text = @echo_win.sci_get_line(0)
             break
           else
-#            cur_text = @echo_win.sci_autoc_get_current_text()
-#            if cur_text != nil
-#              @echo_win.sci_add_text(cur_text.length, cur_text)
-#            end
-#            @echo_win.sci_autoc_cancel
-#            @view_win.refresh
-#            @mode_win.refresh
             send_key(key, @echo_win)
           end
         when TermKey::SYM_TAB
-          if @echo_win.sci_autoc_active == 0
-            input_text = @echo_win.sci_get_line(0)
+          input_text = @echo_win.sci_get_line(0)
+          if input_text != last_input or @echo_win.sci_autoc_active == 0
             if block != nil
               comp_list, len = block.call(input_text)
-#              len = input_text.length - text.length
-#              if len < 0
-#                len = input_text.length
-#                len = 0
-#              end
               @echo_win.sci_autoc_cancel
               @view_win.refresh
               Curses.wrefresh(@mode_win)
               @echo_win.sci_autoc_show(len, comp_list)
             end
           else
-            if @echo_win.sci_autoc_active == 1
-              current = @echo_win.sci_autoc_get_current
-              @echo_win.sci_linedown
-              if current == @echo_win.sci_autoc_get_current
-                @echo_win.sci_vchome
-              end
-            else
-              send_key(key, @echo_win)
+            current = @echo_win.sci_autoc_get_current
+            @echo_win.sci_linedown
+            if current == @echo_win.sci_autoc_get_current
+              @echo_win.sci_vchome
             end
           end
         else
