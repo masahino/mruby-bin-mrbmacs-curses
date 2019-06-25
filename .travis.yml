@@ -1,4 +1,7 @@
 sudo: required
+env:
+  global:
+    - TMPDIR=/tmp
 before_install:
   - sudo apt-get update
   - sudo apt-get install gperf
