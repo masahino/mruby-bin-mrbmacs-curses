@@ -49,7 +49,13 @@ module Mrbmacs
         while @frame.sci_notifications.length > 0
           e = @frame.sci_notifications.shift
           if @sci_handler[e['code']] != nil
-            @sci_handler[e['code']].call(self, e)
+            begin
+              @sci_handler[e['code']].call(self, e)
+            rescue => e
+              @logger.error e.to_s
+              @logger.error e.backtrace
+              @frame.echo_puts e.to_s
+            end
           end
         end
         @frame.view_win.refresh
@@ -63,7 +69,13 @@ module Mrbmacs
         readable, writable = IO.select(@readings)
         readable.each do |ri|
           if @io_handler[ri] != nil
-            @io_handler[ri].call(self, ri)
+            begin
+              @io_handler[ri].call(self, ri)
+            rescue => e
+              @logger.error e.to_s
+              @logger.error e.backtrace
+              @frame.echo_puts(e.to_s)
+            end
           end
         end
 
