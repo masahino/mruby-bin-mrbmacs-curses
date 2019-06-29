@@ -5,12 +5,6 @@ module Mrbmacs
       @frame = frame
       @sci = Scintilla::ScintillaCurses.new do |scn|
         @frame.sci_notifications.push(scn)
-        if scn['code'] == Scintilla::SCN_CHARADDED
-          @frame.char_added = true
-        end
-        if $DEBUG
-          $stderr.puts "sci(#{@sci}) callback #{scn['code']}"
-        end
       end
       @buffer = buffer
       @x1 = x1
