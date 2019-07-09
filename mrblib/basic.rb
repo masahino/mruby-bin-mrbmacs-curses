@@ -31,6 +31,9 @@ module Mrbmacs
             end_pos = view_win.sci_get_length
             view_win.sci_set_target_end(end_pos)
           else
+            search_text = @last_search_text
+            @frame.echo_win.sci_add_text(search_text.length, search_text)
+            @frame.echo_win.refresh
             next
           end
         elsif key_str == "C-r"
@@ -42,6 +45,9 @@ module Mrbmacs
             view_win.sci_set_target_end(end_pos)
           else
             next
+            search_text = @last_search_text
+            @frame.echo_win.sci_add_text(search_text.length, search_text)
+            @frame.echo_win.refresh
           end
         elsif key_str == "C-g"
           view_win.sci_goto_pos(orig_pos)
@@ -52,7 +58,8 @@ module Mrbmacs
         else
           @frame.send_key(key, echo_win)
           echo_win.refresh
-          search_text += key_str #echo_win.get_line(0)[prompt.length..-1]
+          search_text = @frame.echo_win.sci_get_text(@frame.echo_win.sci_get_length+1)
+          @last_search_text = search_text
         end
         ret = view_win.sci_search_in_target(search_text.length, search_text)
         if ret != -1
