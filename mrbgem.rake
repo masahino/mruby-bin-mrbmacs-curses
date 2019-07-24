@@ -7,5 +7,6 @@ MRuby::Gem::Specification.new('mruby-bin-mrbmacs-curses') do |spec|
   spec.add_dependency 'mruby-termkey', :github => 'masahino/mruby-termkey'
   spec.add_dependency 'mruby-iconv'
   spec.add_test_dependency 'mruby-require'
+  spec.add_test_dependency 'mruby-scintilla-curses'
   spec.bins = %w(mrbmacs-curses)
 end
