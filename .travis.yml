@@ -4,7 +4,7 @@ env:
     - TMPDIR=/tmp
 before_install:
   - sudo apt-get update
-  - sudo apt-get install gperf
+  - sudo apt-get install gperf libtool
 script:
   - export MRUBY_CONFIG=`pwd`/.travis_config.rb
 #  - SCINTILLA_FILE='scintilla380.tgz'
