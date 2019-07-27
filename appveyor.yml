@@ -1,0 +1,13 @@
+version: 1.0.{build}
+init:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+environment:
+  CYG_PACKAGES: libncurses-devel,ruby
+  CYG_ROOT: C:\cygwin
+  CYG_SETUP: c:\cygwin\setup-x86.exe
+  matrix:
+  - {}
+install:
+- cmd: if defined CYG_ROOT (%CYG_SETUP% --quiet-mode --no-shortcuts --only-site --root "%CYG_ROOT%" --packages "%CYG_PACKAGES%" --upgrade-also)
+build_script:
+- cmd: c:\cygwin\bin\bash -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && rake && rake test"
