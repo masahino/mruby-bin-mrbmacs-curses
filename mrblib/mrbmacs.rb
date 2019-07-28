@@ -2,6 +2,9 @@ module Mrbmacs
   class Application
     include Scintilla
 
+    def add_buffer_to_frame(buffer)
+    end
+
     def doscan(prefix)
       ret, key = @frame.waitkey(@frame.view_win)
       if ret != TermKey::RES_KEY

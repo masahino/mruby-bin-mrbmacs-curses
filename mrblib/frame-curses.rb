@@ -59,39 +59,6 @@ module Mrbmacs
       return echo_win
     end
 
-    def new_viewwin
-      view_win = ScinTerm.new do |msg|
-        if msg == Scintilla::SCN_CHARADDED
-          @char_added = true
-        end
-        if $DEBUG
-          $stderr.puts "sci callback #{msg}"
-        end
-#        if msg == SCN_CHARADDED
-#          pos = @view_win.brace_match(@view_win.get_current_pos, 0)
-#          if pos != -1
-#            @view_win.brace_highlight(pos, @view_win.get_current_pos)
-#          end
-#        end
-      end
-      view_win.resize_window(Curses::lines - 2, Curses::cols)
-
-      view_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
-
-      view_win.sci_set_margin_widthn(0, view_win.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      view_win.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
-      view_win.sci_set_margin_widthn(1, 1)
-      view_win.sci_set_margin_typen(1, 0)
-      view_win.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
-
-      view_win.sci_set_marginsensitiven(1, 1)
-      view_win.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
-#      $stderr.puts @view_win.sci_get_automatic_fold
-      view_win.sci_set_focus(true)
-      view_win.refresh
-      return view_win
-    end
-
     def delete_other_window
       @edit_win_list.each do |w|
         if w != @edit_win
@@ -291,9 +258,6 @@ module Mrbmacs
     end
 
     def set_buffer_name(buffer_name)
-    end
-
-    def add_buffer(buffer_name)
     end
 
     def select_buffer(default_buffername, buffer_list)
