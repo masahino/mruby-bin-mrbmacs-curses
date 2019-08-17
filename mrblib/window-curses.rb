@@ -4,6 +4,8 @@ module Mrbmacs
      def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
       @sci = Scintilla::ScintillaCurses.new do |scn|
+        code = scn['code']
+        @frame.sci_notifications.delete_if{|n| n['code'] == code}
         @frame.sci_notifications.push(scn)
       end
       @buffer = buffer
