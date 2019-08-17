@@ -78,7 +78,12 @@ class TermKey
     attr_accessor :key_str
     def initialize(key = nil)
       if key != nil
-        @code = key.chr
+        @code =
+        if key == "Enter"
+          TermKey::SYM_ENTER
+        else
+          key.chr
+        end
         @type = TermKey::TYPE_UNICODE
         @modifiers = 0
         @key_str = key
