@@ -15,11 +15,43 @@ module Mrbmacs
   COLOR_BLUE   = Scintilla::COLOR_BLUE
   COLOR_CYAN   = Scintilla::COLOR_CYAN
   COLOR_GREEN  = Scintilla::COLOR_GREEN
+
+  SOLARIZED_COLOR_LIST = [
+    [8,   0,  43,  54],
+    [0,   7,  54,  66],
+    [10,  88, 110, 117],
+    [11, 101, 123, 131],
+    [12, 131, 148, 150],
+    [14, 147, 161, 161],
+    [ 7, 238, 232, 213],
+    [15, 253, 246, 227],
+    [ 3, 181, 137,   0],
+    [ 9, 203,  75,  22],
+    [ 1, 220,  50,  47],
+    [ 5, 211,  54, 130],
+    [13, 108, 113, 196],
+    [ 4,  38, 139, 210],
+    [ 6,  42, 161, 152],
+    [ 2, 133, 153,   0],
+    ]
+
+  def self.curses_init_color_rgb(n, r, g, b)
+    Curses.init_color n, r*1000/255, g*1000/255, b*1000/255
+  end
+
   class SolarizedDarkTheme
     def set_pallete
-      color_list = [235, 160, 64, 136, 33, 125, 37, 254,
-                    234, 166, 240, 241, 244, 61, 245, 230]
-      Scintilla::ScinTerm.set_pallete(color_list)
+      SOLARIZED_COLOR_LIST.each do |c|
+        Mrbmacs::curses_init_color_rgb(c[0], c[1], c[2], c[3])
+      end
+    end
+  end
+
+  class SolarizedLightTheme
+    def set_pallete
+      SOLARIZED_COLOR_LIST.each do |c|
+        Mrbmacs::curses_init_color_rgb(c[0], c[1], c[2], c[3])
+      end
     end
   end
 end
