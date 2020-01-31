@@ -1,13 +1,24 @@
 version: 1.0.{build}
-init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 environment:
-  CYG_PACKAGES: libncurses-devel,ruby
-  CYG_ROOT: C:\cygwin
-  CYG_SETUP: c:\cygwin\setup-x86.exe
   matrix:
-  - {}
+  - CYG_ROOT: C:\cygwin64
+    BASH: C:\cygwin64\bin\bash
+    CC: gcc
+    CYG_PACKAGES: libncurses-devel,ruby,libiconv-devel,libonig-devel
+    CYG_SETUP: C:\cygwin64\setup-x86_64.exe
+  - MSYSTEM: MINGW64
+    BASH: C:\msys64\usr\bin\bash
+    CC: x86_64-w64-mingw32-gcc
+    MSYS_PACKAGES: mingw-w64-x86_64-ruby mingw-w64-x86_64-ncurses ncurses-devel mingw-w64-x86_64-libiconv
+    PATH: c:\msys64\mingw64\usr\bin;c:\msys64\mingw64\bin;%PATH%
 install:
-- cmd: if defined CYG_ROOT (%CYG_SETUP% --quiet-mode --no-shortcuts --only-site --root "%CYG_ROOT%" --packages "%CYG_PACKAGES%" --upgrade-also)
+- cmd: >-
+    if defined CYG_ROOT (%CYG_SETUP% --quiet-mode --no-shortcuts --only-site --root "%CYG_ROOT%" --packages "%CYG_PACKAGES%" --upgrade-also)
+
+    if defined MSYSTEM (%BASH% -lc "pacman -Suuy --noconfirm ${MSYS_PACKAGES}")
+
+    if defined MSYSTEM (%BASH% -lc "pacman -Suuy --noconfirm ${MSYS_PACKAGES} && pacman -Sc --noconfirm")
 build_script:
-- cmd: c:\cygwin\bin\bash -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && rake && rake test"
+- cmd: if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && rake")
+test_script:
+- cmd: if defined BASH (%BASH% -lc "cd $(cygpath ${APPVEYOR_BUILD_FOLDER}) && rake test")
