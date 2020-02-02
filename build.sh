@@ -9,7 +9,6 @@ if [ ! -d "./mruby/src" ]; then
   git fetch --tags
   rev=`git rev-parse $MRUBY_VERSION`
   git checkout $rev
+  cd ..
 fi
-(cd mruby; rake clean)
-(cd mruby; rake)
-(cd mruby; rake test)
+(cd mruby; rake $1)
