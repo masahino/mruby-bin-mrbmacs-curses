@@ -8,7 +8,8 @@ module Mrbmacs
 
     def initialize(buffer)
       print "\033[?1000h" # enable mouse
-      @tk = TermKey.new(0, TermKey::FLAG_UTF8 | TermKey::FLAG_SPACESYMBOL)
+#      @tk = TermKey.new(0, TermKey::FLAG_UTF8 | TermKey::FLAG_SPACESYMBOL)
+      @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
       Curses::curs_set(0)
