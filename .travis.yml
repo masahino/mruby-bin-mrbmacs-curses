@@ -1,16 +1,11 @@
-sudo: required
-env:
-  global:
-    - TMPDIR=/tmp
+language: c
+compiler:
+  - gcc
+  - clang
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install gperf libtool-bin
+    - sudo apt-get -qq update
+install:
+    - sudo apt-get -qq install rake bison git gperf
 script:
-  - export MRUBY_CONFIG=`pwd`/.travis_config.rb
-#  - SCINTILLA_FILE='scintilla380.tgz'
-#  - wget https://downloads.sourceforge.net/scintilla/$SCINTILLA_FILE
-#  - tar zxf $SCINTILLA_FILE
-#  - (cd scintilla/curses ; make CURSES_FLAGS="-DNO_CXX11_REGEX")
-  - git clone https://github.com/mruby/mruby.git
-  - (cd mruby; ./minirake)
-  - (cd mruby; ./minirake test)
+  - ./build.sh
+  - ./build.sh test
