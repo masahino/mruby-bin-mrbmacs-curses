@@ -270,8 +270,33 @@ module Mrbmacs
       return buffername
     end
 
+    def restore_colors
+      default_color = [
+        [0, 0, 0],
+        [680, 0, 0],
+        [0, 680, 0],
+        [680, 680, 0],
+        [0, 0, 680],
+        [680, 0, 680],
+        [0, 680, 680],
+        [680, 680, 680],
+        [0, 0, 0],
+        [1000, 0, 0],
+        [0, 1000, 0],
+        [1000, 1000, 0],
+        [0, 0, 1000],
+        [1000, 0, 1000],
+        [0, 1000, 1000],
+        [1000, 1000, 1000]
+        ]
+      for i in 0..15
+        Curses.init_color(i, default_color[i][0], default_color[i][1], default_color[i][2])
+      end
+    end
+
     def exit
       @view_win.delete
+      restore_colors
       Curses::noraw
       Curses::curs_set(1)
       Curses::endwin

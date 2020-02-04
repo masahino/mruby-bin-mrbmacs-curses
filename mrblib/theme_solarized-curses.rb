@@ -39,7 +39,7 @@ module Mrbmacs
     Curses.init_color n, r*1000/255, g*1000/255, b*1000/255
   end
 
-  class SolarizedDarkTheme
+  class SolarizedDarkTheme < Theme
     def set_pallete
       SOLARIZED_COLOR_LIST.each do |c|
         Mrbmacs::curses_init_color_rgb(c[0], c[1], c[2], c[3])
@@ -47,7 +47,7 @@ module Mrbmacs
     end
   end
 
-  class SolarizedLightTheme
+  class SolarizedLightTheme < Theme
     def set_pallete
       SOLARIZED_COLOR_LIST.each do |c|
         Mrbmacs::curses_init_color_rgb(c[0], c[1], c[2], c[3])
