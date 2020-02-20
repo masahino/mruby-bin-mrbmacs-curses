@@ -54,21 +54,19 @@ module Mrbmacs
 
     def refresh
       @sci.refresh
-      Curses.refresh(@modeline)
+      Curses.wrefresh(@modeline)
     end
 
     def focus_in()
       @sci.sci_set_focus(true)
-      Curses.wbkgd(@modeline,
-        Curses.color_pair(Scintilla::ScintillaCurses.color_pair(0, 15)))
+      Curses.wbkgd(@modeline, Curses::A_REVERSE)
       @sci.refresh
     end
 
     def focus_out()
       @sci.sci_set_focus(false)
       @sci.refresh
-      Curses.wbkgd(@modeline,
-        Curses.color_pair(Scintilla::ScintillaCurses.color_pair(15, 10)))
+      Curses.wbkgd(@modeline, Curses::A_DIM)
       Curses.wrefresh(@modeline)
     end
   end
