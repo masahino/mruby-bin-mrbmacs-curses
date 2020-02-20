@@ -17,9 +17,11 @@ module Mrbmacs
   BASE16_BASE07 = Scintilla::COLOR_LIGHTWHITE #15
 
   def self.curses_init_color_rgb_hex(n, rgb_hex)
-    Curses.init_color n,
-    rgb_hex[0..1].hex*1000/255,
-    rgb_hex[2..3].hex*1000/255,
-    rgb_hex[4..5].hex*1000/255
+    if Curses.can_change_color == true
+      Curses.init_color n,
+      rgb_hex[0..1].hex*1000/255,
+      rgb_hex[2..3].hex*1000/255,
+      rgb_hex[4..5].hex*1000/255
+    end
   end
 end

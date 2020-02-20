@@ -36,7 +36,9 @@ module Mrbmacs
     ]
 
   def self.curses_init_color_rgb(n, r, g, b)
-    Curses.init_color n, r*1000/255, g*1000/255, b*1000/255
+    if Curses.can_change_color == true
+      Curses.init_color n, r*1000/255, g*1000/255, b*1000/255
+    end
   end
 
   class SolarizedDarkTheme < Theme
