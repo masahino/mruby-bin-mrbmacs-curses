@@ -52,6 +52,7 @@ module Mrbmacs
       add_io_read_event(STDIN) { |app, io| keyin }
       @frame.view_win.refresh
       loop do
+        # notification event
         while @frame.sci_notifications.length > 0
           e = @frame.sci_notifications.shift
           if @sci_handler[e['code']] != nil
@@ -72,6 +73,7 @@ module Mrbmacs
         @frame.view_win.setpos(y, x)
         @frame.view_win.sci_set_empty_selection(current_pos)
 
+        # IO event
         readable, writable = IO.select(@readings)
         readable.each do |ri|
           if @io_handler[ri] != nil
