@@ -100,52 +100,52 @@ end
 #  conf.gem :github => 'mattn/mruby-require'
 #end
 
-MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
-  toolchain :gcc
+#MRuby::CrossBuild.new('i686-w64-mingw32') do |conf|
+#  toolchain :gcc
+#
+#  [conf.cc, conf.linker].each do |cc|
+#    cc.command = 'i686-w64-mingw32-gcc'
+#  end
+#  conf.cxx.command      = 'i686-w64-mingw32-g++'
+#  conf.archiver.command = 'i686-w64-mingw32-gcc-ar'
+#  conf.exts.executable  = ".exe"
+#
+#  conf.build_target     = 'i686-pc-linux-gnu'
+#  conf.host_target      = 'i686-w64-mingw32'
+#
+#  gem_config(conf)
+#  conf.gem :github => 'mattn/mruby-onig-regexp'
+##  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
+##    g.cc.flags << '-DPCRE_STATIC'
+##  end
+#  conf.cc.include_paths << '/usr/i686-w64-mingw32/include/ncurses'
+#  conf.linker.flags << '-static'
+#  conf.linker.libraries << 'iconv'
+#  conf.linker.libraries << 'stdc++'
+#end
 
-  [conf.cc, conf.linker].each do |cc|
-    cc.command = 'i686-w64-mingw32-gcc'
-  end
-  conf.cxx.command      = 'i686-w64-mingw32-g++'
-  conf.archiver.command = 'i686-w64-mingw32-gcc-ar'
-  conf.exts.executable  = ".exe"
-
-  conf.build_target     = 'i686-pc-linux-gnu'
-  conf.host_target      = 'i686-w64-mingw32'
-
-  gem_config(conf)
-  conf.gem :github => 'mattn/mruby-onig-regexp'
+#MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
+#  toolchain :gcc
+#
+#  [conf.cc, conf.linker].each do |cc|
+#    cc.command = 'x86_64-w64-mingw32-gcc'
+#  end
+#  conf.cxx.command      = 'x86_64-w64-mingw32-g++'
+#  conf.archiver.command = 'x86_64-w64-mingw32-gcc-ar'
+#  conf.exts.executable  = ".exe"
+#
+#  conf.build_target     = 'x86-pc-linux-gnu'
+#  conf.host_target      = 'x86_64-w64-mingw32'
+#
+#  gem_config(conf)
 #  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
 #    g.cc.flags << '-DPCRE_STATIC'
 #  end
-  conf.cc.include_paths << '/usr/i686-w64-mingw32/include/ncurses'
-  conf.linker.flags << '-static'
-  conf.linker.libraries << 'iconv'
-  conf.linker.libraries << 'stdc++'
-end
-
-MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
-  toolchain :gcc
-
-  [conf.cc, conf.linker].each do |cc|
-    cc.command = 'x86_64-w64-mingw32-gcc'
-  end
-  conf.cxx.command      = 'x86_64-w64-mingw32-g++'
-  conf.archiver.command = 'x86_64-w64-mingw32-gcc-ar'
-  conf.exts.executable  = ".exe"
-
-  conf.build_target     = 'x86-pc-linux-gnu'
-  conf.host_target      = 'x86_64-w64-mingw32'
-
-  gem_config(conf)
-  conf.gem :github => 'iij/mruby-regexp-pcre' do |g|
-    g.cc.flags << '-DPCRE_STATIC'
-  end
-  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
-  conf.linker.flags << '-static'
-  conf.linker.libraries << 'iconv'
-  conf.linker.libraries << 'stdc++'
-end
+#  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
+#  conf.linker.flags << '-static'
+#  conf.linker.libraries << 'iconv'
+#  conf.linker.libraries << 'stdc++'
+#end
 
 MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
   toolchain :gcc
