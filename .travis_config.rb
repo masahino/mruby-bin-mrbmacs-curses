@@ -11,6 +11,7 @@ MRuby::Build.new do |conf|
   enable_debug
 
   conf.cc.defines = %w(MRB_ENABLE_ALL_SYMBOLS)
+  conf.cc.defines = %w(MRB_UTF8_STRING)
 
   # Use mrbgems
   # conf.gem 'examples/mrbgems/ruby_extension_example'

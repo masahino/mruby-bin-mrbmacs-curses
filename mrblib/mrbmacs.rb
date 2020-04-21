@@ -49,7 +49,9 @@ module Mrbmacs
     end
 
     def editloop()
-      add_io_read_event(STDIN) { |app, io| keyin }
+      if Scintilla::PLATFORM != :CURSES_WIN32
+        add_io_read_event(STDIN) { |app, io| keyin }
+      end
       @frame.view_win.refresh
       loop do
         # notification event
@@ -73,16 +75,20 @@ module Mrbmacs
         @frame.view_win.setpos(y, x)
         @frame.view_win.sci_set_empty_selection(current_pos)
 
+        if Scintilla::PLATFORM == :CURSES_WIN32
+          keyin
+        else
         # IO event
-        readable, writable = IO.select(@readings)
-        readable.each do |ri|
-          if @io_handler[ri] != nil
-            begin
-              @io_handler[ri].call(self, ri)
-            rescue => e
-              @logger.error e.to_s
-              @logger.error e.backtrace
-              @frame.echo_puts(e.to_s)
+          readable, writable = IO.select(@readings)
+          readable.each do |ri|
+            if @io_handler[ri] != nil
+              begin
+                @io_handler[ri].call(self, ri)
+              rescue => e
+                @logger.error e.to_s
+                @logger.error e.backtrace
+                @frame.echo_puts(e.to_s)
+              end
             end
           end
         end

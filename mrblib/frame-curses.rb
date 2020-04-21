@@ -94,9 +94,12 @@ module Mrbmacs
 
     def waitkey(win)
       if Scintilla::PLATFORM == :CURSES_WIN32
-        @tk.set_fd(win.get_window)
+        c = Curses::getch
+        @tk.push_keys(c.chr("UTF-8"))
+        @tk.getkey
+      else
+        @tk.waitkey
       end
-      @tk.waitkey
     end
 
     def strfkey(key)
@@ -158,7 +161,9 @@ module Mrbmacs
     def echo_puts(text)
       @echo_win.sci_clear_all
       echo_set_prompt("[Message]")
-      @echo_win.sci_add_text(text.length, text)
+      if text != nil
+        @echo_win.sci_add_text(text.length, text)
+      end
       @echo_win.refresh
     end
 
