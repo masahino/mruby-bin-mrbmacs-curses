@@ -95,7 +95,7 @@ module Mrbmacs
     def waitkey(win)
       if Scintilla::PLATFORM == :CURSES_WIN32
         c = Curses::getch
-        @tk.push_keys(c.chr("UTF-8"))
+        @tk.push_bytes(c.chr("UTF-8"))
         @tk.getkey
       else
         @tk.waitkey
