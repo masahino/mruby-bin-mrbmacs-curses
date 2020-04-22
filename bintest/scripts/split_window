@@ -7,8 +7,9 @@ delete_other_window
 switch_to_buffer "*Messages*"
 revert_buffer
 all_text = @frame.view_win.sci_get_text(@frame.view_win.sci_get_length+1)
-all_text.each do |line|
+all_text.each_line do |line|
   if line =~/ ERROR /
     $stderr.puts line
   end
 end
+save_buffers_kill_terminal()
