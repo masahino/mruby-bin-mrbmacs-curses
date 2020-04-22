@@ -111,5 +111,5 @@ MRuby::Build.new do |conf|
   # bintest
   conf.enable_bintest
   conf.enable_test
-  conf.gem :github => 'mattn/mruby-require'
+#  conf.gem :github => 'mattn/mruby-require'
 end
