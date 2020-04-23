@@ -9,7 +9,7 @@ assert('init buffer') do
 end
 
 assert('split window') do
-  stdout, stderr, status = Open3.capture3("#{cmd('mrbmacs-curses')} -l #{$script_dir}split_window")
+  stdout, stderr, status = Open3.capture3("#{cmd('mrbmacs-curses')} -q -l #{$script_dir}split_window")
   assert_equal 0, status.to_i
   assert_equal 0, stderr.length
 end
