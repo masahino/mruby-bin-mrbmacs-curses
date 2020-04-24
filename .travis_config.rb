@@ -33,24 +33,44 @@ MRuby::Build.new do |conf|
       g.linker.libraries.delete 'iconv'
     end
   end
+ if RUBY_PLATFORM.downcase =~ /msys|mingw/
+    conf.cc.flags << "-I/mingw64/include/pdcurses/"
+  end
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
+    if RUBY_PLATFORM.downcase =~ /msys|mingw/
+      g.linker.libraries.delete "ncurses"
+      g.linker.libraries << "unibilium"
+    end
   end
   conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
     g.download_scintilla
   end
   conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
     g.download_scintilla
+    if RUBY_PLATFORM.downcase =~ /msys|mingw/
+      g.linker.libraries.delete "ncurses"
+      g.linker.libraries.delete "panel"
+    end
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
+  if RUBY_PLATFORM.downcase =~ /msys|mingw/
+    conf.gem :github => 'jbreeden/mruby-curses' do |g|
+      g.download_scintilla
+      g.linker.libraries.delete "ncurses"
+      g.linker.libraries.delete "panel"
+    end
+  end
   conf.gem "#{MRUBY_ROOT}/.."
-#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/include"
-#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/src"
-#  cc.include_paths << "#{MRUBY_ROOT}/../scintilla/curses"
-#  linker.flags_before_libraries << "#{MRUBY_ROOT}/../scintilla/bin/scintilla.a"
   conf.linker.libraries << "stdc++"
+  if RUBY_PLATFORM.downcase =~ /msys|mingw/
+    conf.cc.include_paths << "/mingw64/include/pdcurses/"
+    conf.linker.libraries << "pdcurses"
+    conf.linker.libraries.delete "panel"
+    conf.linker.libraries.delete "ncurses"
+  end
 
   # conf.cc do |cc|
   #   cc.command = ENV['CC'] || 'gcc'
