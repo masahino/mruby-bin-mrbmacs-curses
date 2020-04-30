@@ -10,7 +10,7 @@ environment:
   - MSYSTEM: MINGW64
     BASH: C:\msys64\usr\bin\bash
     CC: x86_64-w64-mingw32-gcc
-    MSYS_PACKAGES: mingw-w64-x86_64-ruby mingw-w64-x86_64-ncurses ncurses-devel mingw-w64-x86_64-libiconv
+    MSYS_PACKAGES: mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv
     PATH: c:\msys64\mingw64\usr\bin;c:\msys64\mingw64\bin;%PATH%
 install:
 - cmd: >-
