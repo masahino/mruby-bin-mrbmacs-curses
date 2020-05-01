@@ -27,20 +27,16 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'fastly/mruby-optparse'
-#  conf.gem :github => 'gromnitsky/mruby-dir-glob'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     if RUBY_PLATFORM.include?('linux')
       g.linker.libraries.delete 'iconv'
     end
   end
  if RUBY_PLATFORM.downcase =~ /msys|mingw/
-    conf.cc.flags << "-I/mingw64/include/pdcurses/"
+    conf.cc.include_paths << "#{ENV['MINGW_PREFIX']}/include/pdcurses"
   end
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
-    if RUBY_PLATFORM.downcase =~ /msys|mingw/
-      g.linker.libraries.delete "ncurses"
-      g.linker.libraries << "unibilium"
     end
   end
   conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
@@ -48,25 +44,14 @@ MRuby::Build.new do |conf|
   end
   conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
     g.download_scintilla
-    if RUBY_PLATFORM.downcase =~ /msys|mingw/
-      g.linker.libraries.delete "ncurses"
-      g.linker.libraries.delete "panel"
     end
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
-  if RUBY_PLATFORM.downcase =~ /msys|mingw/
-    conf.gem :github => 'jbreeden/mruby-curses' do |g|
-      g.download_scintilla
-      g.linker.libraries.delete "ncurses"
-      g.linker.libraries.delete "panel"
-    end
-  end
   conf.gem "#{MRUBY_ROOT}/.."
   conf.linker.libraries << "stdc++"
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
-    conf.cc.include_paths << "/mingw64/include/pdcurses/"
     conf.linker.libraries << "pdcurses"
     conf.linker.libraries.delete "panel"
     conf.linker.libraries.delete "ncurses"
