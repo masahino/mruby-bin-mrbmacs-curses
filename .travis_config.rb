@@ -32,19 +32,17 @@ MRuby::Build.new do |conf|
       g.linker.libraries.delete 'iconv'
     end
   end
- if RUBY_PLATFORM.downcase =~ /msys|mingw/
+  if RUBY_PLATFORM.downcase =~ /msys|mingw/
     conf.cc.include_paths << "#{ENV['MINGW_PREFIX']}/include/pdcurses"
   end
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
-    end
   end
   conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
     g.download_scintilla
   end
   conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
     g.download_scintilla
-    end
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
     g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
