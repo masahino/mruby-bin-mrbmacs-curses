@@ -12,7 +12,9 @@ module Mrbmacs
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
       Curses::initscr
       Curses::raw
+      Curses::noecho
       Curses::curs_set(0)
+      Curses::keypad(Curses::stdscr, true)
       @keysyms = [0,
                   Scintilla::SCK_BACK,
                   Scintilla::SCK_TAB,
@@ -96,7 +98,12 @@ module Mrbmacs
       if Scintilla::PLATFORM == :CURSES_WIN32
         c = Curses::getch
         @tk.push_bytes(c.chr("UTF-8"))
-        @tk.getkey
+        ret, key = @tk.getkey
+        if ret == TermKey::RES_AGAIN
+          @tk.getkey
+        else
+          [ret, key]
+        end
       else
         @tk.waitkey
       end
