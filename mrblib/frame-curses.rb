@@ -7,6 +7,9 @@ module Mrbmacs
     attr_accessor :edit_win_list
 
     def initialize(buffer)
+      if ENV['TERM'] == nil
+        ENV['TERM'] = 'xterm-256color'
+      end
       print "\033[?1000h" # enable mouse
 #      @tk = TermKey.new(0, TermKey::FLAG_UTF8 | TermKey::FLAG_SPACESYMBOL)
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
