@@ -74,7 +74,7 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
   conf.build_target     = 'x86-pc-linux-gnu'
   conf.host_target      = 'x86_64-w64-mingw32'
 
-  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/ncurses'
+  conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/pdcurses'
   gem_config(conf)
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
