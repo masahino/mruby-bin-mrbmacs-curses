@@ -105,4 +105,7 @@ MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
 
   conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
   gem_config(conf)
+  conf.gem :github => 'jbreeden/mruby-curses' do |g|
+    g.linker.flags_before_libraries = []
+  end
 end
