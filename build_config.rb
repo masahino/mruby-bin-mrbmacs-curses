@@ -45,19 +45,22 @@ MRuby::CrossBuild.new('x86_64-pc-linux-gnu') do |conf|
   gem_config(conf)
 end
 
-MRuby::CrossBuild.new('x86_64-apple-darwin14') do |conf|
+MRuby::CrossBuild.new('x86_64-apple-darwin19') do |conf|
   toolchain :clang
 
   [conf.cc, conf.linker].each do |cc|
-    cc.command = 'x86_64-apple-darwin14-clang'
+    cc.command = 'x86_64-apple-darwin19-clang'
   end
-  conf.cxx.command      = 'x86_64-apple-darwin14-clang++'
-  conf.archiver.command = 'x86_64-apple-darwin14-ar'
+  conf.cxx.command      = 'x86_64-apple-darwin19-clang++'
+  conf.archiver.command = 'x86_64-apple-darwin19-ar'
 
   conf.build_target     = 'x86_64-pc-linux-gnu'
-  conf.host_target      = 'x86_64-apple-darwin14'
+  conf.host_target      = 'x86_64-apple-darwin19'
 
   gem_config(conf)
+  conf.gem :github => 'jbreeden/mruby-curses' do |g|
+    g.linker.flags_before_libraries = []
+  end
   conf.linker.libraries << 'iconv'
 end
 
@@ -76,6 +79,9 @@ MRuby::CrossBuild.new('x86_64-w64-mingw32') do |conf|
 
   conf.cc.include_paths << '/usr/x86_64-w64-mingw32/include/pdcurses'
   gem_config(conf)
+  conf.gem :github => 'jbreeden/mruby-curses' do |g|
+    g.linker.flags_before_libraries = []
+  end
   conf.linker.flags << '-static'
   conf.linker.libraries << 'iconv'
   conf.linker.libraries.delete 'ncurses'
@@ -99,4 +105,7 @@ MRuby::CrossBuild.new('arm-linux-gnueabihf') do |conf|
 
   conf.cc.include_paths << '/usr/arm-linux-gnueabihf/include/ncurses'
   gem_config(conf)
+  conf.gem :github => 'jbreeden/mruby-curses' do |g|
+    g.linker.flags_before_libraries = []
+  end
 end
