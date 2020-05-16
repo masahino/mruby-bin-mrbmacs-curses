@@ -34,6 +34,7 @@ module Mrbmacs
 
       set_buffer(buffer)
       @modeline = Curses.newwin(1, width, y1 + height - 1, x1)
+      Curses.keypad(@modeline, true)
       Curses.wbkgd(@modeline, Curses::A_REVERSE)
       Curses.wrefresh(@modeline)
     end

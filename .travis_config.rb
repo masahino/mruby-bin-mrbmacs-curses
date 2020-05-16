@@ -34,6 +34,7 @@ MRuby::Build.new do |conf|
   end
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
     conf.cc.include_paths << "#{ENV['MINGW_PREFIX']}/include/pdcurses"
+    conf.cc.flags << "-DPDC_WIDE"
   end
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey

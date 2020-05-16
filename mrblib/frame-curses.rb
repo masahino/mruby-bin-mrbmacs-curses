@@ -100,6 +100,11 @@ module Mrbmacs
     def waitkey(win)
       if Scintilla::PLATFORM == :CURSES_WIN32
         c = Curses::wgetch(@mode_win)
+        if c >= Curses::KEY_MIN and c <= Curses::KEY_MAX
+          keyname = Curses::keyname(c).sub("KEY_", "").tr("()", "").capitalize
+          ret = @tk.strpkey(keyname, 0)
+          return [TermKey::RES_KEY, @tk.strpkey(keyname, 0)]
+        end
         @tk.push_bytes(c.chr("UTF-8"))
         ret, key = @tk.getkey
         if ret == TermKey::RES_AGAIN
