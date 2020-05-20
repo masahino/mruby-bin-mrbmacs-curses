@@ -1,6 +1,7 @@
 module Mrbmacs
   class Base16DefaultDarkTheme < Base16Theme
     def initialize
+      curses_init
       super
       @name = "base16-default-dark"
     end
