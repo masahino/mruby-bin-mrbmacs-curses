@@ -38,12 +38,16 @@ module Mrbmacs
                   Scintilla::SCK_HOME,
                   Scintilla::SCK_END]
       @sci_notifications = []
-      @edit_win = EditWindow.new(self, buffer, 0, 0, Curses.COLS, Curses.LINES-1)
+      @edit_win = EditWindowCurses.new(self, buffer, 0, 0, Curses.COLS, Curses.LINES-1)
       @view_win = @edit_win.sci
       @mode_win = @edit_win.modeline
       @echo_win = new_echowin
       @edit_win_list = [@edit_win]
       @char_added = false
+    end
+
+    def new_editwin(buffer, x, y, width, height)
+      EditWindowCurses.new(self, buffer, x, y, width, height)
     end
 
     def new_echowin
@@ -78,14 +82,6 @@ module Mrbmacs
       @edit_win.y2 = Curses.LINES-1
       @edit_win.compute_area
       @edit_win.refresh
-    end
-
-    def switch_window(new_win)
-      @edit_win.focus_out()
-      @edit_win = new_win
-      @view_win = new_win.sci
-      @mode_win = new_win.modeline
-      new_win.focus_in()
     end
 
     def get_edit_win_from_pos(line, col)

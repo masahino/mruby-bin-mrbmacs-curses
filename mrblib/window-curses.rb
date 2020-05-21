@@ -1,6 +1,6 @@
 # coding: utf-8
 module Mrbmacs
-  class EditWindow
+  class EditWindowCurses < EditWindow
      def initialize(frame, buffer, x1, y1, width, height)
       @frame = frame
       @sci = Scintilla::ScintillaCurses.new do |scn|
