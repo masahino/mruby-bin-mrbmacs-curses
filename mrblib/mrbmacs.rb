@@ -38,10 +38,11 @@ module Mrbmacs
       pos1 = @frame.view_win.sci_bracematch(current_pos, 0)
       if pos1 != -1
         @frame.view_win.sci_brace_highlight(pos1, current_pos)
-      end
-      pos1 = @frame.view_win.sci_bracematch(current_pos - 1, 0)
-      if pos1 != -1
-        @frame.view_win.sci_brace_highlight(pos1, current_pos - 1)
+      else
+        pos1 = @frame.view_win.sci_bracematch(current_pos - 1, 0)
+        if pos1 != -1
+          @frame.view_win.sci_brace_highlight(pos1, current_pos - 1)
+        end
       end
       if @mark_pos != nil
         @frame.view_win.sci_set_anchor(@mark_pos)
