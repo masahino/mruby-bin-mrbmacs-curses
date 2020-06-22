@@ -57,15 +57,7 @@ module Mrbmacs
         # notification event
         while @frame.sci_notifications.length > 0
           e = @frame.sci_notifications.shift
-          if @sci_handler[e['code']] != nil
-            begin
-              @sci_handler[e['code']].call(self, e)
-            rescue => e
-              @logger.error e.to_s
-              @logger.error e.backtrace
-              @frame.echo_puts e.to_s
-            end
-          end
+          call_sci_event(e)
         end
         @frame.view_win.refresh
         # set cursor pos for IME
