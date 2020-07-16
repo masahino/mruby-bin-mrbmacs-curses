@@ -8,29 +8,29 @@ module Mrbmacs
     def doscan(prefix)
       ret, key = @frame.waitkey(@frame.view_win)
       if ret != TermKey::RES_KEY
-        return [nil, nil]
+        return
       end
       key_str = prefix + @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
       if $DEBUG
         $stderr.puts '['+key_str+']'
       end
       key_str.gsub!(/^Escape /, "M-")
-
-      if @command_list.has_key?(key_str)
-        if @command_list[key_str] == "prefix"
+      command = key_scan(key_str)
+      if command != nil
+        if command == "prefix"
           return doscan(key_str + " ")
         else
-          return [key, @command_list[key_str]]
+          return extend(command)
         end
       end
-      [key, nil]
+      @frame.send_key(key)
     end
 
     def keyin()
       mod_mask = @frame.view_win.sci_get_mod_event_mask
       @frame.view_win.sci_set_mod_event_mask(0)
       loop do
-        doin()
+        doscan("")
         break if @frame.tk.buffer_remaining == @frame.tk.buffer_size
       end
       @frame.view_win.sci_set_mod_event_mask(mod_mask)
@@ -57,6 +57,9 @@ module Mrbmacs
         # notification event
         while @frame.sci_notifications.length > 0
           e = @frame.sci_notifications.shift
+          if $DEBUG
+            $stderr.puts e['code']
+          end
           call_sci_event(e)
         end
         @frame.view_win.refresh

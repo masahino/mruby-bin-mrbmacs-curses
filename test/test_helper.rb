@@ -4,6 +4,7 @@ module Mrbmacs
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @buffer_list = []
+      @command_list = {}
     end
   end
 
@@ -69,6 +70,19 @@ module Scintilla
 
     def send_key(key, mod_shift, mod_ctrl, mod_alt)
     end
+
+    def sci_get_current_pos
+      1
+    end
+
+    def sci_brace_match(x, y)
+      1
+    end
+
+    def sci_brace_highlight(x, y)
+
+    end
+
   end
 end
 
