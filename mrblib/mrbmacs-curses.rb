@@ -43,9 +43,6 @@ module Mrbmacs
       if pos1 != -1
         @frame.view_win.sci_brace_highlight(pos1, current_pos - 1)
       end
-      if @mark_pos != nil
-        @frame.view_win.sci_set_anchor(@mark_pos)
-      end
     end
 
     def editloop()
