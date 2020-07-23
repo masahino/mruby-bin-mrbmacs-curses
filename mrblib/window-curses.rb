@@ -28,7 +28,7 @@ module Mrbmacs
       @sci.sci_set_marginsensitiven(1, 1)
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
 
-      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
+      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT | Scintilla::SC_PERFORMED_USER | Scintilla::SC_PERFORMED_UNDO | Scintilla::SC_PERFORMED_REDO)
       @sci.sci_set_focus(true)
       @sci.refresh
 
