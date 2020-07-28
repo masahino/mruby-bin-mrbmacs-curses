@@ -40,7 +40,7 @@ module Mrbmacs
       @sci_notifications = []
       @edit_win = EditWindowCurses.new(self, buffer, 0, 0, Curses.COLS, Curses.LINES-1)
       @view_win = @edit_win.sci
-      @mode_win = @edit_win.modeline
+      @mode_win = @edit_win.mode_win
       @echo_win = new_echowin
       @edit_win_list = [@edit_win]
       @char_added = false
@@ -159,8 +159,14 @@ module Mrbmacs
 
     def modeline(app, win = @mode_win)
 #      @mode_win.clear()
+      mode_str = get_mode_str(app)
+      if mode_str.length < Curses.getmaxx(win) - 1
+        mode_str += "-" * (Curses.getmaxx(win) - mode_str.length - 1)
+      else
+        mode_str[Curses.getmaxx(win) - 1] = " "
+      end
       Curses.wmove(win, 0, 0)
-      Curses.waddstr(win, get_mode_str(app))
+      Curses.waddstr(win, mode_str)
       Curses.wrefresh(win)
     end
 

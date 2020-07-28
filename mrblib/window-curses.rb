@@ -33,15 +33,15 @@ module Mrbmacs
       @sci.refresh
 
       set_buffer(buffer)
-      @modeline = Curses.newwin(1, width, y1 + height - 1, x1)
-      Curses.keypad(@modeline, true)
-      Curses.wbkgd(@modeline, Curses::A_REVERSE)
-      Curses.wrefresh(@modeline)
+      @mode_win = Curses.newwin(1, width, y1 + height - 1, x1)
+      Curses.keypad(@mode_win, true)
+      Curses.wbkgd(@mode_win, Curses::A_REVERSE)
+      Curses.wrefresh(@mode_win)
     end
 
     def delete
       @sci.delete
-      Curses.delwin(@modeline)
+      Curses.delwin(@mode_win)
     end
 
     def compute_area
@@ -49,26 +49,26 @@ module Mrbmacs
       @height = @y2 - @y1
       @sci.move_window(@y1, @x1)
       @sci.resize_window(@height - 1, @width)
-      Curses.mvwin(@modeline, @y2-1, @x1)
-      Curses.wresize(@modeline, 1, @width)
+      Curses.mvwin(@mode_win, @y2-1, @x1)
+      Curses.wresize(@mode_win, 1, @width)
      end
 
     def refresh
       @sci.refresh
-      Curses.wrefresh(@modeline)
+      Curses.wrefresh(@mode_win)
     end
 
     def focus_in()
       @sci.sci_set_focus(true)
-      Curses.wbkgd(@modeline, Curses::A_REVERSE)
+      Curses.wbkgd(@mode_win, Curses::A_REVERSE)
       @sci.refresh
     end
 
     def focus_out()
       @sci.sci_set_focus(false)
       @sci.refresh
-      Curses.wbkgd(@modeline, Curses::A_DIM)
-      Curses.wrefresh(@modeline)
+      Curses.wbkgd(@mode_win, Curses::A_DIM)
+      Curses.wrefresh(@mode_win)
     end
 
     def set_theme(theme)
