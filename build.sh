@@ -1,6 +1,6 @@
 export MRUBY_CONFIG=`pwd`/.travis_config.rb
 if [[ -z "${MRUBY_VERSION}" ]] ; then
-  export MRUBY_VERSION="2.1.1-rc2"
+  export MRUBY_VERSION="2.1.2"
 fi
 
 if [ ! -d "./mruby/src" ]; then
