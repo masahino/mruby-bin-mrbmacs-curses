@@ -4,6 +4,7 @@ module Mrbmacs
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
       @buffer_list = []
+      @keymap = ViewKeyMap.new
       @command_list = {}
     end
   end
@@ -95,6 +96,8 @@ class TermKey
         @code =
         if key == "Enter"
           TermKey::SYM_ENTER
+        elsif key == "Escape"
+          TermKey::SYM_ESCAPE
         else
           key.chr
         end

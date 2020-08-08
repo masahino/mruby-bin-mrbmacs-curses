@@ -11,12 +11,15 @@ module Mrbmacs
         return
       end
       key_str = prefix + @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+      key_str.gsub!(/^Escape /, "M-")
       if $DEBUG
         $stderr.puts '['+key_str+']'
       end
-      key_str.gsub!(/^Escape /, "M-")
       command = key_scan(key_str)
       if command != nil
+        if command.is_a?(Integer)
+          return @frame.view_win.send_message(command, nil, nil)
+        end
         if command == "prefix"
           return doscan(key_str + " ")
         else
