@@ -31,9 +31,11 @@ jobs:
       
     # Runs a single command using the runners shell
     - name: build
+      shell: msys2 {0}
       run: ./build.sh
 
     # Runs a set of commands using the runners shell
     - name: test
+      shell: msys2 {0}
       run: ./build.sh test
         
