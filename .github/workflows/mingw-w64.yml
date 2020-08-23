@@ -26,7 +26,7 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
-        install: mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv
+        install: mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv git
         update: true
       
     # Runs a single command using the runners shell
