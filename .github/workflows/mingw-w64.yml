@@ -33,11 +33,12 @@ jobs:
     - name: build
       shell: msys2 {0}
       run: PKG_CONFIG_PATH="" ./build.sh
+
     - name: upload
-        uses:  actions/upload-artifact@v2
-        with:
-          name: mingw-w64-x86_64-mrbmacs-curses
-          path: mruby/bin/mrbmacs-curses.exe
+      uses: actions/upload-artifact@v2
+      with:
+        name: mingw-w64-x86_64-mrbmacs-curses
+        path: mruby/bin/mrbmacs-curses.exe
 
     # Runs a set of commands using the runners shell
     - name: test
