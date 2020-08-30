@@ -24,7 +24,10 @@ jobs:
 
     - name: intall apt packages
       run: sudo apt-get -qq install pkg-config rake bison libtool-bin libncurses5-dev libncursesw5-dev
-      
+
+    - name: set env
+      run: echo "::set-env name=TERM::xterm"
+
     # Runs a single command using the runners shell
     - name: build
       run: ./build.sh

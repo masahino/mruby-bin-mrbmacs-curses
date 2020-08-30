@@ -28,6 +28,9 @@ jobs:
         msystem: MINGW64
         install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config git make patch
         update: true
+
+    - name: set env
+      run: echo "::set-env name=TERM::xterm"
       
     # Runs a single command using the runners shell
     - name: build
