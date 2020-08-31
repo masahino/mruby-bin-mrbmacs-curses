@@ -33,7 +33,7 @@ end
 
 class << Curses
   [
-    :initscr, :raw, :curs_set, :newwin, :wbkgd, :wrefresh, :wmove, :waddstr, :noecho, :keypad
+    :initscr, :raw, :curs_set, :newwin, :wbkgd, :wrefresh, :wmove, :waddstr, :noecho, :keypad, :wgetch
     ].each do |name|
     undef_method name
     define_method(name) do |*args|
