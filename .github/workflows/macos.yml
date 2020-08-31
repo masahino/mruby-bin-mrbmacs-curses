@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: mingw-w64 builds
+name: macOS builds
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -8,49 +8,39 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/workflows/mingw-w64.yml'
       - '.github/workflows/main.yml'
-      - '.github/workflows/macos.yml'
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - '.github/workflows/mingw-w64.yml'
       - '.github/workflows/main.yml'
-      - '.github/workflows/macos.yml'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-2019
+    runs-on: macos-10.15
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: mingw setup
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config git make patch
-        update: true
-
     - name: set env
       run: echo "::set-env name=TERM::xterm"
-      
+
     # Runs a single command using the runners shell
     - name: build
-      shell: msys2 {0}
-      run: PKG_CONFIG_PATH="" ./build.sh
+      run: ./build.sh
 
     - name: upload
       uses: actions/upload-artifact@v2
       with:
-        name: mingw-w64-x86_64-mrbmacs-curses
-        path: mruby/bin/mrbmacs-curses.exe
+        name: macos-mrbmacs-curses
+        path: mruby/bin/mrbmacs-curses
 
     # Runs a set of commands using the runners shell
     - name: test
-      shell: msys2 {0}
-      run: PKG_CONFIG_PATH="" ./build.sh test
-        
+      run: ./build.sh "--trace test"
