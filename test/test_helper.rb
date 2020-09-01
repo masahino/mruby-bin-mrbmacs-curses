@@ -40,7 +40,7 @@ class << Curses
     end
   end
   undef_method :wgetch
-  define_method(:wgetch) do
+  define_method(:wgetch) do |*args|
     257
   end
 end
