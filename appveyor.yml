@@ -16,6 +16,14 @@ install:
 - cmd: >-
     if defined CYG_ROOT (%CYG_SETUP% --quiet-mode --no-shortcuts --only-site --root "%CYG_ROOT%" --packages "%CYG_PACKAGES%" --upgrade-also)
 
+    if defined MSYSTEM (%BASH% -lc "curl -O http://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz")
+
+    if defined MSYSTEM (%BASH% -lc "curl -O http://repo.msys2.org/msys/x86_64/msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig")
+
+    if defined MSYSTEM (%BASH% -lc "pacman-key --verify msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz.sig")
+
+    if defined MSYSTEM (%BASH% -lc "pacman -U --noconfirm msys2-keyring-r21.b39fb11-1-any.pkg.tar.xz")
+
     if defined MSYSTEM (%BASH% -lc "pacman -U --noconfirm http://repo.msys2.org/msys/x86_64/pacman-5.2.1-6-x86_64.pkg.tar.xz")
 
     if defined MSYSTEM (%BASH% -lc "pacman -Sy --noconfirm pacman")
