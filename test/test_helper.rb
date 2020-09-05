@@ -143,7 +143,10 @@ class TermKey
   end
 
   def strfkey(key, flag)
-    key.key_str
+    if key.respond_to? :key_str
+      return key.key_str
+    else
+      return ""
   end
 
   def strpkey(key_str, flag)
