@@ -41,7 +41,7 @@ class << Curses
   end
   undef_method :wgetch
   define_method(:wgetch) do |*args|
-    257
+    Curses::KEY_MIN + 1
   end
 end
 
@@ -144,6 +144,10 @@ class TermKey
 
   def strfkey(key, flag)
     key.key_str
+  end
+
+  def strpkey(key_str, flag)
+    0
   end
 
   def buffer_remaining
