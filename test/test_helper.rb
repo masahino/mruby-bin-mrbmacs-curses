@@ -147,6 +147,7 @@ class TermKey
       return key.key_str
     else
       return ""
+    end
   end
 
   def strpkey(key_str, flag)
