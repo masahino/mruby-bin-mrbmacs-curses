@@ -151,7 +151,7 @@ class TermKey
   end
 
   def strpkey(key_str, flag)
-    0
+    TermKey::Key.new
   end
 
   def buffer_remaining
