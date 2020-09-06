@@ -151,7 +151,11 @@ class TermKey
   end
 
   def strpkey(key_str, flag)
-    TermKey::Key.new
+    if @key_buffer.size > 0
+      TermKey::Key.new(@key_buffer.shift)
+    else
+      TermKey::Key.new
+    end
   end
 
   def buffer_remaining
