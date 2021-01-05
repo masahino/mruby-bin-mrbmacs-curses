@@ -68,7 +68,7 @@ module Mrbmacs
         x = @frame.view_win.sci_point_x_from_position(0, current_pos)
         y = @frame.view_win.sci_point_y_from_position(0, current_pos)
         @frame.view_win.setpos(y, x)
-        @frame.view_win.sci_set_empty_selection(current_pos)
+#        @frame.view_win.sci_set_empty_selection(current_pos)
 
         if Scintilla::PLATFORM == :CURSES_WIN32
           keyin

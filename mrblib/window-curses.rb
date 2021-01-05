@@ -29,6 +29,7 @@ module Mrbmacs
       @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
 
       @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT | Scintilla::SC_PERFORMED_USER | Scintilla::SC_PERFORMED_UNDO | Scintilla::SC_PERFORMED_REDO)
+      @sci.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
       @sci.sci_set_focus(true)
       @sci.refresh
 
