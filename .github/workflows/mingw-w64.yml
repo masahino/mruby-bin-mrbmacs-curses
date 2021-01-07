@@ -36,7 +36,7 @@ jobs:
         update: true
 
     - name: set env
-      run: echo "::set-env name=TERM::xterm"
+      run: echo "TERM=xterm" >> $GITHUB_ENV
       
     # Runs a single command using the runners shell
     - name: build
