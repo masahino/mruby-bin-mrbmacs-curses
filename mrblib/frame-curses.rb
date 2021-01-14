@@ -146,14 +146,6 @@ module Mrbmacs
         return
       end
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
-      if @tk.buffer_remaining == @tk.buffer_size
-        pos1 = win.sci_brace_match(win.sci_get_current_pos() - 1, 0)
-        if pos1 != -1 and (c == ')'.ord or c == ']'.ord or c == '}'.ord or c == '>'.ord)
-          win.sci_brace_highlight(pos1, win.sci_get_current_pos() - 1)
-        else
-          win.sci_brace_highlight(-1, -1)
-        end
-      end
     end
 
     def modeline(app, win = @mode_win)

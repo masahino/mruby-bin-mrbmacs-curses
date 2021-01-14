@@ -37,15 +37,6 @@ module Mrbmacs
         break if @frame.tk.buffer_remaining == @frame.tk.buffer_size
       end
       @frame.view_win.sci_set_mod_event_mask(mod_mask)
-      current_pos = @frame.view_win.sci_get_current_pos
-      pos1 = @frame.view_win.sci_bracematch(current_pos, 0)
-      if pos1 != -1
-        @frame.view_win.sci_brace_highlight(pos1, current_pos)
-      end
-      pos1 = @frame.view_win.sci_bracematch(current_pos - 1, 0)
-      if pos1 != -1
-        @frame.view_win.sci_brace_highlight(pos1, current_pos - 1)
-      end
     end
 
     def editloop()
