@@ -1,5 +1,15 @@
 # coding: utf-8
 module Mrbmacs
+  def self.common_str(comp_list)
+    max_len = comp_list.map{|i| i.length}.sort[0]
+    (1..max_len).reverse_each do |i|
+      if comp_list.map{|f| f[0..i]}.sort.uniq.size == 1
+        return comp_list[0][0..i]
+      end
+    end
+    return nil
+  end
+
   class Frame
     include Scintilla
     attr_accessor :view_win, :echo_win, :tk, :char_added
@@ -215,20 +225,29 @@ module Mrbmacs
           end
         when TermKey::SYM_TAB
           input_text = @echo_win.sci_get_line(0)
-          if input_text != last_input or @echo_win.sci_autoc_active == 0
+          if @echo_win.sci_autoc_active == 0
             if block != nil
-              comp_list, len = block.call(input_text)
               @echo_win.sci_autoc_cancel
               @view_win.refresh
               Curses.wrefresh(@mode_win)
+              comp_list, len = block.call(input_text)
               @echo_win.sci_autoc_show(len, comp_list)
             end
           else
-            current = @echo_win.sci_autoc_get_current
-            @echo_win.sci_linedown
-            if current == @echo_win.sci_autoc_get_current
-              @echo_win.sci_vchome
+            @echo_win.sci_autoc_cancel
+            @view_win.refresh
+            Curses.redrawwin(@mode_win)
+            Curses.wrefresh(@mode_win)
+            comp_list, len = block.call(input_text)
+            common_str = Mrbmacs::common_str(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
+            if common_str != nil
+              @echo_win.sci_autoc_cancel
+              @echo_win.sci_add_text(common_str.length - len, common_str[len..-1])
+              @echo_win.refresh
+              len = common_str.length
             end
+            @echo_win.sci_autoc_show(len, comp_list)
+
           end
         else
           send_key(key, @echo_win)
