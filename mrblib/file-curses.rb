@@ -6,12 +6,13 @@ module Mrbmacs
         file_list = []
         len = 0
         if input_text[-1] == "/"
-          file_list = (Dir.entries(input_text) - ['.', '..']).sort
+          file_list = Dir.entries(input_text)
         else
           dir = File.dirname(input_text)
           fname = File.basename(input_text)
+          qfname = Regexp.quote(fname)
           Dir.foreach(dir) do |item|
-            if item =~ /^#{fname}/
+            if item =~ /^#{qfname}/
               file_list.push(item)
             end
           end
@@ -24,7 +25,7 @@ module Mrbmacs
 #          input_text.length - File.dirname(input_text).length - 1
 #        end
 #        [file_list.map{|f| File.basename(f)}.join(" "), len]
-        [file_list.join(" "), len]
+        [file_list.sort.join(" "), len]
       end
       return filename
     end
