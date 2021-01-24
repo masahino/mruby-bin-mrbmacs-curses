@@ -1,12 +1,8 @@
 module Mrbmacs
   class Base16DefaultLightTheme < Base16Theme
+    @theme_name = "base16-default-light"
     def initialize
-      super
-      @name = "base16-default-light"      
-    end
-
-    def set_pallete 
-      color_list = [
+      @color_list = [
         ["BASE00",  0, "f8f8f8"],
         ["BASE01", 10, "e8e8e8"],
         ["BASE02", 11, "d8d8d8"],
@@ -24,9 +20,8 @@ module Mrbmacs
         ["BASE0E",  5, "ba8baf"],
         ["BASE0F", 14, "a16946"],
       ] 
-     color_list.each do |c|
-        Mrbmacs::curses_init_color_rgb_hex(c[1], c[2])
-      end
+      super
+      @name = @@theme_name
     end
   end
 end

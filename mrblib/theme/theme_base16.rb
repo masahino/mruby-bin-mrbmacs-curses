@@ -27,5 +27,13 @@ module Mrbmacs
       @@base0F = Scintilla::COLOR_LIGHTCYAN #14
       @@base07 = Scintilla::COLOR_LIGHTWHITE #15
     end
+
+    def set_pallete
+      if @color_list != nil
+        @color_list.each do |c|
+          Mrbmacs::curses_init_color_rgb_hex(c[1], c[2])
+        end
+      end
+    end
   end
 end
