@@ -2,9 +2,9 @@ module Mrbmacs
   def self.curses_init_color_rgb_hex(n, rgb_hex)
     if Curses.can_change_color == true
       Curses.init_color n,
-      rgb_hex[0..1].hex*1000/255,
-      rgb_hex[2..3].hex*1000/255,
-      rgb_hex[4..5].hex*1000/255
+      (rgb_hex >> 16)*1000/255,
+      ((rgb_hex & 0x00ff00) >> 8)*1000/255,
+      (rgb_hex & 0x0000ff)*1000/255
     end
   end
 
@@ -29,11 +29,23 @@ module Mrbmacs
     end
 
     def set_pallete
-      if @color_list != nil
-        @color_list.each do |c|
-          Mrbmacs::curses_init_color_rgb_hex(c[1], c[2])
-        end
-      end
+      Mrbmacs::curses_init_color_rgb_hex( 0, @@base00)
+      Mrbmacs::curses_init_color_rgb_hex(10, @@base01)
+      Mrbmacs::curses_init_color_rgb_hex(11, @@base02)
+      Mrbmacs::curses_init_color_rgb_hex( 8, @@base03)
+      Mrbmacs::curses_init_color_rgb_hex(12, @@base04)
+      Mrbmacs::curses_init_color_rgb_hex( 7, @@base05)
+      Mrbmacs::curses_init_color_rgb_hex(13, @@base06)
+      Mrbmacs::curses_init_color_rgb_hex(15, @@base07)
+      Mrbmacs::curses_init_color_rgb_hex( 1, @@base08)
+      Mrbmacs::curses_init_color_rgb_hex( 9, @@base09)
+      Mrbmacs::curses_init_color_rgb_hex( 3, @@base0A)
+      Mrbmacs::curses_init_color_rgb_hex( 2, @@base0B)
+      Mrbmacs::curses_init_color_rgb_hex( 6, @@base0C)
+      Mrbmacs::curses_init_color_rgb_hex( 4, @@base0D)
+      Mrbmacs::curses_init_color_rgb_hex( 5, @@base0E)
+      Mrbmacs::curses_init_color_rgb_hex(14, @@base0F)
+      curses_init
     end
   end
 end
