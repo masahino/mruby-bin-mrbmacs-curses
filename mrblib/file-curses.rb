@@ -18,16 +18,12 @@ module Mrbmacs
           end
           len = fname.length
         end
-#        file_list = Dir.glob(input_text+"*")
-#        len = if input_text[-1] == "/"
-#          0
-#        else
-#          input_text.length - File.dirname(input_text).length - 1
-#        end
-#        [file_list.map{|f| File.basename(f)}.join(" "), len]
         [file_list.sort.join(" "), len]
       end
       return filename
+    end
+    def read_save_file_name(prompt, directory)
+      read_file_name(prompt, directory)
     end
   end
 end
