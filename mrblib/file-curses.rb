@@ -1,7 +1,10 @@
 module Mrbmacs
   class Application
-    def read_file_name(prompt, directory)
+    def read_file_name(prompt, directory, default_name = nil)
       prefix_text = directory + "/"
+      if default_name != nil
+        prefix_text += default_name
+      end
       filename = @frame.echo_gets(prompt, prefix_text) do |input_text|
         file_list = []
         len = 0
@@ -22,8 +25,8 @@ module Mrbmacs
       end
       return filename
     end
-    def read_save_file_name(prompt, directory)
-      read_file_name(prompt, directory)
+    def read_save_file_name(prompt, directory, default_name = nil)
+      read_file_name(prompt, directory, default_name)
     end
   end
 end
