@@ -1,5 +1,5 @@
 module Mrbmacs
-  class Application
+  class ApplicationCurses < Application
     def read_file_name(prompt, directory, default_name = nil)
       prefix_text = directory + "/"
       if default_name != nil
@@ -23,8 +23,10 @@ module Mrbmacs
         end
         [file_list.sort.join(" "), len]
       end
+      @frame.modeline_refresh(self)
       return filename
     end
+
     def read_save_file_name(prompt, directory, default_name = nil)
       read_file_name(prompt, directory, default_name)
     end

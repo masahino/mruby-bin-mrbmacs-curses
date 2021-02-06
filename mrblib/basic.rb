@@ -1,5 +1,19 @@
 module Mrbmacs
-  class Application
+  class ApplicationCurses < Application
+    def copy_region()
+      super
+      str = @frame.view_win.get_clipboard
+      if Scintilla::PLATFORM == :CURSES_WIN32
+        IO.popen('clip.exe', 'r+') {|f| f << str}
+      else
+        # try pbcopy
+        ret = `type pbcopy 2>/dev/null`
+        if $?.exitstatus == 0
+          IO.popen('pbcopy', 'w') {|f| f << str}
+        end
+      end
+    end
+
     def isearch_forward()
       isearch("I-search: ", false)#, @frame.view_win.sci_get_length)
     end

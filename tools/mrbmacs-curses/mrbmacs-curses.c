@@ -23,7 +23,7 @@ main(int argc, char **argv)
   for (i = 1; i < argc; i++) {
     mrb_ary_push(mrb, arg_array, mrb_str_new_cstr(mrb, argv[i]));
   }
-  scimre_class = mrb_class_get_under(mrb, mrb_module_get(mrb, "Mrbmacs"), "Application");
+  scimre_class = mrb_class_get_under(mrb, mrb_module_get(mrb, "Mrbmacs"), "ApplicationCurses");
   scimre = mrb_funcall(mrb, mrb_obj_value(scimre_class), "new", 1, arg_array);
   mrb_funcall(mrb, scimre, "run", 0);
 

@@ -1,5 +1,5 @@
 module Mrbmacs
-  class Application
+  class ApplicationCurses < Application
     def replace_string(str = nil, newstr = nil, query = false)
       if str == nil or newstr == nil
         @frame.echo_win.sci_clear_all

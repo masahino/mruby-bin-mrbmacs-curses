@@ -1,5 +1,5 @@
 module Mrbmacs
-  class TestApp < Application
+  class TestApp < ApplicationCurses
     def initialize
       @current_buffer = Buffer.new("*scratch*")
       @frame = Mrbmacs::Frame.new(@current_buffer)
