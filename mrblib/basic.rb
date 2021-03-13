@@ -14,6 +14,17 @@ module Mrbmacs
       end
     end
 
+    def yank()
+      if @frame.view_win.get_clipboard == ""
+        ret = `type pbpaste 2>/dev/null`
+        if $?.exitstatus == 0
+          clipboard_text = `pbpaste`
+          @frame.view_win.sci_copytext(clipboard_text.length, clipboard_text)
+        end
+      end
+      @frame.view_win.sci_paste
+    end
+
     def isearch_forward()
       isearch("I-search: ", false)#, @frame.view_win.sci_get_length)
     end
