@@ -208,12 +208,12 @@ module Mrbmacs
           input_text = nil
           break
         end
-        if key_str == "C-k"
-          @echo_win.send_message(SCI_DELLINERIGHT)
-          echo_set_prompt(prompt)
-          @echo_win.refresh
-          next
-        end
+#        if key_str == "C-k"
+#          @echo_win.send_message(SCI_DELLINERIGHT)
+#          echo_set_prompt(prompt)
+#          @echo_win.refresh
+#          next
+#        end
         case key.code
         when TermKey::SYM_ENTER, TermKey::SYM_INSERT
           if @echo_win.sci_autoc_active == 0
@@ -251,6 +251,9 @@ module Mrbmacs
           end
         else
           send_key(key, @echo_win)
+        end
+        if @echo_win.sci_margin_get_text(0) == ""
+          echo_set_prompt(prompt)
         end
         @echo_win.refresh
       end
