@@ -2,9 +2,9 @@ module Mrbmacs
   def self.curses_init_color_rgb_hex(n, bgr_hex)
     if Curses.can_change_color == true
       Curses.init_color n,
-      (bgr_hex & 0x0000ff)*1000/255,
+      (bgr_hex >> 16)*1000/255,
       ((bgr_hex & 0x00ff00) >> 8)*1000/255,
-      (bgr_hex >> 16)*1000/255
+      (bgr_hex & 0x0000ff)*1000/255
     end
   end
 

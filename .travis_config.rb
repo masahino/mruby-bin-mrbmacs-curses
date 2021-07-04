@@ -39,15 +39,17 @@ MRuby::Build.new do |conf|
   conf.gem :github => 'masahino/mruby-termkey' do |g|
     g.download_libtermkey
   end
-  conf.gem :github => 'masahino/mruby-scintilla-base' do |g|
+  conf.gem :github => 'masahino/mruby-scintilla-base', :branch => "scintilla5" do |g|
     g.download_scintilla
   end
-  conf.gem :github => 'masahino/mruby-scintilla-curses' do |g|
+  conf.gem :github => 'masahino/mruby-scintilla-curses', :branch => "scintilla5" do |g|
     g.download_scintilla
   end
-  conf.gem :github => 'masahino/mruby-mrbmacs-base' do |g|
+  conf.gem :github => 'masahino/mruby-mrbmacs-base', :branch => "scintilla5" do |g|
     g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
+  conf.gem :github => 'masahino/mruby-mrbmacs-lsp'
+
   conf.gem "#{MRUBY_ROOT}/.."
   conf.linker.libraries << "stdc++"
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
