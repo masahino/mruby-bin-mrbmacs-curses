@@ -19,7 +19,7 @@ module Mrbmacs
         ret = `type pbpaste 2>/dev/null`
         if $?.exitstatus == 0
           clipboard_text = `pbpaste`
-          @frame.view_win.sci_copytext(clipboard_text.length, clipboard_text)
+          @frame.view_win.sci_copytext(clipboard_text.bytesize, clipboard_text)
         end
       end
       @frame.view_win.sci_paste
@@ -57,7 +57,7 @@ module Mrbmacs
             view_win.sci_set_target_end(end_pos)
           else
             search_text = @last_search_text
-            @frame.echo_win.sci_add_text(search_text.length, search_text)
+            @frame.echo_win.sci_add_text(search_text.bytesize, search_text)
             @frame.echo_win.refresh
             next
           end
@@ -71,7 +71,7 @@ module Mrbmacs
           else
             next
             search_text = @last_search_text
-            @frame.echo_win.sci_add_text(search_text.length, search_text)
+            @frame.echo_win.sci_add_text(search_text.bytesize, search_text)
             @frame.echo_win.refresh
           end
         elsif key_str == "C-g"
@@ -86,7 +86,7 @@ module Mrbmacs
           search_text = @frame.echo_win.sci_get_text(@frame.echo_win.sci_get_length+1)
           @last_search_text = search_text
         end
-        ret = view_win.sci_search_in_target(search_text.length, search_text)
+        ret = view_win.sci_search_in_target(search_text.bytesize, search_text)
         if ret != -1
           view_win.sci_set_sel(view_win.sci_get_target_start, view_win.sci_get_target_end)
           if backward == true

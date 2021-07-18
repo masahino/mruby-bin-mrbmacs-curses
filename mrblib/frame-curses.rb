@@ -74,6 +74,7 @@ module Mrbmacs
       echo_win.sci_autoc_set_choose_single(1)
       echo_win.sci_autoc_set_auto_hide(false)
       echo_win.sci_set_margin_typen(3, 4)
+      echo_win.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
       echo_win.refresh
 
       return echo_win
@@ -180,7 +181,7 @@ module Mrbmacs
       @echo_win.sci_clear_all
       echo_set_prompt("[Message]")
       if text != nil
-        @echo_win.sci_add_text(text.length, text)
+        @echo_win.sci_add_text(text.bytesize, text)
       end
       @echo_win.refresh
     end
@@ -192,7 +193,7 @@ module Mrbmacs
       @echo_win.sci_clear_all
       echo_set_prompt(prompt)
       prefix_text = text
-      @echo_win.sci_add_text(prefix_text.length, prefix_text)
+      @echo_win.sci_add_text(prefix_text.bytesize, prefix_text)
       @echo_win.refresh
       input_text = nil
       last_input = nil
@@ -242,7 +243,7 @@ module Mrbmacs
             common_str = Mrbmacs::common_str(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
             if common_str != nil
               @echo_win.sci_autoc_cancel
-              @echo_win.sci_add_text(common_str.length - len, common_str[len..-1])
+              @echo_win.sci_add_text(common_str[len..-1].bytesize, common_str[len..-1])
               @echo_win.refresh
               len = common_str.length
             end
