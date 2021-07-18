@@ -27,6 +27,7 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
   conf.gem :github => 'mattn/mruby-onig-regexp'
   conf.gem :github => 'fastly/mruby-optparse'
+  conf.gem :github => 'masahino/mruby-json', :branch => 'supress_error'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     if RUBY_PLATFORM.include?('linux')
       g.linker.libraries.delete 'iconv'
