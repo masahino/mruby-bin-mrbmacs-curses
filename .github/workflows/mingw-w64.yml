@@ -32,7 +32,7 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW64
-        install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config git make patch
+        install: mingw-w64-x86_64-gcc mingw-w64-x86_64-ruby mingw-w64-x86_64-pdcurses mingw-w64-x86_64-unibilium mingw-w64-x86_64-libiconv mingw-w64-x86_64-libtool mingw-w64-x86_64-pkg-config git make patch mingw-w64-x86_64-onigmo
         update: true
 
     - name: set env
