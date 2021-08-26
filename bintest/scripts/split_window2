@@ -1,0 +1,6 @@
+split_window_vertically
+other_window
+$stderr.puts @current_buffer.name
+other_window
+$stderr.puts @current_buffer.name
+save_buffers_kill_terminal()

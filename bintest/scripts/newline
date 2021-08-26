@@ -1,0 +1,6 @@
+newline
+newline
+newline
+insert "a"
+save_buffer
+save_buffers_kill_terminal
