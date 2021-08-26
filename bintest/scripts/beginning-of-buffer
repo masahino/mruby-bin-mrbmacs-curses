@@ -1,6 +1,6 @@
 end_of_buffer
-insert "a"
+insert "abc"
 beginning_of_buffer
-insert "b"
+insert "あ"
 save_buffer
 save_buffers_kill_terminal

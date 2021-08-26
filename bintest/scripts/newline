@@ -1,6 +1,7 @@
 newline
 newline
 newline
-insert "a"
+insert "テスト"
+insert "abc"
 save_buffer
 save_buffers_kill_terminal
