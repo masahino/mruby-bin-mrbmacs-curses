@@ -1,0 +1,6 @@
+find_file "hoge"
+insert "abc"
+switch_to_buffer "find-file.input"
+insert "xyz"
+save_buffer
+save_buffers_kill_terminal

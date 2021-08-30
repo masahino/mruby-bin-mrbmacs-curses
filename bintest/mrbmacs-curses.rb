@@ -71,6 +71,14 @@ assert('end-of-line') do
   run_edit_test('end-of-line')
 end
 
+assert('find-file') do
+  run_edit_test('find-file')
+end
+
+assert('insert-file') do
+  run_edit_test('insert-file')
+end
+
 assert('kill-line') do
   run_edit_test('kill-line')
 end
@@ -88,16 +96,8 @@ assert('yank') do
 end
 
 #####
-assert('find-file') do
-end
-
-assert('insert-file') do
-end
 
 assert('kill-buffer') do
-end
-
-assert('kill-line') do
 end
 
 assert('isearch-backward') do
@@ -107,7 +107,4 @@ assert('isearch-forward') do
 end
 
 assert('switch-to-buffer') do
-end
-
-assert('yank') do
 end
