@@ -1,0 +1,6 @@
+@frame.view_win.sci_linedown
+@frame.view_win.sci_linedown
+end_of_line
+insert "abc"
+save_buffer
+save_buffers_kill_terminal

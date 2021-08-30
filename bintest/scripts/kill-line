@@ -1,0 +1,8 @@
+@frame.view_win.sci_linedown
+kill_line
+@frame.view_win.sci_linedown
+@frame.view_win.sci_charright
+@frame.view_win.sci_charright
+kill_line
+save_buffer
+save_buffers_kill_terminal

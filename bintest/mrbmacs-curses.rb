@@ -32,7 +32,10 @@ def run_edit_test(test_name)
     stdout, stderr, status =
     Open3.capture3("#{cmd('mrbmacs-curses')} -q -l #{$script_dir}#{test_name} #{edit_file}")
   end
-  assert_true FileUtils.cmp(edit_file, output_file)
+  expected_text = File.open(output_file, "r").read
+  actual_text = File.open(edit_file, "r").read
+#  assert_true FileUtils.cmp(edit_file, output_file)
+  assert_equal expected_text, actual_text
   File.delete edit_file
 end
 
@@ -40,20 +43,51 @@ assert('beginning-of-buffer') do
   run_edit_test('beginning-of-buffer')
 end
 
+assert('beginning-of-line') do
+  run_edit_test('beginning-of-line')
+end
+
+assert('clear-rectangle') do
+  run_edit_test('clear-rectangle')
+end
+
+assert('copy-region') do
+  run_edit_test('copy-region')
+end
+
+assert('cut-region') do
+  run_edit_test('cut-region')
+end
+
+assert('delete-rectangle') do
+  run_edit_test('delete-rectangle')
+end
+
 assert('end-of-buffer') do
   run_edit_test('end-of-buffer')
+end
+
+assert('end-of-line') do
+  run_edit_test('end-of-line')
+end
+
+assert('kill-line') do
+  run_edit_test('kill-line')
 end
 
 assert('newline') do
   run_edit_test('newline')
 end
-  
-assert('beginning-of-line') do
+
+assert('set-mark') do
+  run_edit_test('set-mark')
 end
 
-assert('end-of-line.el') do
+assert('yank') do
+  run_edit_test('yank')
 end
 
+#####
 assert('find-file') do
 end
 

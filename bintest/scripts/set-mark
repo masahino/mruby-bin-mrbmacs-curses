@@ -1,0 +1,12 @@
+set_mark
+@frame.view_win.sci_linedown
+@frame.view_win.sci_charright
+@frame.view_win.sci_charright
+set_mark
+@frame.view_win.sci_linedown
+end_of_line
+@frame.view_win.sci_charleft
+@frame.view_win.sci_charleft
+cut_region
+save_buffer
+save_buffers_kill_terminal

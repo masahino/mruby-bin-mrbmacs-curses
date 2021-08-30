@@ -1,0 +1,6 @@
+@frame.view_win.sci_linedown
+insert "abc"
+beginning_of_line
+insert "xyz"
+save_buffer
+save_buffers_kill_terminal
