@@ -79,6 +79,10 @@ assert('insert-file') do
   run_edit_test('insert-file')
 end
 
+assert('kill-buffer') do
+  run_edit_test('kill-buffer')
+end
+
 assert('kill-line') do
   run_edit_test('kill-line')
 end
@@ -91,20 +95,17 @@ assert('set-mark') do
   run_edit_test('set-mark')
 end
 
+assert('switch-to-buffer') do
+  run_edit_test('switch-to-buffer')
+end
+
 assert('yank') do
   run_edit_test('yank')
 end
 
-#####
-
-assert('kill-buffer') do
-end
-
+##########
 assert('isearch-backward') do
 end
 
 assert('isearch-forward') do
-end
-
-assert('switch-to-buffer') do
 end

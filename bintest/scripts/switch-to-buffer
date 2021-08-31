@@ -1,0 +1,6 @@
+switch_to_buffer "*scratch*"
+insert "abc"
+switch_to_buffer "switch-to-buffer.input"
+insert "xyz"
+save_buffer
+save_buffers_kill_terminal

@@ -1,0 +1,5 @@
+find_file "hoge"
+kill_buffer "hoge"
+insert "abc"
+save_buffer
+save_buffers_kill_terminal
