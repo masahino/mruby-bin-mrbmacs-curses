@@ -10,7 +10,7 @@ module Mrbmacs
       if ret != TermKey::RES_KEY
         return
       end
-      key_str = prefix + @frame.tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
+      key_str = prefix + @frame.strfkey(key)
       key_str.gsub!(/^Escape /, "M-")
       if $DEBUG
         $stderr.puts '['+key_str+']'
