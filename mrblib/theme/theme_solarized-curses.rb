@@ -40,10 +40,10 @@ module Mrbmacs
         [13, 108, 113, 196],
         [ 4,  38, 139, 210],
         [ 6,  42, 161, 152],
-        [ 2, 133, 153,   0],
+        [ 2, 133, 153,   0]
         ]
       solarized_color_list.each do |c|
-        Mrbmacs::curses_init_color_rgb(c[0], c[1], c[2], c[3])
+        Mrbmacs.curses_init_color_rgb(c[0], c[1], c[2], c[3])
       end
     end
   end
