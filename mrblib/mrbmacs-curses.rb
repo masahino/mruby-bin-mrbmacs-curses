@@ -30,13 +30,10 @@ module Mrbmacs
     end
 
     def keyin()
-      mod_mask = @frame.view_win.sci_get_mod_event_mask
-      @frame.view_win.sci_set_mod_event_mask(0)
       loop do
         doscan("")
         break if @frame.tk.buffer_remaining == @frame.tk.buffer_size
       end
-      @frame.view_win.sci_set_mod_event_mask(mod_mask)
     end
 
     def editloop()

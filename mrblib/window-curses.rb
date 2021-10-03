@@ -18,8 +18,7 @@ module Mrbmacs
       @sci.resize_window(@height - 1, @width)
       @sci.move_window(@y1, @x1)
       @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
-
-      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT | Scintilla::SC_PERFORMED_USER | Scintilla::SC_PERFORMED_UNDO | Scintilla::SC_PERFORMED_REDO)
+      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
       @sci.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
       set_margin_curses()
 
