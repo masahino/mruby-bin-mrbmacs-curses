@@ -1,4 +1,5 @@
 module Mrbmacs
+  # ApplicationCurses
   class ApplicationCurses < Application
     include Scintilla
 
@@ -10,18 +11,19 @@ module Mrbmacs
       if ret != TermKey::RES_KEY
         return
       end
+
       key_str = prefix + @frame.strfkey(key)
-      key_str.gsub!(/^Escape /, "M-")
+      key_str.gsub!(/^Escape /, 'M-')
       if $DEBUG
-        $stderr.puts '['+key_str+']'
+        $stderr.puts '[' + key_str + ']'
       end
       command = key_scan(key_str)
       if command != nil
         if command.is_a?(Integer)
           return @frame.view_win.send_message(command, nil, nil)
         end
-        if command == "prefix"
-          return doscan(key_str + " ")
+        if command == 'prefix'
+          return doscan(key_str + ' ')
         else
           return extend(command)
         end
@@ -31,12 +33,12 @@ module Mrbmacs
 
     def keyin()
       loop do
-        doscan("")
+        doscan('')
         break if @frame.tk.buffer_remaining == @frame.tk.buffer_size
       end
     end
 
-    def editloop()
+    def editloop
       if Scintilla::PLATFORM != :CURSES_WIN32
         add_io_read_event(STDIN) { |app, io| keyin }
       end
@@ -61,7 +63,7 @@ module Mrbmacs
           keyin
         else
         # IO event
-          readable, writable = IO.select(@readings)
+          readable, _writable = IO.select(@readings)
           readable.each do |ri|
             if @io_handler[ri] != nil
               begin
