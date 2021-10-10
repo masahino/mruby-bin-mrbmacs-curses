@@ -1,10 +1,9 @@
-# coding: utf-8
 # Mrbmacs module
 module Mrbmacs
   def self.common_str(comp_list)
-    max_len = comp_list.map{|i| i.length}.sort[0]
+    max_len = comp_list.map { |i| i.length }.sort[0]
     (1..max_len).reverse_each do |i|
-      if comp_list.map{ |f| f[0..i] }.sort.uniq.size == 1
+      if comp_list.map { |f| f[0..i] }.sort.uniq.size == 1
         return comp_list[0][0..i]
       end
     end
@@ -76,6 +75,7 @@ module Mrbmacs
       echo_win.sci_set_margin_typen(3, 4)
       echo_win.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
       echo_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
+      echo_win.sci_autoc_set_max_height(16)
       echo_win.refresh
 
       echo_win
@@ -308,33 +308,8 @@ module Mrbmacs
       return buffername
     end
 
-    def restore_colors
-      default_color = [
-        [0, 0, 0],
-        [680, 0, 0],
-        [0, 680, 0],
-        [680, 680, 0],
-        [0, 0, 680],
-        [680, 0, 680],
-        [0, 680, 680],
-        [680, 680, 680],
-        [0, 0, 0],
-        [1000, 0, 0],
-        [0, 1000, 0],
-        [1000, 1000, 0],
-        [0, 0, 1000],
-        [1000, 0, 1000],
-        [0, 1000, 1000],
-        [1000, 1000, 1000]
-      ]
-      for i in 0..15
-        Curses.init_color(i, default_color[i][0], default_color[i][1], default_color[i][2])
-      end
-    end
-
     def exit
       @view_win.delete
-      restore_colors
       Curses.noraw
       Curses.curs_set(1)
       Curses.endwin
