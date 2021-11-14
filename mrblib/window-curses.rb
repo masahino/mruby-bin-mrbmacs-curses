@@ -1,4 +1,3 @@
-# coding: utf-8
 module Mrbmacs
   class EditWindowCurses < EditWindow
     def initialize(frame, buffer, x1, y1, width, height)
@@ -11,8 +10,8 @@ module Mrbmacs
       @buffer = buffer
       @x1 = x1
       @y1 = y1
-      @x2 = x1 + width
-      @y2 = y1 + height
+      @x2 = x1 + width - 1
+      @y2 = y1 + height - 1
       @width = width
       @height = height
       @sci.resize_window(@height - 1, @width)
@@ -59,11 +58,11 @@ module Mrbmacs
     end
 
     def compute_area
-      @width = @x2 - @x1
-      @height = @y2 - @y1
+      @width = @x2 - @x1 + 1
+      @height = @y2 - @y1 + 1
       @sci.move_window(@y1, @x1)
       @sci.resize_window(@height - 1, @width)
-      Curses.mvwin(@mode_win, @y2 - 1, @x1)
+      Curses.mvwin(@mode_win, @y2, @x1)
       Curses.wresize(@mode_win, 1, @width)
     end
 

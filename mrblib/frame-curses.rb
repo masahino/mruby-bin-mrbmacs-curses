@@ -89,9 +89,9 @@ module Mrbmacs
       end
       @edit_win_list.delete_if { |w| w != @edit_win }
       @edit_win.x1 = 0
-      @edit_win.x2 = Curses.COLS
+      @edit_win.x2 = Curses.COLS - 1
       @edit_win.y1 = 0
-      @edit_win.y2 = Curses.LINES - 1
+      @edit_win.y2 = Curses.LINES - 1 - 1
       @edit_win.compute_area
       @edit_win.refresh
     end
@@ -160,8 +160,9 @@ module Mrbmacs
       win.send_key(c, mod_shift, mod_ctrl, mod_alt)
     end
 
-    def modeline(app, win = @mode_win)
+    def modeline(app, edit_win = @edit_win)
       #      @mode_win.clear()
+      win = edit_win.mode_win
       mode_str = get_mode_str(app)
       if mode_str.length < Curses.getmaxx(win) - 1
         mode_str += '-' * (Curses.getmaxx(win) - mode_str.length - 1)
