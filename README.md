@@ -14,11 +14,10 @@
   + [masahino/mruby-termkey](https://github.com/masahino/mruby-termkey/)
   + [masahino/mruby-scintilla-base](https://github.com/masahino/mruby-scintilla-base/)
   + [masahino/mruby-scintilla-curses](https://github.com/masahino/mruby-scintilla-curses/)
-  + [iij/mruby-require](https://github.com/iij/mruby-require/)
+  + [mattn/mruby-require](https://github.com/mattn/mruby-require/)
   + [mattn/mruby-iconv](https://github.com/mattn/mruby-iconv/)
   + [mattn/mruby-onig-regexp](https://github.com/mattn/mruby-onig-regexp/)
   + [fastly/mruby-optparse](https://github.com/fastly/mruby-optparse/)
-  + [gromnitsky/mruby-dir-glob](https://github.com/gromnitsky/mruby-dir-glob/)
   + [masahino/mruby-mrbmacs-lsp](https://github.com/masahino/mruby-mrbmacs-lsp/) (optional)
 
 ### Building
@@ -31,3 +30,4 @@ $ ./build.sh
 ## Related Project
 
 + [mrbmacs-gtk](https://github.com/masahino/mruby-bin-mrbmacs-gtk/)
++ [mrbmacs-termbox](https://github.com/masahino/mruby-bin-mrbmacs-termbox/)
