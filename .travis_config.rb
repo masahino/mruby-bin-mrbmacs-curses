@@ -50,9 +50,11 @@ MRuby::Build.new do |conf|
     g.add_test_dependency 'mruby-scintilla-curses',  :github => 'masahino/mruby-scintilla-curses'
   end
   conf.gem :github => 'masahino/mruby-mrbmacs-lsp'
+  conf.gem :github => 'masahino/mruby-mrbmacs-themes-base16', :branch => 'main'
 
   conf.gem "#{MRUBY_ROOT}/.."
   conf.linker.libraries << "stdc++"
+  conf.linker.libraries << "pthread"
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
     conf.linker.libraries << "pdcurses"
     conf.linker.libraries.delete "panel"
