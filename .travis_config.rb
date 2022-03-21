@@ -53,6 +53,7 @@ MRuby::Build.new do |conf|
 
   conf.gem "#{MRUBY_ROOT}/.."
   conf.linker.libraries << "stdc++"
+  conf.linker.libraries << "pthread"
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
     conf.linker.libraries << "pdcurses"
     conf.linker.libraries.delete "panel"
