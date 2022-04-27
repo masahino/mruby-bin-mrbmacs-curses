@@ -1,6 +1,6 @@
 module Mrbmacs
   # ApplicationCurses
-  class ApplicationCurses < Application
+  class ApplicationCurses < ApplicationTerminal
     include Scintilla
 
     def add_buffer_to_frame(buffer)
@@ -15,7 +15,7 @@ module Mrbmacs
       key_str = prefix + @frame.strfkey(key)
       key_str.gsub!(/^Escape /, 'M-')
       if $DEBUG
-        $stderr.puts '[' + key_str + ']'
+        $stderr.puts "[#{key_str}]"
       end
       command = key_scan(key_str)
       if command != nil
@@ -31,7 +31,7 @@ module Mrbmacs
       @frame.send_key(key)
     end
 
-    def keyin()
+    def keyin
       loop do
         doscan('')
         break if @frame.tk.buffer_remaining == @frame.tk.buffer_size
@@ -62,7 +62,7 @@ module Mrbmacs
         if Scintilla::PLATFORM == :CURSES_WIN32
           keyin
         else
-        # IO event
+          # IO event
           readable, _writable = IO.select(@readings)
           readable.each do |ri|
             if @io_handler[ri] != nil
