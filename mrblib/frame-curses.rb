@@ -165,7 +165,7 @@ module Mrbmacs
       win = edit_win.mode_win
       mode_str = get_mode_str(app)
       if mode_str.length < Curses.getmaxx(win) - 1
-        mode_str += '-' * (Curses.getmaxx(win) - mode_str.length - 1)
+        mode_str += '-' * (Curses.getmaxx(win) - mode_str.length)
       else
         mode_str[Curses.getmaxx(win) - 1] = ' '
       end
