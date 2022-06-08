@@ -1,7 +1,7 @@
 module Mrbmacs
   def self.curses_init_color_rgb(n, r, g, b)
     if Curses.can_change_color == true
-      Curses.init_color n, r*1000/255, g*1000/255, b*1000/255
+      Curses.init_color n, r * 1000 / 255, g * 1000 / 255, b * 1000 / 255
     end
   end
 
@@ -41,7 +41,7 @@ module Mrbmacs
         [ 4,  38, 139, 210],
         [ 6,  42, 161, 152],
         [ 2, 133, 153,   0]
-        ]
+      ]
       solarized_color_list.each do |c|
         Mrbmacs.curses_init_color_rgb(c[0], c[1], c[2], c[3])
       end
