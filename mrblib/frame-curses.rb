@@ -75,7 +75,9 @@ module Mrbmacs
       echo_win.sci_set_margin_typen(3, 4)
       echo_win.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
       echo_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
-      echo_win.sci_autoc_set_max_height(16)
+      if Scintilla::PLATFORM != :CURSES_WIN32
+        echo_win.sci_autoc_set_max_height(16)
+      end
       echo_win.refresh
 
       echo_win
