@@ -55,8 +55,8 @@ module Mrbmacs
       @char_added = false
     end
 
-    def new_editwin(buffer, x, y, width, height)
-      EditWindowCurses.new(self, buffer, x, y, width, height)
+    def new_editwin(buffer, left, top, width, height)
+      EditWindowCurses.new(self, buffer, left, top, width, height)
     end
 
     def new_echowin

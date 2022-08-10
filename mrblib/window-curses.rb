@@ -1,24 +1,15 @@
 module Mrbmacs
   class EditWindowCurses < EditWindow
-    def initialize(frame, buffer, x1, y1, width, height)
-      @frame = frame
+    def initialize(frame, buffer, left, top, width, height)
+      super(frame, buffer, left, top, width, height)
       @sci = Scintilla::ScintillaCurses.new do |scn|
         code = scn['code']
         @frame.sci_notifications.delete_if { |n| n['code'] == code }
         @frame.sci_notifications.push(scn)
       end
-      @buffer = buffer
-      @x1 = x1
-      @y1 = y1
-      @x2 = x1 + width - 1
-      @y2 = y1 + height - 1
-      @width = width
-      @height = height
       @sci.resize_window(@height - 1, @width)
       @sci.move_window(@y1, @x1)
-      @sci.sci_set_codepage(Scintilla::SC_CP_UTF8)
-      @sci.sci_set_mod_event_mask(Scintilla::SC_MOD_INSERTTEXT | Scintilla::SC_MOD_DELETETEXT)
-      @sci.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
+      init_sci_default
       set_margin_curses
 
       @sci.sci_set_focus(true)
