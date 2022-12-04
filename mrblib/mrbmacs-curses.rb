@@ -8,20 +8,18 @@ module Mrbmacs
 
     def doscan(prefix)
       ret, key = @frame.waitkey(@frame.view_win)
-      if ret != TermKey::RES_KEY
-        return
-      end
+      return if ret != TermKey::RES_KEY
 
       key_str = prefix + @frame.strfkey(key)
       key_str.gsub!(/^Escape /, 'M-')
       if $DEBUG
         $stderr.puts "[#{key_str}]"
       end
+
       command = key_scan(key_str)
       if command != nil
-        if command.is_a?(Integer)
-          return @frame.view_win.send_message(command, nil, nil)
-        end
+        return @frame.view_win.send_message(command, nil, nil) if command.is_a?(Integer)
+
         if command == 'prefix'
           return doscan(key_str + ' ')
         else
