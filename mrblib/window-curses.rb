@@ -75,8 +75,8 @@ module Mrbmacs
       Curses.wrefresh(@mode_win)
     end
 
-    def set_theme(theme)
-      set_theme_base(theme)
+    def apply_theme(theme)
+      apply_theme_base(theme)
       @sci.sci_set_fold_margin_colour(true, theme.background_color)
       @sci.sci_set_fold_margin_hicolour(true, theme.foreground_color)
       for n in 25..31
