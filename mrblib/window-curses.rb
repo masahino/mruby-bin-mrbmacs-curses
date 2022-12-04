@@ -14,7 +14,7 @@ module Mrbmacs
 
       @sci.sci_set_focus(true)
       @sci.refresh
-      set_buffer(buffer)
+      init_buffer(buffer)
 
       # create @mode_win
       @mode_win = create_mode_win
@@ -35,9 +35,9 @@ module Mrbmacs
     def set_margin_curses
       set_margin
       # @sci.sci_set_margin_widthn(0, @sci.sci_text_width(Scintilla::STYLE_LINENUMBER, "_99999"))
-      @sci.sci_set_margin_maskn(0, ~Scintilla::SC_MASK_FOLDERS)
-      @sci.sci_set_margin_widthn(1, 1)
-      @sci.sci_set_margin_typen(1, 0)
+      @sci.sci_set_margin_maskn(MARGIN_LINE_NUMBER, ~Scintilla::SC_MASK_FOLDERS)
+      @sci.sci_set_margin_widthn(MARGIN_FOLDING, 1)
+      @sci.sci_set_margin_typen(MARGIN_FOLDING, 0)
       # @sci.sci_set_margin_maskn(1, Scintilla::SC_MASK_FOLDERS)
       # @sci.sci_set_marginsensitiven(1, 1)
       # @sci.sci_set_automatic_fold(Scintilla::SC_AUTOMATICFOLD_CLICK)
