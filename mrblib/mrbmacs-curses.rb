@@ -10,12 +10,14 @@ module Mrbmacs
       ret, key = @frame.waitkey(@frame.view_win)
       return if ret != TermKey::RES_KEY
 
-      key_str = prefix + @frame.strfkey(key)
-      key_str.gsub!(/^Escape /, 'M-')
+      key_str = @frame.strfkey(key)
       if $DEBUG
         $stderr.puts "[#{key_str}]"
       end
 
+      add_recent_key(key_str)
+      key_str = prefix + key_str
+      key_str.gsub!(/^Escape /, 'M-')
       command = key_scan(key_str)
       if command != nil
         return @frame.view_win.send_message(command, nil, nil) if command.is_a?(Integer)

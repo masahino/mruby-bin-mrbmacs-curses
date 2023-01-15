@@ -6,6 +6,7 @@ module Mrbmacs
       @buffer_list = []
       @keymap = ViewKeyMap.new
       @command_list = {}
+      @recent_keys = []
     end
   end
 
