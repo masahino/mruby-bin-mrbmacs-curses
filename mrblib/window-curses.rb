@@ -4,7 +4,7 @@ module Mrbmacs
       super(frame, buffer, left, top, width, height)
       @sci = Scintilla::ScintillaCurses.new do |scn|
         code = scn['code']
-        @frame.sci_notifications.delete_if { |n| n['code'] == code }
+        # @frame.sci_notifications.delete_if { |n| n['code'] == code }
         @frame.sci_notifications.push(scn)
       end
       @sci.resize_window(@height - 1, @width)
