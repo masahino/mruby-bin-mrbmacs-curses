@@ -303,7 +303,7 @@ module Mrbmacs
       echo_text = "Switch to buffer: (default #{default_buffername}) "
       buffername = echo_gets(echo_text, '') do |input_text|
         list = buffer_list.select { |b| b[0, input_text.length] == input_text }
-        [list.join(@view_win.sci_autoc_get_separator.chr), input_text.length]
+        [list.join(@echo_win.sci_autoc_get_separator.chr), input_text.length]
       end
       return buffername
     end
