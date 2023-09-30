@@ -1,8 +1,6 @@
 module Mrbmacs
   # ApplicationCurses
   class ApplicationCurses < ApplicationTerminal
-    include Scintilla
-
     def add_buffer_to_frame(buffer)
     end
 

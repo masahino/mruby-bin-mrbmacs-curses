@@ -11,7 +11,10 @@ MRuby::Build.new do |conf|
   enable_debug
 
   conf.cc.defines = %w(MRB_ENABLE_ALL_SYMBOLS)
-  conf.cc.defines = %w(MRB_UTF8_STRING)
+  conf.cc.defines << %w(MRB_UTF8_STRING)
+  # conf.cc.defines << %w(MRB_ENABLE_DEBUG_HOOK)
+  # conf.gem :github => 'masahino/mruby-debug', :branch => 'main'
+  # conf.gem :core => 'mruby-bin-debugger'
 
   # Use mrbgems
   # conf.gem 'examples/mrbgems/ruby_extension_example'
@@ -25,8 +28,8 @@ MRuby::Build.new do |conf|
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-eval"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-exit"
   conf.gem "#{MRUBY_ROOT}/mrbgems/mruby-bin-mrbc"
-  conf.gem :github => 'mattn/mruby-onig-regexp'
-  conf.gem :github => 'fastly/mruby-optparse'
+  #  conf.gem :github => 'mattn/mruby-onig-regexp'
+  #  conf.gem :github => 'fastly/mruby-optparse'
   conf.gem :github => 'masahino/mruby-json', :branch => 'supress_error'
   conf.gem :github => 'mattn/mruby-iconv' do |g|
     if RUBY_PLATFORM.include?('linux')

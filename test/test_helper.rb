@@ -10,6 +10,10 @@ module Mrbmacs
     end
   end
 
+  class Frame
+    attr_reader :tk
+  end
+
   class TestFrame
     attr_accessor :view_win, :echo_win, :tk
     def initialize

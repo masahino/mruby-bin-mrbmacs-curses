@@ -1,8 +1,10 @@
 # Mrbmacs module
 module Mrbmacs
-  def self.common_str(comp_list)
-    max_len = comp_list.map { |i| i.length }.sort[0]
-    (1..max_len).reverse_each do |i|
+  def self.find_common_prefix(comp_list)
+    len = comp_list.map(&:length).min
+    return nil if len.nil?
+
+    (1..len).reverse_each do |i|
       if comp_list.map { |f| f[0..i] }.sort.uniq.size == 1
         return comp_list[0][0..i]
       end
@@ -12,13 +14,10 @@ module Mrbmacs
 
   # Frame
   class Frame
-    include Scintilla
-    attr_accessor :view_win, :echo_win, :tk, :char_added, :edit_win, :mode_win, :edit_win_list
+    attr_reader :tk
 
     def initialize(buffer)
-      if ENV['TERM'] == nil
-        ENV['TERM'] = 'xterm-256color'
-      end
+      ENV['TERM'] = 'xterm-256color' if ENV['TERM'].nil?
       print "\033[?1000h" # enable mouse
       #      @tk = TermKey.new(0, TermKey::FLAG_UTF8 | TermKey::FLAG_SPACESYMBOL)
       @tk = TermKey.new(0, TermKey::FLAG_UTF8)
@@ -52,7 +51,6 @@ module Mrbmacs
       @mode_win = @edit_win.mode_win
       @echo_win = new_echowin
       @edit_win_list = [@edit_win]
-      @char_added = false
     end
 
     def new_editwin(buffer, left, top, width, height)
@@ -60,7 +58,7 @@ module Mrbmacs
     end
 
     def new_echowin
-      echo_win = ScintillaCurses.new do |msg|
+      echo_win = Scintilla::ScintillaCurses.new do |msg|
         #        $stderr.puts "echo win callback #{msg}"
       end
       echo_win.sci_set_codepage(Scintilla::SC_CP_UTF8)
@@ -73,11 +71,11 @@ module Mrbmacs
       echo_win.sci_autoc_set_choose_single(1)
       echo_win.sci_autoc_set_auto_hide(false)
       echo_win.sci_set_margin_typen(3, 4)
-      echo_win.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER | Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK | Scintilla::CARETSTYLE_BLOCK
+      echo_win.sci_set_caretstyle Scintilla::CARETSTYLE_BLOCK_AFTER |
+                                  Scintilla::CARETSTYLE_OVERSTRIKE_BLOCK |
+                                  Scintilla::CARETSTYLE_BLOCK
       echo_win.sci_set_wrap_mode(Scintilla::SC_WRAP_CHAR)
-      if Scintilla::PLATFORM != :CURSES_WIN32
-        echo_win.sci_autoc_set_max_height(16)
-      end
+      echo_win.sci_autoc_set_max_height(16) if Scintilla::PLATFORM != :CURSES_WIN32
       echo_win.refresh
 
       echo_win
@@ -85,9 +83,7 @@ module Mrbmacs
 
     def delete_other_window
       @edit_win_list.each do |w|
-        if w != @edit_win
-          w.delete
-        end
+        w.delete if w != @edit_win
       end
       @edit_win_list.delete_if { |w| w != @edit_win }
       @edit_win.x1 = 0
@@ -131,12 +127,11 @@ module Mrbmacs
     end
 
     def send_key(key, win = nil)
-      if win == nil
-        win = @view_win
-      end
-      mod_shift = (key.modifiers & TermKey::KEYMOD_SHIFT > 0) ? true : false
-      mod_ctrl = (key.modifiers & TermKey::KEYMOD_CTRL > 0) ? true : false
-      mod_alt = (key.modifiers & TermKey::KEYMOD_ALT > 0) ? true : false
+      win = @view_win if win.nil?
+
+      mod_shift = (key.modifiers & TermKey::KEYMOD_SHIFT) > 0
+      mod_ctrl = (key.modifiers & TermKey::KEYMOD_CTRL) > 0
+      mod_alt = (key.modifiers & TermKey::KEYMOD_ALT) > 0
       case key.type
       when TermKey::TYPE_UNICODE
         c = key.code
@@ -200,12 +195,9 @@ module Mrbmacs
       @echo_win.sci_add_text(prefix_text.bytesize, prefix_text)
       @echo_win.refresh
       input_text = nil
-      last_input = nil
-      while true
+      loop do
         ret, key = waitkey(@echo_win)
-        if ret != TermKey::RES_KEY
-          break
-        end
+        break if ret != TermKey::RES_KEY
 
         key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
         if key_str == 'C-g'
@@ -245,7 +237,7 @@ module Mrbmacs
             Curses.redrawwin(@mode_win)
             Curses.wrefresh(@mode_win)
             comp_list, len = block.call(input_text)
-            common_str = Mrbmacs.common_str(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
+            common_str = Mrbmacs.find_common_prefix(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
             if common_str != nil
               @echo_win.sci_autoc_cancel
               @echo_win.sci_add_text(common_str[len..-1].bytesize, common_str[len..-1])
@@ -259,6 +251,7 @@ module Mrbmacs
           send_key(key, @echo_win)
         end
         if @echo_win.sci_margin_get_text(0) == ''
+          $stderr.puts 'lost echo prompt'
           echo_set_prompt(prompt)
         end
         @echo_win.refresh
@@ -282,20 +275,18 @@ module Mrbmacs
     end
 
     def y_or_n(prompt)
-      if $DEBUG
-        $stderr.puts prompt
-      end
+      $stderr.puts prompt if $DEBUG
       @echo_win.sci_clear_all
       echo_set_prompt(prompt)
       _ret, key = waitkey(@echo_win)
       key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
       echo_set_prompt('')
-      if key_str == 'Y' or key_str == 'y'
-        return true
+      if key_str == 'Y' || key_str == 'y'
+        true
       elsif key_str == 'C-g'
-        return false
+        false
       else
-        return false
+        false
       end
     end
 
@@ -305,7 +296,7 @@ module Mrbmacs
         list = buffer_list.select { |b| b[0, input_text.length] == input_text }
         [list.join(@echo_win.sci_autoc_get_separator.chr), input_text.length]
       end
-      return buffername
+      buffername
     end
 
     def exit
