@@ -24,7 +24,7 @@ jobs:
         os: [ubuntu-24.04, ubuntu-22.04]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: intall apt packages
       run: sudo apt-get -qq install pkg-config rake bison libtool-bin libncurses5-dev libncursesw5-dev
