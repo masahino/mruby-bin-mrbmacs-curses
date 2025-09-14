@@ -15,18 +15,18 @@ module Mrbmacs
 
       add_recent_key(key_str)
       key_str = prefix + key_str
-      key_str.gsub!(/^Escape /, 'M-')
+      key_str.gsub!('Escape ', 'M-')
       command = key_scan(key_str)
-      if command != nil
-        return @frame.view_win.send_message(command, nil, nil) if command.is_a?(Integer)
 
-        if command == 'prefix'
-          return doscan(key_str + ' ')
-        else
-          return extend(command)
-        end
+      if command.nil?
+        @frame.send_key(key)
+      elsif command.is_a?(Integer)
+        @frame.view_win.send_message(command, nil, nil)
+      elsif command == 'prefix'
+        doscan("#{key_str} ")
+      else
+        extend(command)
       end
-      @frame.send_key(key)
     end
 
     def keyin
