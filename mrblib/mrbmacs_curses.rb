@@ -15,7 +15,7 @@ module Mrbmacs
 
       add_recent_key(key_str)
       key_str = prefix + key_str
-      key_str.gsub!('Escape ', 'M-')
+      key_str.gsub!(/^Escape /, 'M-')
       command = key_scan(key_str)
 
       if command.nil?
