@@ -1,9 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
 name: mingw-w64 builds
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -16,16 +12,16 @@ on:
       - '.github/workflows/main.yml'
       - '.github/workflows/macos.yml'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: windows-2019
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        os: [windows-2025, windows-2022]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v5
 
     - name: mingw setup
@@ -38,7 +34,6 @@ jobs:
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
       
-    # Runs a single command using the runners shell
     - name: build
       shell: msys2 {0}
       run: PKG_CONFIG_PATH="" ./build.sh
@@ -46,10 +41,9 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v5
       with:
-        name: mingw-w64-x86_64-mrbmacs-curses
+        name: mrbmacs-curses-${{ matrix.os }}
         path: mruby/bin/mrbmacs-curses.exe
 
-    # Runs a set of commands using the runners shell
     - name: test
       shell: msys2 {0}
       run: PKG_CONFIG_PATH="" ./build.sh test

@@ -1,10 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build & Test on Ubuntu
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
-on:
+on: 
   push:
     branches: [ master ]
     paths-ignore:
@@ -16,29 +14,23 @@ on:
       - '.github/workflows/mingw-w64.yml'
       - '.github/workflows/macos.yml'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, ubuntu-22.04]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v5
 
     - name: intall apt packages
       run: sudo apt-get -qq install pkg-config rake bison libtool-bin libncurses5-dev libncursesw5-dev
-
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
-
-    # Runs a single command using the runners shell
     - name: build
       run: ./build.sh
-
-    # Runs a set of commands using the runners shell
     - name: test
       run: ./build.sh test
-        
