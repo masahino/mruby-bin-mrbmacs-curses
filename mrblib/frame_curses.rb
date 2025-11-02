@@ -1,17 +1,5 @@
 # Mrbmacs module
 module Mrbmacs
-  def self.find_common_prefix(comp_list)
-    len = comp_list.map(&:length).min
-    return nil if len.nil?
-
-    (1..len).reverse_each do |i|
-      if comp_list.map { |f| f[0..i] }.sort.uniq.size == 1
-        return comp_list[0][0..i]
-      end
-    end
-    nil
-  end
-
   # Frame
   class Frame
     attr_reader :tk
@@ -237,7 +225,7 @@ module Mrbmacs
             Curses.redrawwin(@mode_win)
             Curses.wrefresh(@mode_win)
             comp_list, len = block.call(input_text)
-            common_str = Mrbmacs.find_common_prefix(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
+            common_str = Mrbmacs.common_prefix(comp_list.split(@echo_win.sci_autoc_get_separator.chr))
             if common_str != nil
               @echo_win.sci_autoc_cancel
               @echo_win.sci_add_text(common_str[len..-1].bytesize, common_str[len..-1])
