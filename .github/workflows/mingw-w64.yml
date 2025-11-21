@@ -22,7 +22,7 @@ jobs:
         os: [windows-2025, windows-2022]
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: mingw setup
       uses: msys2/setup-msys2@v2

@@ -23,7 +23,7 @@ jobs:
         os: [macoss-15, macoss-14]
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
     - name: build
