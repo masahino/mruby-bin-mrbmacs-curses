@@ -39,7 +39,7 @@ jobs:
       run: PKG_CONFIG_PATH="" ./build.sh
 
     - name: upload
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: mrbmacs-curses-${{ matrix.os }}
         path: mruby/bin/mrbmacs-curses.exe
