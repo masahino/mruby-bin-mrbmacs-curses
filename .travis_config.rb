@@ -22,6 +22,7 @@ MRuby::Build.new do |conf|
 
   conf.gem github: 'mattn/mruby-iconv' do |g|
     g.linker.libraries.delete 'iconv' if RUBY_PLATFORM.include?('linux')
+    g.skip_test = true
   end
   if RUBY_PLATFORM.downcase =~ /msys|mingw/
     conf.cc.include_paths << "#{MRUBY_ROOT}/../misc"
@@ -29,7 +30,13 @@ MRuby::Build.new do |conf|
     conf.cc.flags << '-DPDC_WIDE'
     conf.cc.flags << '-DPDC_FORCE_UTF8'
   end
+  conf.gem github: 'iij/mruby-regexp-pcre' do |g|
+    g.skip_test = true
+  end
   conf.gem github: 'masahino/mruby-mrbmacs-lsp'
+  conf.gem github: 'masahino/mruby-lsp-client' do |g|
+    g.skip_test = true
+  end
 
   conf.gem "#{MRUBY_ROOT}/.."
   conf.linker.libraries << 'stdc++'

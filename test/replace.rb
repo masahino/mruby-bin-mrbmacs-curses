@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
 module Scintilla
   class ScintillaCurses
     def sci_search_in_target(length, text)

@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
 assert('duplicate notification') do
   app = Mrbmacs::TestApp.new
   assert_equal 0, app.frame.sci_notifications.length
