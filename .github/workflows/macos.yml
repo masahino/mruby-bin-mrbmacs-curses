@@ -17,10 +17,10 @@ jobs:
   build:
     name: "${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minute: 10
+    timeout-minutes: 10
     strategy:
       matrix:
-        os: [macoss-15, macoss-14]
+        os: [macos-15, macos-14]
 
     steps:
     - uses: actions/checkout@v7
