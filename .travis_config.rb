@@ -1,3 +1,11 @@
+class MRuby::Build
+  # mruby 3.3+ splits core objects into libmruby_core.a, but gem binaries
+  # in this project still expect both archives to be linked.
+  def libraries
+    [libmruby_static, libmruby_core_static]
+  end
+end
+
 MRuby::Build.new do |conf|
   if ENV['VisualStudioVersion'] || ENV['VSINSTALLDIR']
     toolchain :visualcpp

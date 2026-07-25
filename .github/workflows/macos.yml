@@ -24,6 +24,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
+    - name: install build dependencies
+      run: brew install libtool
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
     - name: build
