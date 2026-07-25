@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
 assert("isearch_forward") do 
   app = Mrbmacs::TestApp.new
 #  assert app.isearch_forward
