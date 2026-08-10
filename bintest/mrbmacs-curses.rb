@@ -16,7 +16,7 @@ assert('split window') do
   assert_equal 0, stderr.length
 end
 
-assert('split window') do
+assert('split window2') do
   stdout, stderr, status = Open3.capture3("#{cmd('mrbmacs-curses')} -q -l #{$script_dir}split_window2")
   assert_equal 0, status.to_i
   lines = stderr.split("\n")
