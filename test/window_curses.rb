@@ -10,3 +10,13 @@ assert('duplicate notification') do
   assert_equal Scintilla::SCN_CHARADDED, app.frame.sci_notifications[-1]['code']
   assert_equal 99, app.frame.sci_notifications[-1]['ch']
 end
+
+assert('Curses keeps theme colours as RGB values') do
+  base16 = Mrbmacs::Base16DefaultDarkTheme.new
+  solarized = Mrbmacs::SolarizedDarkTheme.new
+
+  assert_true base16.foreground_color > 0xff
+  assert_true base16.background_color > 0xff
+  assert_true solarized.foreground_color > 0xff
+  assert_true solarized.background_color > 0xff
+end
