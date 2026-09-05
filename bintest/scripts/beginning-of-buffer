@@ -1,6 +1,10 @@
 end_of_buffer
-insert "abc"
+text = 'abc'
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, text)
 beginning_of_buffer
-insert "あ"
+text = 'あ'
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, text)
 save_buffer
 save_buffers_kill_terminal

@@ -7,6 +7,7 @@ module Mrbmacs
       @keymap = ViewKeyMap.new
       @command_list = {}
       @recent_keys = []
+      @modeline = Mrbmacs::Modeline.new
     end
   end
 

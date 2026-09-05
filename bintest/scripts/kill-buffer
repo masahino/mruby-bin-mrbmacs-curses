@@ -1,5 +1,7 @@
 find_file "hoge"
 kill_buffer "hoge"
-insert "abc"
+text = 'abc'
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, text)
 save_buffer
 save_buffers_kill_terminal

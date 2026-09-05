@@ -1,7 +1,6 @@
 require 'fileutils'
 
 MRUBY_VERSION="4.0.0"
-APP_VERSION="0.9"
 
 file :mruby do
   sh "git clone --depth=1 https://github.com/mruby/mruby"
@@ -20,6 +19,22 @@ ENV['MRUBY_CONFIG'] = mruby_config
 Rake::Task[:mruby].invoke unless Dir.exist?(mruby_root)
 Dir.chdir(mruby_root)
 load "#{mruby_root}/Rakefile"
+
+def frontend_version(target_name, gem_name)
+  target = MRuby.targets[target_name]
+  raise "Unknown mruby build target: #{target_name}" unless target
+
+  version_file = File.join(
+    target.build_dir, 'mrbgems', gem_name, 'version.txt'
+  )
+  raise "Version file was not generated: #{version_file}" \
+    unless File.file?(version_file)
+
+  version = File.read(version_file).strip
+  raise "Generated version is empty: #{version_file}" if version.empty?
+
+  version
+end
 
 desc "compile binary"
 task :compile => [:all] do
@@ -76,10 +91,12 @@ desc "generate a release tarball"
 task :release => :compile do
   require 'tmpdir'
 
+  app_version = frontend_version('host', 'mruby-bin-mrbmacs-curses')
+
   # since we're in the mruby/
-  release_dir  = "releases/v#{APP_VERSION}"
+  release_dir  = "releases/v#{app_version}"
   release_path = Dir.pwd + "/../#{release_dir}"
-  app_name     = "#{APP_NAME}-#{APP_VERSION}"
+  app_name     = "#{APP_NAME}-#{app_version}"
   FileUtils.mkdir_p(release_path)
 
   Dir.mktmpdir do |tmp_dir|

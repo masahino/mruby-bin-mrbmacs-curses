@@ -1,6 +1,10 @@
 switch_to_buffer "*scratch*"
-insert "abc"
+text = 'abc'
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, text)
 switch_to_buffer "switch-to-buffer.input"
-insert "xyz"
+text = 'xyz'
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, text)
 save_buffer
 save_buffers_kill_terminal

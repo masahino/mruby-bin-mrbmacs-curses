@@ -257,19 +257,7 @@ module Mrbmacs
     end
 
     def y_or_n(prompt)
-      $stderr.puts prompt if $DEBUG
-      @echo_win.sci_clear_all
-      echo_set_prompt(prompt)
-      _ret, key = waitkey(@echo_win)
-      key_str = @tk.strfkey(key, TermKey::FORMAT_ALTISMETA)
-      echo_set_prompt('')
-      if key_str == 'Y' || key_str == 'y'
-        true
-      elsif key_str == 'C-g'
-        false
-      else
-        false
-      end
+      y_or_n_terminal(prompt)
     end
 
     def exit

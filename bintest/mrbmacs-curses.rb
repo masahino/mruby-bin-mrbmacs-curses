@@ -3,6 +3,20 @@ require 'fileutils'
 require 'timeout'
 $script_dir = File.dirname(__FILE__) + "/scripts/"
 
+assert('report the generated frontend version') do
+  version_file = File.join(
+    ENV.fetch('BUILD_DIR'), 'mrbgems', GEMNAME, 'version.txt'
+  )
+  expected_version = File.read(version_file).strip
+  stdout, stderr, status = Open3.capture3(
+    "#{cmd('mrbmacs-curses')} --version"
+  )
+
+  assert_equal 0, status.to_i
+  assert_equal '', stderr
+  assert_equal expected_version, stdout.strip
+end
+
 assert('init buffer') do
   stdout, stderr, status = Open3.capture3("#{cmd('mrbmacs-curses')} -l #{$script_dir}init_buffer")
   assert_equal 0, status.to_i
