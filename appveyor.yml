@@ -6,7 +6,7 @@ environment:
     CC: gcc
     CYG_PACKAGES: libncurses-devel,ruby,libiconv-devel,libonig-devel
     CYG_SETUP: C:\cygwin64\setup-x86_64.exe
-    MRUBY_VERSION: 2.1.1-rc
+    MRUBY_VERSION: 4.0.0
   - MSYSTEM: MINGW64
     BASH: C:\msys64\usr\bin\bash
     CC: x86_64-w64-mingw32-gcc

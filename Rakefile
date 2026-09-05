@@ -1,6 +1,6 @@
 require 'fileutils'
 
-MRUBY_VERSION="3.2.0"
+MRUBY_VERSION="4.0.0"
 APP_VERSION="0.9"
 
 file :mruby do

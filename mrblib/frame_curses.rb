@@ -278,15 +278,6 @@ module Mrbmacs
       end
     end
 
-    def select_buffer(default_buffername, buffer_list)
-      echo_text = "Switch to buffer: (default #{default_buffername}) "
-      buffername = echo_gets(echo_text, '') do |input_text|
-        list = buffer_list.select { |b| b[0, input_text.length] == input_text }
-        [list.join(@echo_win.sci_autoc_get_separator.chr), input_text.length]
-      end
-      buffername
-    end
-
     def exit
       @view_win.delete
       Curses.noraw
