@@ -1,1 +1,4 @@
-mruby/
+/mruby/
+/build/
+/build_config.rb.lock
+/misc/build_config_cross.rb.lock

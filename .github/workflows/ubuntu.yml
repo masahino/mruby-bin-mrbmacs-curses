@@ -31,6 +31,6 @@ jobs:
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
     - name: build
-      run: ./build.sh
+      run: rake
     - name: test
-      run: ./build.sh test
+      run: rake test

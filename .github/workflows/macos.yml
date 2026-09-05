@@ -29,11 +29,11 @@ jobs:
     - name: set env
       run: echo "TERM=xterm" >> $GITHUB_ENV
     - name: build
-      run: ./build.sh
+      run: rake
     - name: upload
       uses: actions/upload-artifact@v7
       with:
         name: mrbmacs-curses-${{ matrix.os }}
         path: mruby/bin/mrbmacs-curses
     - name: test
-      run: ./build.sh "--trace test"
+      run: rake test
