@@ -8,4 +8,5 @@ copy_region
 end_of_buffer
 yank
 save_buffer
-save_buffers_kill_terminal
+@frame.exit
+exit

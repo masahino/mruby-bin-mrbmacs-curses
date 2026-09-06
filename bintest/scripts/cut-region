@@ -6,4 +6,5 @@ set_mark
 @frame.view_win.sci_charright
 cut_region
 save_buffer
-save_buffers_kill_terminal
+@frame.exit
+exit

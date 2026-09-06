@@ -12,4 +12,5 @@ all_text.each_line do |line|
     $stderr.puts line
   end
 end
-save_buffers_kill_terminal()
+@frame.exit
+exit

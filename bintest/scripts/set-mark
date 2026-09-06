@@ -9,4 +9,5 @@ end_of_line
 @frame.view_win.sci_charleft
 cut_region
 save_buffer
-save_buffers_kill_terminal
+@frame.exit
+exit

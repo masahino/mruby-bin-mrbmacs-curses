@@ -8,4 +8,5 @@ set_mark
 @frame.view_win.sci_charright
 clear_rectangle
 save_buffer
-save_buffers_kill_terminal
+@frame.exit
+exit
