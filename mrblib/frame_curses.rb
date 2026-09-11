@@ -178,6 +178,8 @@ module Mrbmacs
       @view_win.refresh
       @echo_win.sci_set_focus(true)
       @echo_win.sci_clear_all
+      clipboard = @application.clipboard_text if @application
+      @echo_win.sci_copytext(clipboard.bytesize, clipboard) unless clipboard.nil? || clipboard == ''
       echo_set_prompt(prompt)
       prefix_text = text
       @echo_win.sci_add_text(prefix_text.bytesize, prefix_text)
