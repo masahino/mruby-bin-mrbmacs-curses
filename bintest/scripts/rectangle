@@ -1,12 +1,14 @@
-@frame.view_win.sci_charright
-@frame.view_win.sci_charright
+# Blanks a rectangle spanning two lines, from column 2 to column 6.
+# Positions come from sci_goto_pos / sci_position_from_line rather than caret
+# movement: LINEDOWN is resolved through screen coordinates, which are not laid
+# out when a GUI frontend runs a -l script.
+win = @frame.view_win
+
+win.sci_goto_pos(2)
 set_mark
-@frame.view_win.sci_linedown
-@frame.view_win.sci_charright
-@frame.view_win.sci_charright
-@frame.view_win.sci_charright
-@frame.view_win.sci_charright
+win.sci_goto_pos(win.sci_position_from_line(1) + 6)
 clear_rectangle
+
 save_buffer
 @frame.exit
 exit

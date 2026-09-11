@@ -1,14 +1,24 @@
+# Comments and uncomments specific lines in two different modes.
+# Lines are selected with sci_goto_line rather than sci_linedown: LINEDOWN is
+# resolved through screen coordinates, which are not laid out when a GUI
+# frontend runs a -l script, so it does not move between document lines there.
+win = @frame.view_win
+
 cpp_mode
+win.sci_goto_line(0)
 comment_line
-@frame.view_win.sci_linedown
+
 ruby_mode
+win.sci_goto_line(1)
 comment_line
-@frame.view_win.sci_linedown
-@frame.view_win.sci_linedown
+
 cpp_mode
+win.sci_goto_line(3)
 uncomment_line
-@frame.view_win.sci_linedown
+
+win.sci_goto_line(4)
 comment_line
+
 save_buffer
 @frame.exit
 exit

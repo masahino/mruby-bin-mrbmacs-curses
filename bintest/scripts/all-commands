@@ -64,6 +64,7 @@ SKIPPED = %w[
   replace_string
   save_buffers_kill_terminal
   search_project
+  select_font
   select_theme
   set_buffer_file_coding_system
   write_file

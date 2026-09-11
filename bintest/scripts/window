@@ -1,6 +1,6 @@
 split_window_vertically
 other_window
-split_window_horizontal
+split_window_horizontally
 delete_window
 other_window
 delete_other_window
