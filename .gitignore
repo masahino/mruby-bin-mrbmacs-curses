@@ -2,3 +2,8 @@
 /build/
 /build_config.rb.lock
 /misc/build_config_cross.rb.lock
+/bintest/.capture
+/bintest/*.input
+!/bintest/test.input
+!/bintest/test2.input
+!/bintest/test-utf8-dos.input
