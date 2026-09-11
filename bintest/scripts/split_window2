@@ -1,7 +1,0 @@
-split_window_vertically
-other_window
-$stderr.puts @current_buffer.name
-other_window
-$stderr.puts @current_buffer.name
-@frame.exit
-exit

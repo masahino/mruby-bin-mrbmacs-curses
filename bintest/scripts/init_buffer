@@ -1,4 +1,0 @@
-$stderr.puts @current_buffer.name
-$stderr.puts @frame.view_win.sci_get_text(10)
-@frame.exit
-exit

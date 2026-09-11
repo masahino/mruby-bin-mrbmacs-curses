@@ -1,9 +1,0 @@
-@frame.view_win.sci_linedown
-@frame.view_win.sci_linedown
-end_of_line
-text = 'abc'
-win = @frame.view_win
-win.sci_insert_text(win.sci_get_current_pos, text)
-save_buffer
-@frame.exit
-exit
