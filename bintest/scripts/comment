@@ -1,0 +1,14 @@
+cpp_mode
+comment_line
+@frame.view_win.sci_linedown
+ruby_mode
+comment_line
+@frame.view_win.sci_linedown
+@frame.view_win.sci_linedown
+cpp_mode
+uncomment_line
+@frame.view_win.sci_linedown
+comment_line
+save_buffer
+@frame.exit
+exit

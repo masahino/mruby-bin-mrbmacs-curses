@@ -1,0 +1,8 @@
+# Opens a CRLF file, edits it, and saves. The document EOL mode is detected on
+# load, so the saved bytes must keep CRLF.
+beginning_of_buffer
+win = @frame.view_win
+win.sci_insert_text(win.sci_get_current_pos, 'X')
+save_buffer
+@frame.exit
+exit

@@ -1,0 +1,105 @@
+# Runs base editor commands against the real Scintilla. The point is not the
+# result but that nothing explodes where the unit tests only ever saw a fake
+# view.
+#
+# Only the commands listed in RUN are executed. An allow list is used rather
+# than a deny list because Mrbmacs::Command.instance_methods holds the commands
+# of every gem that is linked in, and those reach the network (aichat), spawn
+# language servers (lsp) or debug adapters (dap). Nothing unknown may run.
+RUN = %w[
+  beginning_of_buffer
+  beginning_of_line
+  clear_rectangle
+  comment_line
+  copy_region
+  cut_region
+  delete_other_window
+  delete_rectangle
+  delete_window
+  describe_bindings
+  diff_next_hunk
+  diff_previous_hunk
+  dmacro_exec
+  downcase_word
+  end_of_buffer
+  end_of_line
+  enlarge_window
+  enlarge_window_horizontally
+  eval_buffer
+  eval_last_exp
+  indent
+  keyboard_quit
+  kill_line
+  list_commands
+  newline
+  other_window
+  preview_theme
+  recenter
+  revert_buffer
+  save_buffer
+  set_mark
+  split_window_horizontally
+  split_window_vertically
+  uncomment_line
+  upcase_word
+  vc_diff
+  yank
+].freeze
+
+# Base commands deliberately left out: they prompt, loop on key input, or end
+# the process. Listed so that the check below can tell "decided against" from
+# "nobody has looked at this yet".
+SKIPPED = %w[
+  compile
+  execute_extended_command
+  find_file
+  grep
+  insert_file
+  isearch_backward
+  isearch_forward
+  kill_buffer
+  open_project
+  query_replace
+  recompile
+  replace_string
+  save_buffers_kill_terminal
+  search_project
+  select_theme
+  set_buffer_file_coding_system
+  write_file
+].freeze
+
+# Commands owned by the optional feature gems, tested in their own repositories.
+EXTENSION = /\A(aichat|dap|lsp_)/
+
+win = @frame.view_win
+win.sci_insert_text(0, "Hello World\nこんにちは 世界\n\tTabbed line\n")
+beginning_of_buffer
+
+# The command name is written before it runs, so a hang leaves the culprit on
+# the last line and an exception adds an explicit NG line.
+out = File.open(ENV['MRBMACS_BINTEST_OUT'] || '/dev/stderr', 'w')
+RUN.each do |name|
+  out.puts name
+  out.flush
+  begin
+    send(name.to_sym)
+  rescue StandardError => e
+    out.puts "NG #{name} #{e}"
+    out.flush
+  end
+end
+
+# A base command that is in neither list is new and nobody has decided whether
+# it is safe to run here, so surface it instead of silently leaving it untested.
+Mrbmacs::Command.instance_methods.map(&:to_s).sort.each do |name|
+  next if RUN.include?(name) || SKIPPED.include?(name) || name =~ EXTENSION
+
+  out.puts "UNLISTED #{name}"
+end
+
+out.puts 'done'
+out.close
+
+@frame.exit
+exit
