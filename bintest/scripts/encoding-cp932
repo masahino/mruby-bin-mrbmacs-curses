@@ -1,5 +1,5 @@
 # Saves a UTF-8 buffer as CP932. Auto detection is not used: it walks
-# @config.file_encodings, which is empty unless ~/.mrbmacsrc sets it, so a -q
+# @config.file_encodings, which is empty unless the startup file sets it, so a -q
 # run would always come back as utf-8.
 set_buffer_file_coding_system 'cp932'
 save_buffer
