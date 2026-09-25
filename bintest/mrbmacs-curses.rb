@@ -2,6 +2,8 @@ require 'open3'
 require 'fileutils'
 require 'timeout'
 
+FRONTEND_GEM_NAME = 'mruby-bin-mrbmacs-curses'
+
 $script_dir = "#{File.dirname(__FILE__)}/scripts/"
 $capture_file = "#{File.dirname(__FILE__)}/.capture"
 
@@ -43,7 +45,7 @@ end
 
 assert('report the generated frontend version') do
   version_file = File.join(
-    ENV.fetch('BUILD_DIR'), 'mrbgems', GEMNAME, 'version.txt'
+    ENV.fetch('BUILD_DIR'), 'mrbgems', FRONTEND_GEM_NAME, 'version.txt'
   )
   expected_version = File.read(version_file).strip
   stdout, stderr, status = Open3.capture3(

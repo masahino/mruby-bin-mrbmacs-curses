@@ -43,6 +43,8 @@ RUN = %w[
   uncomment_line
   upcase_word
   vc_diff
+  vc_next_change
+  vc_previous_change
   yank
 ].freeze
 
